@@ -6,8 +6,8 @@ import { Product } from '../entities/product.entity';
 @Injectable()
 export class ListProductsService {
   constructor(
-      @InjectRepository(Product)
-      private productRepository: Repository<Product>,
+    @InjectRepository(Product)
+    private productRepository: Repository<Product>,
   ) {}
 
   async execute(): Promise<Product[]> {

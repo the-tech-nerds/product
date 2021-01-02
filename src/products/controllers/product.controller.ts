@@ -1,13 +1,9 @@
-import {
-  Controller,
-  Get,
-  Res,
-} from '@nestjs/common';
+import { Controller, Get, Res } from '@nestjs/common';
 
 import { ApiResponseService } from 'src/utils/services/api-response/response/api-response.service';
 import { Response } from 'express';
 import { ListProductsService } from '../services/list-products.service';
-import { Product } from "../entities/product.entity";
+import { Product } from '../entities/product.entity';
 
 @Controller()
 export class ProductController {
