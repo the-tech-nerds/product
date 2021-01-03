@@ -3,7 +3,7 @@ import { ProductModule } from './products/product.module';
 
 export const routes: Routes = [
   {
-    path: '/products',
+    path: '/product',
     module: ProductModule,
   },
 ];
