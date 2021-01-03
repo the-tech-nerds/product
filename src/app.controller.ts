@@ -7,7 +7,6 @@ export class AppController {
 
   @Get()
   getHello(): string {
-    console.log('arif');
     return this.appService.getHello();
   }
 }
