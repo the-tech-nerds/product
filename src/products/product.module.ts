@@ -6,13 +6,8 @@ import { ListProductsService } from './services/list-products.service';
 import { ApiResponseService } from '../utils/services/api-response/response/api-response.service';
 
 @Module({
-  imports: [
-      TypeOrmModule.forFeature([Product])
-  ],
-  providers: [
-    ListProductsService,
-    ApiResponseService,
-  ],
+  imports: [TypeOrmModule.forFeature([Product])],
+  providers: [ListProductsService, ApiResponseService],
   controllers: [ProductController],
 })
 export class ProductModule {}
