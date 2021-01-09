@@ -5,13 +5,13 @@ import {
   HttpStatus,
   HttpException,
 } from '@nestjs/common';
-import { ApiResponseService } from '../utils/services/api-response/response/api-response.service';
+import { ApiResponseService } from '@technerds/common-services';
 
 @Catch()
 export class ErrorFilter implements ExceptionFilter {
   constructor(private readonly apiResponseService: ApiResponseService) {}
 
-  catch(error: Error, host: ArgumentsHost) {
+  catch(error: Error, host: ArgumentsHost): any {
     const response = host.switchToHttp().getResponse();
     const status =
       error instanceof HttpException

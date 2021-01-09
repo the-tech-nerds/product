@@ -12,6 +12,7 @@ import { ProductModule } from './products/product.module';
 import { routes } from './route';
 import configuration from './config/configuration';
 import { TypeOrmConfig } from './database';
+import { ShopModule } from './shops/shop.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { TypeOrmConfig } from './database';
     RouterModule.forRoutes(routes),
     ProductModule,
     CacheModule,
+    ShopModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -28,7 +28,7 @@
     "@nestjs/passport": "^7.1.2",
     "@nestjs/platform-express": "^7.0.0",
     "@nestjs/typeorm": "^7.1.4",
-    "@technerds/common-services": "git@github.com:the-tech-nerds/common-services.git#6079538",
+    "@technerds/common-services": "git@github.com:the-tech-nerds/common-services.git#5137af0",
     "@types/bcryptjs": "^2.4.2",
     "@types/isomorphic-fetch": "0.0.35",
     "@types/passport-jwt": "^3.0.3",
