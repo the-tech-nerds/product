@@ -37,7 +37,7 @@ export const TypeOrmConfig = TypeOrmModule.forRootAsync({
       password: process.env.DB_PASSWORD,
       database: process.env.DB_DATABASE_NAME,
       maxQueryExecutionTime: 10000,
-      synchronize: true,
+      synchronize: false,
       logging: ['error'],
       keepConnectionAlive: true,
       ...core,
