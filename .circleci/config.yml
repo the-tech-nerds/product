@@ -102,13 +102,11 @@ workflows:
   version: 2
   build:
     jobs:
-      - npm-install:
-          context: npm_private
+      - npm-install
       - npm-build:
-          context: npm_private
           requires:
             - npm-install
       - docker-build-image:
-          context: aws_k8s
+          context: khanfreshcorner
           requires:
             - npm-install
