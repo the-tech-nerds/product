@@ -30,17 +30,14 @@ commands:
             echo "role_arn = arn:aws:iam::${PROD_AWS_ACCOUNT_ID}:role/developer" >> ~/.aws/credentials
             echo "source_profile = default" >> ~/.aws/credentials
 jobs:
-  deploy-job:
-    executor: node
-    steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "65:14:83:3a:23:55:a6:8f:d3:de:c5:c6:59:f1:90:6d"
   npm-install:
     resource_class: small
     executor: node
     steps:
       - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "65:14:83:3a:23:55:a6:8f:d3:de:c5:c6:59:f1:90:6d"
       - run:
           name: GIT_COMMIT
           command: |
@@ -108,14 +105,13 @@ workflows:
   version: 2
   build:
     jobs:
-      - deploy-job
       - npm-install:
-          requires:
-            - deploy-job
+          context: khanfreshcorner
       - npm-build:
+          context: khanfreshcorner
           requires:
             - npm-install
       - docker-build-image:
           context: khanfreshcorner
           requires:
-            - npm-install
+            - npm-build
