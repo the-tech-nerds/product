@@ -12,6 +12,7 @@ services:
     build:
       context: ./
       dockerfile: Dockerfile
+    restart: always
     volumes:
       - ./:/app
     ports:
@@ -23,7 +24,8 @@ services:
     external_links:
       - auth
       - authredis
-      - authdb
+      - productdb
+      - productredis
 
   productredis:
     container_name: productredis

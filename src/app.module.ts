@@ -6,13 +6,14 @@ import {
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RouterModule } from 'nest-router';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './products/product.module';
 import { routes } from './route';
 import configuration from './config/configuration';
-import { TypeOrmConfig } from './database';
 import { ShopModule } from './shops/shop.module';
+import * as ormconfig from './database';
 
 @Module({
   imports: [
@@ -20,7 +21,7 @@ import { ShopModule } from './shops/shop.module';
       isGlobal: true,
       load: [configuration, commonConfig],
     }),
-    TypeOrmConfig,
+    TypeOrmModule.forRoot(ormconfig),
     RouterModule.forRoutes(routes),
     ProductModule,
     CacheModule,

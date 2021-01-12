@@ -1,73 +1,32 @@
-import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import * as mysql from 'mysql';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-// tslint:disable-next-line:variable-name
-export const TypeOrmConfig = TypeOrmModule.forRootAsync({
-  useFactory: (): TypeOrmModuleOptions => {
-    const core = {
-      entities: ['dist/**/*.entity{.ts,.js}'],
-      migrationsTableName: 'migrations',
-      cli: {
-        migrationsDir: 'dist/migration',
-      },
-      migrations: ['dist/migration/*.js'],
-    };
+const ormconfig: TypeOrmModuleOptions = {
+  type: 'mysql',
+  host: process.env.MYSQL_HOST || 'productdb',
+  port: Number(process.env.MYSQL_PORT) || 3306,
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE_NAME,
+  maxQueryExecutionTime: 10000,
+  entities: [`${__dirname}/**/*.entity{.ts,.js}`],
 
-    if (process.env.NODE_ENV === 'test') {
-      return {
-        type: 'sqlite',
-        database: ':memory:',
-        synchronize: true,
-        logging: false,
-        entities: ['dist/**/*.entity{.ts,.js}'],
-        migrationsTableName: 'migrations',
-        cli: {
-          migrationsDir: 'src/migration',
-        },
-        migrations: ['src/migration/*.ts'],
-        keepConnectionAlive: true,
-      };
-    }
+  // We are using migrations, synchronize should be set to false.
+  synchronize: false,
 
-    const config = {
-      type: 'mysql',
-      host: process.env.MYSQL_HOST || 'productdb',
-      port: process.env.MYSQL_PORT || 3306,
-      username: process.env.DB_USERNAME,
-      password: process.env.DB_PASSWORD,
-      database: process.env.DB_DATABASE_NAME,
-      maxQueryExecutionTime: 10000,
-      synchronize: true,
-      logging: ['error'],
-      keepConnectionAlive: true,
-      ...core,
-    };
+  // Run migrations automatically,
+  // you can disable this if you prefer running migration manually.
+  migrationsRun: true,
+  logging: true,
+  logger: 'file',
 
-    if (process.env.NODE_ENV === 'development') {
-      const conn = mysql.createConnection({
-        host: config.host,
-        user: config.username,
-        password: config.password,
-      });
-
-      conn.connect((err: any) => {
-        if (err) {
-          throw new Error(err.message);
-        }
-
-        conn.query(
-          `CREATE DATABASE IF NOT EXISTS \`${config.database}\``,
-          (err2: any) => {
-            if (err2) {
-              throw new Error(err2.message);
-            }
-
-            conn.end();
-          },
-        );
-      });
-    }
-
-    return config as TypeOrmModuleOptions;
+  // Allow both start:prod and start:dev to use migrations
+  // __dirname is either dist or src folder, meaning either
+  // the compiled js in prod or the ts in dev.
+  migrations: [`${__dirname}/migrations/**/*{.ts,.js}`],
+  cli: {
+    // Location of migration should be inside src folder
+    // to be compiled into dist/ folder.
+    migrationsDir: 'src/migrations',
   },
-});
+};
+export = ormconfig;
