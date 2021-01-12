@@ -72,6 +72,7 @@ jobs:
       - run:
           name: Setup aws-cli scripts to work with ECR
           command: sudo pip install awscli
+      - setup_remote_docker
       - setup_aws_credentials_file
       - run:
           name: Setup Build Environment Variables
