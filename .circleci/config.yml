@@ -13,22 +13,22 @@ executors:
     working_directory: ~/app
 
 # define reusable commands in this section below
-#commands:
-#  setup_aws_credentials_file:
-#    description: "setup .aws/credentials file to run docker commands"
-#    steps:
-#      - run:
-#          name: Setup aws credentials
-#          command: |
-#            set -euxo pipefail
-#            mkdir -p ~/.aws
-#            echo "[default]" > ~/.aws/credentials
-#            echo "aws_access_key_id=$AWS_ACCESS_KEY" >> ~/.aws/credentials
-#            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
-#            echo "region=$AWS_DEFAULT_REGION" >> ~/.aws/credentials
-#            echo "[prod]" >> ~/.aws/credentials
-#            echo "role_arn = arn:aws:iam::${PROD_AWS_ACCOUNT_ID}:role/developer" >> ~/.aws/credentials
-#            echo "source_profile = default" >> ~/.aws/credentials
+commands:
+  setup_aws_credentials_file:
+    description: "setup .aws/credentials file to run docker commands"
+    steps:
+      - run:
+          name: Setup aws credentials
+          command: |
+            set -euxo pipefail
+            mkdir -p ~/.aws
+            echo "[default]" > ~/.aws/credentials
+            echo "aws_access_key_id=$AWS_ACCESS_KEY" >> ~/.aws/credentials
+            echo "aws_secret_access_key=$AWS_SECRET_ACCESS_KEY" >> ~/.aws/credentials
+            echo "region=$AWS_DEFAULT_REGION" >> ~/.aws/credentials
+            echo "[prod]" >> ~/.aws/credentials
+            echo "role_arn = arn:aws:iam::${PROD_AWS_ACCOUNT_ID}:role/developer" >> ~/.aws/credentials
+            echo "source_profile = default" >> ~/.aws/credentials
 jobs:
   npm-install:
     resource_class: small
