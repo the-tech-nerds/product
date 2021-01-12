@@ -90,10 +90,9 @@ jobs:
             if [[ ! "${status}" -eq 0 ]]; then
                 aws ecr create-repository --repository-name ${CIRCLE_PROJECT_REPONAME}
             fi
-            docker build -t $DEV_IMAGE_NAME .
-            docker push $DEV_IMAGE_NAME
             if [ "master" == "$CIRCLE_BRANCH" ]
             then
+              docker build -t $DEV_IMAGE_NAME .
               docker tag $DEV_IMAGE_NAME $DEV_IMAGE_NAME_LATEST
               docker push $DEV_IMAGE_NAME_LATEST
               echo "Pushed ${DEV_IMAGE_NAME_LATEST}"
