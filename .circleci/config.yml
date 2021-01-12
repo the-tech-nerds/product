@@ -79,8 +79,6 @@ jobs:
             set -euxo pipefail
             echo "export DEV_IMAGE_NAME=${ECR_DEV_REPO_BASE}/${CIRCLE_PROJECT_REPONAME}:c-${CIRCLE_BRANCH,,}-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
             echo "export DEV_IMAGE_NAME_LATEST=${ECR_DEV_REPO_BASE}/${CIRCLE_PROJECT_REPONAME}:latest" >> $BASH_ENV
-            echo "export PROD_IMAGE_NAME=${ECR_PROD_REPO_BASE}/${CIRCLE_PROJECT_REPONAME}:c-${CIRCLE_BRANCH,,}-${CIRCLE_BUILD_NUM}" >> $BASH_ENV
-            echo "export PROD_IMAGE_NAME_LATEST=${ECR_PROD_REPO_BASE}/${CIRCLE_PROJECT_REPONAME}:latest" >> $BASH_ENV
       - run:
           name: Build & Push Docker To ECR (DEV)
           command: |
