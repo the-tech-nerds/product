@@ -1,6 +1,6 @@
 import { Controller, Get, Res } from '@nestjs/common';
 import { Response } from 'express';
-import { ApiResponseService } from '@technerds/common-services';
+import { ApiResponseService } from '@the-tech-nerds/common-services';
 import { ListProductsService } from '../services/list-products.service';
 import { Product } from '../entities/product.entity';
 

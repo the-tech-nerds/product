@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ApiResponseService } from '@technerds/common-services';
+import { ApiResponseService } from '@the-tech-nerds/common-services';
 import { DeleteShopService } from './service/shop/delete.service';
 import { ListShopService } from './service/shop/fetch-all.service';
 import { CreateShopService } from './service/shop/create-shop.service';

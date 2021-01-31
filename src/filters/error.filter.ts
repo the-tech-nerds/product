@@ -5,7 +5,7 @@ import {
   HttpStatus,
   HttpException,
 } from '@nestjs/common';
-import { ApiResponseService } from '@technerds/common-services';
+import { ApiResponseService } from '@the-tech-nerds/common-services';
 
 @Catch()
 export class ErrorFilter implements ExceptionFilter {

@@ -2,7 +2,7 @@ import {
   CacheModule,
   commonConfig,
   GatewayMiddleware,
-} from '@technerds/common-services';
+} from '@the-tech-nerds/common-services';
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RouterModule } from 'nest-router';
