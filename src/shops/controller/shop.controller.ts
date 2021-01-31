@@ -2,7 +2,7 @@ import {
   ApiResponseService,
   CurrentUser,
   UserGuard,
-} from '@technerds/common-services';
+} from '@the-tech-nerds/common-services';
 import {
   Body,
   Controller,
