@@ -4,7 +4,7 @@ module.exports = {
     sourceType: 'module',
   },
   extends: [
-    '@technerds/eslint-config'
+    '@the-tech-nerds/eslint-config'
   ],
   rules: {
     "nest/max-attributes-per-line": "off"
