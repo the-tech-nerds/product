@@ -2,7 +2,10 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as session from 'express-session';
 import { ValidationPipe } from '@nestjs/common';
-import { ApiResponseService, setBootstrap } from '@technerds/common-services';
+import {
+  ApiResponseService,
+  setBootstrap,
+} from '@the-tech-nerds/common-services';
 import { AppModule } from './app.module';
 import { ErrorFilter } from './filters/error.filter';
 
