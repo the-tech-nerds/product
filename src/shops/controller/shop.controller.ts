@@ -42,6 +42,7 @@ export class ShopController {
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     try {
+      userId = 1;
       const data = await this.createShopService.create(userId, shopRequest);
       return this.apiResponseService.successResponse(
         ['shop created successfully'],
@@ -54,7 +55,7 @@ export class ShopController {
   }
 
   @UseGuards(UserGuard)
-  @Get('/all')
+  @Get('/list/all')
   async getShops(@Res() res: Response): Promise<Response<ResponseModel>> {
     try {
       const data = await this.listShopService.execute();

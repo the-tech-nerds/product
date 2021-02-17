@@ -13,7 +13,7 @@ export class CreateShopService {
 
   async create(userId: number, shopRequest: ShopRequest): Promise<Shop> {
     return this.shopRepository.save({
-      ...ShopRequest,
+      ...shopRequest,
       created_by: userId,
     });
   }

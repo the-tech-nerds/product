@@ -2,11 +2,13 @@ import {
   CacheModule,
   commonConfig,
   GatewayMiddleware,
+  JwtStrategy,
 } from '@the-tech-nerds/common-services';
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RouterModule } from 'nest-router';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { JwtModule } from '@nestjs/jwt';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './products/product.module';
@@ -26,9 +28,17 @@ import * as ormconfig from './database';
     ProductModule,
     CacheModule,
     ShopModule,
+    JwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        secret: configService.get('jwt_secret'),
+        signOptions: { expiresIn: configService.get('jwt_expiration') },
+      }),
+      inject: [ConfigService],
+    }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtStrategy],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
