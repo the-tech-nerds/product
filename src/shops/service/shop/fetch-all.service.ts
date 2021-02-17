@@ -11,8 +11,6 @@ export class ListShopService {
   ) {}
 
   async execute(): Promise<Shop[]> {
-    return this.shopRepository.find({
-      deleted_at: undefined,
-    });
+    return this.shopRepository.find();
   }
 }
