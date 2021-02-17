@@ -2,6 +2,7 @@ import {
   CacheModule,
   commonConfig,
   GatewayMiddleware,
+  JwtStrategy,
 } from '@the-tech-nerds/common-services';
 import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -37,7 +38,7 @@ import * as ormconfig from './database';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtStrategy],
 })
 export class AppModule {
   configure(consumer: MiddlewareConsumer) {
