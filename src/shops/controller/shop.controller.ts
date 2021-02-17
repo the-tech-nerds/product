@@ -38,8 +38,8 @@ export class ShopController {
   @Post('/')
   async createShop(
     @CurrentUser('id') userId: any,
-      @Body() shopRequest: ShopRequest,
-      @Res() res: Response,
+    @Body() shopRequest: ShopRequest,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     try {
       userId = 1;
@@ -73,9 +73,9 @@ export class ShopController {
   @Put('/:id')
   async updateShop(
     @CurrentUser('id') userId: any,
-      @Param('id') id: number,
-      @Body() shopRequest: ShopRequest,
-      @Res() res: Response,
+    @Param('id') id: number,
+    @Body() shopRequest: ShopRequest,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     try {
       const data = await this.updateShopService.execute(
@@ -97,7 +97,7 @@ export class ShopController {
   @Get('/:id')
   async getShopById(
     @Param('id') id: number,
-      @Res() res: Response,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     try {
       const data = await this.fetchShopByIdService.execute(id);
@@ -115,7 +115,7 @@ export class ShopController {
   @Delete('/:id')
   async DeleteShop(
     @Param('id') id: number,
-      @Res() res: Response,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     try {
       const data = await this.deleteShopService.execute(id);
