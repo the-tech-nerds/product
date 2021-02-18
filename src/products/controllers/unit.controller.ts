@@ -35,7 +35,7 @@ class UnitController {
   ) {}
 
   @UseGuards(UserGuard)
-  @Post('/')
+  @Post('/unit')
   async createUnit(
     @CurrentUser('id') userId: any,
     @Body() unitRequest: UnitRequest,
@@ -54,7 +54,7 @@ class UnitController {
   }
 
   @UseGuards(UserGuard)
-  @Get('/list/all')
+  @Get('/unit/list/all')
   async getUnits(@Res() res: Response): Promise<Response<ResponseModel>> {
     try {
       const data = await this.listUnitService.execute();
@@ -69,7 +69,7 @@ class UnitController {
   }
 
   @UseGuards(UserGuard)
-  @Put('/:id')
+  @Put('/unit/:id')
   async updateUnit(
     @CurrentUser('id') userId: any,
     @Param('id') id: number,
@@ -93,7 +93,7 @@ class UnitController {
   }
 
   @UseGuards(UserGuard)
-  @Get('/:id')
+  @Get('/unit/:id')
   async getUnitById(
     @Param('id') id: number,
     @Res() res: Response,
@@ -111,7 +111,7 @@ class UnitController {
   }
 
   @UseGuards(UserGuard)
-  @Delete('/:id')
+  @Delete('/unit/:id')
   async DeleteUnit(
     @Param('id') id: number,
     @Res() res: Response,
