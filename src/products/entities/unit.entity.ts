@@ -1,17 +1,18 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 
-@Entity({ name: 'products' })
-export class Product extends BaseEntity {
+@Entity({ name: 'units' })
+class Unit extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  title: string;
+  name: string;
 
-  @Column()
-  price: number;
-
-  @Column()
-  is_active: boolean;
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  description: string;
 }
+export { Unit };

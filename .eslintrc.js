@@ -8,5 +8,5 @@ module.exports = {
   ],
   rules: {
     "nest/max-attributes-per-line": "off"
-  }
+  },
 };
