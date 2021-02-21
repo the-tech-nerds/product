@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Shop } from '../../entities/shop.entity';
 
 @Injectable()
-export class ListShopService {
+class ListShopService {
   constructor(
     @InjectRepository(Shop)
     private shopRepository: Repository<Shop>,
@@ -14,3 +14,5 @@ export class ListShopService {
     return this.shopRepository.find();
   }
 }
+
+export { ListShopService };
