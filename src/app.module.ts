@@ -16,6 +16,7 @@ import { routes } from './route';
 import configuration from './config/configuration';
 import { ShopModule } from './shops/shop.module';
 import * as ormconfig from './database';
+import { SupplierModule } from './suppliers/supplier.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import * as ormconfig from './database';
     ProductModule,
     CacheModule,
     ShopModule,
+    SupplierModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
