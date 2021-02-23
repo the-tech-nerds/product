@@ -41,34 +41,26 @@ export class SupplierController {
     @Body() supplierRequest: SupplierRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.createSupplierService.create(
-        userId,
-        supplierRequest,
-      );
-      return this.apiResponseService.successResponse(
-        ['Supplier created successfully'],
-        data as Supplier,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.createSupplierService.create(
+      userId,
+      supplierRequest,
+    );
+    return this.apiResponseService.successResponse(
+      ['Supplier created successfully'],
+      data as Supplier,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
   @Get('/list/all')
   async getSuppliers(@Res() res: Response): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.listSupplierService.execute();
-      return this.apiResponseService.successResponse(
-        ['Supplier list fetched successfully'],
-        data as Supplier[],
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.listSupplierService.execute();
+    return this.apiResponseService.successResponse(
+      ['Supplier list fetched successfully'],
+      data as Supplier[],
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
@@ -79,20 +71,16 @@ export class SupplierController {
     @Body() supplierRequest: SupplierRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.updateSupplierService.execute(
-        id,
-        userId,
-        supplierRequest,
-      );
-      return this.apiResponseService.successResponse(
-        ['Supplier has been updated successfully'],
-        data as Supplier,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.updateSupplierService.execute(
+      id,
+      userId,
+      supplierRequest,
+    );
+    return this.apiResponseService.successResponse(
+      ['Supplier has been updated successfully'],
+      data as Supplier,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
@@ -101,16 +89,12 @@ export class SupplierController {
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.fetchSupplierByIdService.execute(id);
-      return this.apiResponseService.successResponse(
-        ['Supplier fetched successfully'],
-        data as Supplier,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.fetchSupplierByIdService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Supplier fetched successfully'],
+      data as Supplier,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
@@ -119,15 +103,11 @@ export class SupplierController {
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.deleteSupplierService.execute(id);
-      return this.apiResponseService.successResponse(
-        ['Supplier has been deleted successfully'],
-        data,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.deleteSupplierService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Supplier has been deleted successfully'],
+      data,
+      res,
+    );
   }
 }

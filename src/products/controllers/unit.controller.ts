@@ -41,31 +41,23 @@ class UnitController {
     @Body() unitRequest: UnitRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.createUnitService.create(userId, unitRequest);
-      return this.apiResponseService.successResponse(
-        ['Unit created successfully'],
-        data as Unit,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.createUnitService.create(userId, unitRequest);
+    return this.apiResponseService.successResponse(
+      ['Unit created successfully'],
+      data as Unit,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
   @Get('/unit/list/all')
   async getUnits(@Res() res: Response): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.listUnitService.execute();
-      return this.apiResponseService.successResponse(
-        ['Unit list fetched successfully'],
-        data as Unit[],
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.listUnitService.execute();
+    return this.apiResponseService.successResponse(
+      ['Unit list fetched successfully'],
+      data as Unit[],
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
@@ -76,20 +68,12 @@ class UnitController {
     @Body() unitRequest: UnitRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.updateUnitService.execute(
-        id,
-        userId,
-        unitRequest,
-      );
-      return this.apiResponseService.successResponse(
-        ['Unit has been updated successfully'],
-        data as Unit,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.updateUnitService.execute(id, userId, unitRequest);
+    return this.apiResponseService.successResponse(
+      ['Unit has been updated successfully'],
+      data as Unit,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
@@ -98,16 +82,12 @@ class UnitController {
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.fetchUnitByIdService.execute(id);
-      return this.apiResponseService.successResponse(
-        ['Unit fetched successfully'],
-        data as Unit,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.fetchUnitByIdService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Unit fetched successfully'],
+      data as Unit,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
@@ -116,16 +96,12 @@ class UnitController {
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.deleteUnitService.execute(id);
-      return this.apiResponseService.successResponse(
-        ['Unit has been deleted successfully'],
-        data,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.deleteUnitService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Unit has been deleted successfully'],
+      data,
+      res,
+    );
   }
 }
 
