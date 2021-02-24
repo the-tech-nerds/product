@@ -8,7 +8,7 @@ import {
 import BaseEntity from '../../utils/entities/base-entity';
 import { Category } from '../../categories/entities/category.entity';
 
-@Entity({ name: 'Products' })
+@Entity({ name: 'products' })
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,4 +25,7 @@ export class Product extends BaseEntity {
   )
   @JoinTable()
   categories: Category[];
+
+  @Column()
+  is_active: boolean;
 }

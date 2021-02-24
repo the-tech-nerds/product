@@ -15,38 +15,40 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
-import { CreateShopService } from '../service/shop/create-shop.service';
-import { ShopRequest } from '../request/shop.request';
-import { Shop } from '../entities/shop.entity';
-import { UpdateShopService } from '../service/shop/update-shop.service';
-import { FetchShopByIdService } from '../service/shop/fetch-by-id.service';
-import { ListShopService } from '../service/shop/fetch-all.service';
-import { DeleteShopService } from '../service/shop/delete.service';
+import { UpdateSupplierService } from '../services/update-supplier.service';
+import { CreateSupplierService } from '../services/create-supplierservice';
+import { Supplier } from '../entities/supplier.entity';
+import { DeleteSupplierService } from '../services/delete.service';
+import { ListSupplierService } from '../services/fetch-all.service';
+import { FetchSupplierByIdService } from '../services/fetch-by-id.service';
+import { SupplierRequest } from '../requests/supplier.request';
 
 @Controller()
-export class ShopController {
+export class SupplierController {
   constructor(
     private readonly apiResponseService: ApiResponseService,
-    private readonly createShopService: CreateShopService,
-    private readonly updateShopService: UpdateShopService,
-    private readonly fetchShopByIdService: FetchShopByIdService,
-    private readonly listShopService: ListShopService,
-    private readonly deleteShopService: DeleteShopService,
+    private readonly createSupplierService: CreateSupplierService,
+    private readonly updateSupplierService: UpdateSupplierService,
+    private readonly fetchSupplierByIdService: FetchSupplierByIdService,
+    private readonly listSupplierService: ListSupplierService,
+    private readonly deleteSupplierService: DeleteSupplierService,
   ) {}
 
   @UseGuards(UserGuard)
   @Post('/')
-  async createShop(
+  async createSupplier(
     @CurrentUser('id') userId: any,
-    @Body() shopRequest: ShopRequest,
+    @Body() supplierRequest: SupplierRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     try {
-      userId = 1;
-      const data = await this.createShopService.create(userId, shopRequest);
+      const data = await this.createSupplierService.create(
+        userId,
+        supplierRequest,
+      );
       return this.apiResponseService.successResponse(
-        ['shop created successfully'],
-        data as Shop,
+        ['Supplier created successfully'],
+        data as Supplier,
         res,
       );
     } catch (e) {
@@ -56,12 +58,12 @@ export class ShopController {
 
   @UseGuards(UserGuard)
   @Get('/list/all')
-  async getShops(@Res() res: Response): Promise<Response<ResponseModel>> {
+  async getSuppliers(@Res() res: Response): Promise<Response<ResponseModel>> {
     try {
-      const data = await this.listShopService.execute();
+      const data = await this.listSupplierService.execute();
       return this.apiResponseService.successResponse(
-        ['Shop list fetched successfully'],
-        data as Shop[],
+        ['Supplier list fetched successfully'],
+        data as Supplier[],
         res,
       );
     } catch (e) {
@@ -71,21 +73,21 @@ export class ShopController {
 
   @UseGuards(UserGuard)
   @Put('/:id')
-  async updateShop(
+  async updateSupplier(
     @CurrentUser('id') userId: any,
     @Param('id') id: number,
-    @Body() shopRequest: ShopRequest,
+    @Body() supplierRequest: SupplierRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     try {
-      const data = await this.updateShopService.execute(
+      const data = await this.updateSupplierService.execute(
         id,
         userId,
-        shopRequest,
+        supplierRequest,
       );
       return this.apiResponseService.successResponse(
-        ['Shop has been updated successfully'],
-        data as Shop,
+        ['Supplier has been updated successfully'],
+        data as Supplier,
         res,
       );
     } catch (e) {
@@ -95,15 +97,15 @@ export class ShopController {
 
   @UseGuards(UserGuard)
   @Get('/:id')
-  async getShopById(
+  async getSupplierById(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     try {
-      const data = await this.fetchShopByIdService.execute(id);
+      const data = await this.fetchSupplierByIdService.execute(id);
       return this.apiResponseService.successResponse(
-        ['Shop fetched successfully'],
-        data as Shop,
+        ['Supplier fetched successfully'],
+        data as Supplier,
         res,
       );
     } catch (e) {
@@ -113,14 +115,14 @@ export class ShopController {
 
   @UseGuards(UserGuard)
   @Delete('/:id')
-  async DeleteShop(
+  async DeleteSupplier(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     try {
-      const data = await this.deleteShopService.execute(id);
+      const data = await this.deleteSupplierService.execute(id);
       return this.apiResponseService.successResponse(
-        ['Shop has been deleted successfully'],
+        ['Supplier has been deleted successfully'],
         data,
         res,
       );

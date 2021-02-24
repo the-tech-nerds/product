@@ -2,6 +2,7 @@ import { Routes } from 'nest-router';
 import { ProductModule } from './products/product.module';
 import { ShopModule } from './shops/shop.module';
 import { CategoryModule } from './categories/category.module';
+import { SupplierModule } from './suppliers/supplier.module';
 
 export const routes: Routes = [
   {
@@ -15,5 +16,9 @@ export const routes: Routes = [
   {
     path: '/category',
     module: CategoryModule,
+  },
+  {
+    path: '/supplier',
+    module: SupplierModule,
   },
 ];

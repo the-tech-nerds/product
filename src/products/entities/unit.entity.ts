@@ -1,8 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 
-@Entity({ name: 'shops' })
-export class Shop extends BaseEntity {
+@Entity({ name: 'units' })
+class Unit extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -14,10 +14,5 @@ export class Shop extends BaseEntity {
     nullable: true,
   })
   description: string;
-
-  @Column({
-    type: 'text',
-    nullable: true,
-  })
-  address: string;
 }
+export { Unit };
