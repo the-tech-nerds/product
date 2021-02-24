@@ -1,22 +1,24 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiResponseService } from '@the-tech-nerds/common-services';
-import { DeleteShopService } from './service/shop/delete.service';
-import { ListShopService } from './service/shop/fetch-all.service';
-import { CreateCategoryService } from './service/shop/create-shop.service';
-import { UpdateCategoryService } from './service/shop/update-shop.service';
-import { FetchShopByIdService } from './service/shop/fetch-by-id.service';
-import { Shop } from './entities/shop.entity';
-import { CategoryController } from './controller/shop.controller';
+import { Category } from './entities/category.entity';
+import { CategoryController } from './controller/category.controller';
+import { UpdateCategoryService } from './service/update-category.service';
+import { CreateCategoryService } from './service/create-category.service';
+import { DeleteCategoryService } from './service/delete-category.service';
+import { FetchCategoryByIdService } from './service/fetch-category-by-id.service';
+import { ListCategoryService } from './service/list-category.service';
+import { ChangeStatusService } from './service/change-status.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Shop])],
+  imports: [TypeOrmModule.forFeature([Category])],
   providers: [
     CreateCategoryService,
     UpdateCategoryService,
-    DeleteShopService,
-    FetchShopByIdService,
-    ListShopService,
+    DeleteCategoryService,
+    FetchCategoryByIdService,
+    ListCategoryService,
+    ChangeStatusService,
     ApiResponseService,
   ],
   controllers: [CategoryController],

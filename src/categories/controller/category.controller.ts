@@ -19,8 +19,8 @@ import { CreateCategoryService } from '../service/create-category.service';
 import { CategoryRequest } from '../request/category.request';
 import { Category } from '../entities/category.entity';
 import { UpdateCategoryService } from '../service/update-category.service';
-import { FetchByIdService } from '../service/fetch-by-id.service';
-import { FetchAllService } from '../service/fetch-all.service';
+import { FetchCategoryByIdService } from '../service/fetch-category-by-id.service';
+import { ListCategoryService } from '../service/list-category.service';
 import { ChangeStatusService } from '../service/change-status.service';
 import { DeleteCategoryService } from '../service/delete-category.service';
 
@@ -30,8 +30,8 @@ export class CategoryController {
     private readonly apiResponseService: ApiResponseService,
     private readonly createCategoryService: CreateCategoryService,
     private readonly updateCategoryService: UpdateCategoryService,
-    private readonly fetchCategoryByIdService: FetchByIdService,
-    private readonly listCategoryService: FetchAllService,
+    private readonly fetchCategoryByIdService: FetchCategoryByIdService,
+    private readonly listCategoryService: ListCategoryService,
     private readonly changeStatusService: ChangeStatusService,
     private readonly deleteCategoryService: DeleteCategoryService,
   ) {}

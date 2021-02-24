@@ -4,7 +4,7 @@ import { Repository } from 'typeorm';
 import { Category } from '../entities/category.entity';
 
 @Injectable()
-export class FetchByIdService {
+export class FetchCategoryByIdService {
   constructor(
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
