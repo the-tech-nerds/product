@@ -5,4 +5,6 @@ export class CategoryRequest {
   name: string;
 
   parent_id?: number;
+
+  slug_request?: string;
 }

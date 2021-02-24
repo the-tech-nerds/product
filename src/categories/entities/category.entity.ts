@@ -10,6 +10,9 @@ export class Category extends BaseEntity {
   @Column()
   name: string;
 
+  @Column({ nullable: true })
+  slug: string;
+
   @Column('integer', { default: 0 })
   parent_id: number;
 
