@@ -5,4 +5,6 @@ export class BrandRequest {
   name: string;
 
   supplier_id: number;
+
+  description: string;
 }
