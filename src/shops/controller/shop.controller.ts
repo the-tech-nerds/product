@@ -41,32 +41,24 @@ export class ShopController {
     @Body() shopRequest: ShopRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      userId = 1;
-      const data = await this.createShopService.create(userId, shopRequest);
-      return this.apiResponseService.successResponse(
-        ['shop created successfully'],
-        data as Shop,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    userId = 1;
+    const data = await this.createShopService.create(userId, shopRequest);
+    return this.apiResponseService.successResponse(
+      ['shop created successfully'],
+      data as Shop,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
   @Get('/list/all')
   async getShops(@Res() res: Response): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.listShopService.execute();
-      return this.apiResponseService.successResponse(
-        ['Shop list fetched successfully'],
-        data as Shop[],
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.listShopService.execute();
+    return this.apiResponseService.successResponse(
+      ['Shop list fetched successfully'],
+      data as Shop[],
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
@@ -77,20 +69,12 @@ export class ShopController {
     @Body() shopRequest: ShopRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.updateShopService.execute(
-        id,
-        userId,
-        shopRequest,
-      );
-      return this.apiResponseService.successResponse(
-        ['Shop has been updated successfully'],
-        data as Shop,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.updateShopService.execute(id, userId, shopRequest);
+    return this.apiResponseService.successResponse(
+      ['Shop has been updated successfully'],
+      data as Shop,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
@@ -99,16 +83,12 @@ export class ShopController {
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.fetchShopByIdService.execute(id);
-      return this.apiResponseService.successResponse(
-        ['Shop fetched successfully'],
-        data as Shop,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.fetchShopByIdService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Shop fetched successfully'],
+      data as Shop,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
@@ -117,15 +97,11 @@ export class ShopController {
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.deleteShopService.execute(id);
-      return this.apiResponseService.successResponse(
-        ['Shop has been deleted successfully'],
-        data,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.deleteShopService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Shop has been deleted successfully'],
+      data,
+      res,
+    );
   }
 }
