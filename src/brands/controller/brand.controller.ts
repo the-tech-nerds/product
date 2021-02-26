@@ -41,7 +41,6 @@ export class BrandController {
     @Body() brandRequest: BrandRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    userId = 1;
     const data = await this.createBrandService.create(userId, brandRequest);
     return this.apiResponseService.successResponse(
       ['Brand created successfully'],
