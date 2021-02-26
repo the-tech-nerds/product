@@ -2,8 +2,8 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToOne,
   JoinColumn,
+  ManyToOne,
 } from 'typeorm';
 import { Supplier } from '../../suppliers/entities/supplier.entity';
 import BaseEntity from '../../utils/entities/base-entity';
@@ -16,7 +16,16 @@ export class Brand extends BaseEntity {
   @Column()
   name: string;
 
-  @OneToOne(type => Supplier)
+  @Column()
+  description: string;
+
+  @Column({ type: 'int', nullable: false })
+  supplier_id: number;
+
+  @ManyToOne(
+    type => Supplier,
+    supplier => supplier.brand,
+  )
   @JoinColumn({ name: 'supplier_id' })
   supplier: Supplier;
 }
