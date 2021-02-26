@@ -1,6 +1,9 @@
 import {
   ApiResponseService,
   CurrentUser,
+  HasPermissions,
+  PermissionTypeEnum,
+  PermissionTypes,
   UserGuard,
 } from '@the-tech-nerds/common-services';
 import {
@@ -35,6 +38,11 @@ export class ShopController {
   ) {}
 
   @UseGuards(UserGuard)
+  @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SHOP.CREATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Post('/')
   async createShop(
     @CurrentUser('id') userId: any,
@@ -51,6 +59,7 @@ export class ShopController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions([PermissionTypes.SHOP.GET], PermissionTypeEnum.hasPermission)
   @Get('/list/all')
   async getShops(@Res() res: Response): Promise<Response<ResponseModel>> {
     const data = await this.listShopService.execute();
@@ -62,6 +71,10 @@ export class ShopController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SHOP.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Put('/:id')
   async updateShop(
     @CurrentUser('id') userId: any,
@@ -78,6 +91,7 @@ export class ShopController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions([PermissionTypes.SHOP.GET], PermissionTypeEnum.hasPermission)
   @Get('/:id')
   async getShopById(
     @Param('id') id: number,
@@ -92,6 +106,10 @@ export class ShopController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SHOP.DELETE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Delete('/:id')
   async DeleteShop(
     @Param('id') id: number,

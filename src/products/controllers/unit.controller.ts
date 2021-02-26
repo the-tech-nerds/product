@@ -1,6 +1,9 @@
 import {
   ApiResponseService,
   CurrentUser,
+  HasPermissions,
+  PermissionTypeEnum,
+  PermissionTypes,
   UserGuard,
 } from '@the-tech-nerds/common-services';
 import {
@@ -35,6 +38,10 @@ class UnitController {
   ) {}
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.UNIT.CREATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Post('/unit')
   async createUnit(
     @CurrentUser('id') userId: any,
@@ -50,6 +57,7 @@ class UnitController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions([PermissionTypes.UNIT.GET], PermissionTypeEnum.hasPermission)
   @Get('/unit/list/all')
   async getUnits(@Res() res: Response): Promise<Response<ResponseModel>> {
     const data = await this.listUnitService.execute();
@@ -61,6 +69,10 @@ class UnitController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.UNIT.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Put('/unit/:id')
   async updateUnit(
     @CurrentUser('id') userId: any,
@@ -77,6 +89,7 @@ class UnitController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions([PermissionTypes.UNIT.GET], PermissionTypeEnum.hasPermission)
   @Get('/unit/:id')
   async getUnitById(
     @Param('id') id: number,
@@ -91,6 +104,10 @@ class UnitController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.UNIT.DELETE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Delete('/unit/:id')
   async DeleteUnit(
     @Param('id') id: number,
