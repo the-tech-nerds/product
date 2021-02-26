@@ -1,6 +1,9 @@
 import {
   ApiResponseService,
   CurrentUser,
+  HasPermissions,
+  PermissionTypeEnum,
+  PermissionTypes,
   UserGuard,
 } from '@the-tech-nerds/common-services';
 import {
@@ -35,6 +38,10 @@ export class SupplierController {
   ) {}
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SUPPLIER.CREATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Post('/')
   async createSupplier(
     @CurrentUser('id') userId: any,
@@ -53,6 +60,10 @@ export class SupplierController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SUPPLIER.GET],
+    PermissionTypeEnum.hasPermission,
+  )
   @Get('/list/all')
   async getSuppliers(@Res() res: Response): Promise<Response<ResponseModel>> {
     const data = await this.listSupplierService.execute();
@@ -64,6 +75,10 @@ export class SupplierController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SUPPLIER.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Put('/:id')
   async updateSupplier(
     @CurrentUser('id') userId: any,
@@ -84,6 +99,10 @@ export class SupplierController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SUPPLIER.GET],
+    PermissionTypeEnum.hasPermission,
+  )
   @Get('/:id')
   async getSupplierById(
     @Param('id') id: number,
@@ -98,6 +117,10 @@ export class SupplierController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SUPPLIER.DELETE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Delete('/:id')
   async DeleteSupplier(
     @Param('id') id: number,

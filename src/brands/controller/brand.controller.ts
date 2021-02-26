@@ -1,6 +1,9 @@
 import {
   ApiResponseService,
   CurrentUser,
+  HasPermissions,
+  PermissionTypeEnum,
+  PermissionTypes,
   UserGuard,
 } from '@the-tech-nerds/common-services';
 import {
@@ -35,6 +38,10 @@ export class BrandController {
   ) {}
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.BRAND.CREATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Post('/')
   async createBrand(
     @CurrentUser('id') userId: any,
@@ -50,6 +57,7 @@ export class BrandController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions([PermissionTypes.BRAND.GET], PermissionTypeEnum.hasPermission)
   @Get('/list/all')
   async getBrands(@Res() res: Response): Promise<Response<ResponseModel>> {
     const data = await this.listBrandService.execute();
@@ -61,6 +69,10 @@ export class BrandController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.BRAND.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Put('/:id')
   async updateBrand(
     @CurrentUser('id') userId: any,
@@ -81,6 +93,7 @@ export class BrandController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions([PermissionTypes.BRAND.GET], PermissionTypeEnum.hasPermission)
   @Get('/:id')
   async getBrandById(
     @Param('id') id: number,
@@ -95,6 +108,10 @@ export class BrandController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.BRAND.DELETE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Delete('/:id')
   async DeleteBrand(
     @Param('id') id: number,
