@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { IsNull, Repository } from 'typeorm';
 import { Brand } from '../entities/brand.entity';
 
 @Injectable()
@@ -11,7 +11,12 @@ class ListBrandService {
   ) {}
 
   async execute(): Promise<Brand[]> {
-    return this.brandRepository.find();
+    return this.brandRepository.find({
+      relations: ['supplier'],
+      where: {
+        deleted_at: IsNull(),
+      },
+    });
   }
 }
 

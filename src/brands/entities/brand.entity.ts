@@ -3,7 +3,7 @@ import {
   Column,
   PrimaryGeneratedColumn,
   JoinColumn,
-  OneToMany,
+  ManyToOne,
 } from 'typeorm';
 import { Supplier } from '../../suppliers/entities/supplier.entity';
 import BaseEntity from '../../utils/entities/base-entity';
@@ -22,10 +22,10 @@ export class Brand extends BaseEntity {
   @Column({ type: 'int', nullable: false })
   supplier_id: number;
 
-  @OneToMany(
+  @ManyToOne(
     type => Supplier,
-    supplier => supplier.id,
+    supplier => supplier.brand,
   )
   @JoinColumn({ name: 'supplier_id' })
-  suppliers: Supplier[];
+  supplier: Supplier;
 }
