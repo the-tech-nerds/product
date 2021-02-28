@@ -10,6 +10,7 @@ import { RouterModule } from 'nest-router';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
 import { CategoryModule } from './categories/category.module';
+import { BrandModule } from './brands/brand.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './products/product.module';
@@ -32,6 +33,7 @@ import { SupplierModule } from './suppliers/supplier.module';
     ShopModule,
     SupplierModule,
     CategoryModule,
+    BrandModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({

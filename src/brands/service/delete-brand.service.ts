@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Unit } from 'src/products/entities/unit.entity';
 import { Repository, UpdateResult } from 'typeorm';
+import { Brand } from '../entities/brand.entity';
 
 @Injectable()
-class DeleteUnitService {
+class DeleteBrandService {
   constructor(
-    @InjectRepository(Unit)
-    private UnitRepository: Repository<Unit>,
+    @InjectRepository(Brand)
+    private brandRepository: Repository<Brand>,
   ) {}
 
   async execute(id: number): Promise<UpdateResult> {
-    return this.UnitRepository.softDelete(id);
+    return this.brandRepository.softDelete(id);
   }
 }
 
-export { DeleteUnitService };
+export { DeleteBrandService };
