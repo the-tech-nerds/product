@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, IsNull } from 'typeorm';
 import { Category } from '../entities/category.entity';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class ListCategoryService {
 
   async execute(): Promise<Category[]> {
     return this.categoryRepository.find({
-      deleted_at: undefined,
+      deleted_at: IsNull(),
     });
   }
 }
