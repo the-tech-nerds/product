@@ -4,9 +4,12 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   JoinTable,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Category } from '../../categories/entities/category.entity';
+import { Brand } from '../../brands/entities/brand.entity';
 
 @Entity({ name: 'products' })
 export class Product extends BaseEntity {
@@ -14,18 +17,32 @@ export class Product extends BaseEntity {
   id: number;
 
   @Column()
-  title: string;
+  name: string;
 
   @Column()
   price: number;
 
+  @Column()
+  status: boolean;
+
+  @JoinColumn({ name: 'brand_id' })
+  @ManyToOne(
+    () => Brand,
+    brand => brand.id,
+  )
+  brand_id: number;
+
+  @JoinColumn({ name: 'shop_id' })
+  @ManyToOne(
+    () => Brand,
+    shop => shop.id,
+  )
+  shop_id: number;
+
   @ManyToMany(
-    type => Category,
+    () => Category,
     categories => categories.products,
   )
   @JoinTable()
   categories: Category[];
-
-  @Column()
-  is_active: boolean;
 }
