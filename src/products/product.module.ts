@@ -11,11 +11,21 @@ import { ListUnitService } from './services/unit/fetch-all.service';
 import { FetchUnitByIdService } from './services/unit/fetch-by-id.service';
 import { DeleteUnitService } from './services/unit/delete.service';
 import { UnitController } from './controllers/unit.controller';
+import { CreateProductService } from './services/product/create-product.service';
+import { UpdateProductService } from './services/product/update-product.service';
+import { DeleteProductService } from './services/product/delete-product.service';
+import { FetchProductByIdService } from './services/product/fetch-product-by-id.service';
 @Module({
   imports: [TypeOrmModule.forFeature([Product, Unit])],
   providers: [
-    ListProductsService,
     ApiResponseService,
+
+    ListProductsService,
+    CreateProductService,
+    UpdateProductService,
+    FetchProductByIdService,
+    DeleteProductService,
+
     CreateUnitService,
     UpdateUnitService,
     ListUnitService,
