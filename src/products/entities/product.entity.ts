@@ -20,9 +20,6 @@ export class Product extends BaseEntity {
   name: string;
 
   @Column()
-  price: number;
-
-  @Column()
   status: boolean;
 
   @JoinColumn({ name: 'brand_id' })
