@@ -10,7 +10,7 @@ export class FetchProductByIdService {
     private ProductRepository: Repository<Product>,
   ) {}
 
-  async execute(productId: number): Promise<Product[]> {
+  async execute(productId: number): Promise<Product | undefined> {
     return this.ProductRepository.findOne({
       id: productId,
     });

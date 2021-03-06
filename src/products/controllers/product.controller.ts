@@ -18,9 +18,9 @@ import {
   PermissionTypes,
   UserGuard,
 } from '@the-tech-nerds/common-services';
-import { ListProductsService } from '../services/list-products.service';
 import { Product } from '../entities/product.entity';
 import { ProductRequest } from '../requests/product.request';
+import { ListProductsService } from '../services/product/list-products.service';
 import { CreateProductService } from '../services/product/create-product.service';
 import { UpdateProductService } from '../services/product/update-product.service';
 import { FetchProductByIdService } from '../services/product/fetch-product-by-id.service';
