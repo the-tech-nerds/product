@@ -43,7 +43,6 @@ export class CategoryController {
     @Body() categoryRequest: CategoryRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    console.log(userId, categoryRequest);
     const data = await this.createCategoryService.create(
       userId,
       categoryRequest,
