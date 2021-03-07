@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -17,6 +18,7 @@ export class ProductVariance extends BaseEntity {
   @Column()
   title: string;
 
+  @Index({ unique: true })
   @Column()
   sku: string;
 
@@ -29,6 +31,7 @@ export class ProductVariance extends BaseEntity {
   @Column({ default: true })
   status: boolean;
 
+  @Index()
   @JoinColumn({ name: 'product_id' })
   @ManyToOne(
     () => Product,

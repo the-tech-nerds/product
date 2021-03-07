@@ -6,6 +6,7 @@ import {
   JoinTable,
   ManyToOne,
   JoinColumn,
+  Index,
 } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Category } from '../../categories/entities/category.entity';
@@ -22,6 +23,7 @@ export class Product extends BaseEntity {
   @Column()
   status: boolean;
 
+  @Index()
   @JoinColumn({ name: 'brand_id' })
   @ManyToOne(
     () => Brand,
@@ -29,6 +31,7 @@ export class Product extends BaseEntity {
   )
   brand_id: number;
 
+  @Index()
   @JoinColumn({ name: 'shop_id' })
   @ManyToOne(
     () => Brand,
