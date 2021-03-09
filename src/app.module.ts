@@ -19,6 +19,7 @@ import configuration from './config/configuration';
 import { ShopModule } from './shops/shop.module';
 import * as ormconfig from './database';
 import { SupplierModule } from './suppliers/supplier.module';
+import { CommonModule } from './common/common.module';
 
 @Module({
   imports: [
@@ -34,6 +35,7 @@ import { SupplierModule } from './suppliers/supplier.module';
     SupplierModule,
     CategoryModule,
     BrandModule,
+    CommonModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({

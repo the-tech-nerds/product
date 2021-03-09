@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import {
   ApiResponseService,
   UploadService,
-  SaveFileService,
+  FileService,
 } from '@the-tech-nerds/common-services';
 import { Product } from './entities/product.entity';
 import { ProductController } from './controllers/product.controller';
@@ -15,7 +15,6 @@ import { ListUnitService } from './services/unit/fetch-all.service';
 import { FetchUnitByIdService } from './services/unit/fetch-by-id.service';
 import { DeleteUnitService } from './services/unit/delete.service';
 import { UnitController } from './controllers/unit.controller';
-import { FileController } from './controllers/file.controller';
 import { FileStorage } from './entities/storage.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Product, Unit, FileStorage])],
@@ -28,8 +27,8 @@ import { FileStorage } from './entities/storage.entity';
     FetchUnitByIdService,
     DeleteUnitService,
     UploadService,
-    SaveFileService,
+    FileService,
   ],
-  controllers: [ProductController, UnitController, FileController],
+  controllers: [ProductController, UnitController],
 })
 export class ProductModule {}
