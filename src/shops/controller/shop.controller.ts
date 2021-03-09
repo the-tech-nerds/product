@@ -58,8 +58,8 @@ export class ShopController {
     );
   }
 
-  @UseGuards(UserGuard)
-  @HasPermissions([PermissionTypes.SHOP.GET], PermissionTypeEnum.hasPermission)
+  // @UseGuards(UserGuard)
+  // @HasPermissions([PermissionTypes.SHOP.GET], PermissionTypeEnum.hasPermission)
   @Get('/list/all')
   async getShops(@Res() res: Response): Promise<Response<ResponseModel>> {
     const data = await this.listShopService.execute();
