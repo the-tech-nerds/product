@@ -1,3 +1,4 @@
+import { ProductVariance } from './entities/product-variance.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
@@ -15,7 +16,6 @@ import { ListUnitService } from './services/unit/fetch-all.service';
 import { FetchUnitByIdService } from './services/unit/fetch-by-id.service';
 import { DeleteUnitService } from './services/unit/delete.service';
 import { UnitController } from './controllers/unit.controller';
-import { FileStorage } from './entities/storage.entity';
 import { CreateProductService } from './services/product/create-product.service';
 import { UpdateProductService } from './services/product/update-product.service';
 import { DeleteProductService } from './services/product/delete-product.service';
@@ -27,7 +27,7 @@ import { DeleteProductVarianceService } from './services/product-variance/delete
 import { UpdateProductVarianceService } from './services/product-variance/update-product-variance.service';
 import { ProductVarianceController } from './controllers/product-variance.controller';
 @Module({
-  imports: [TypeOrmModule.forFeature([Product, Unit, FileStorage])],
+  imports: [TypeOrmModule.forFeature([Product, Unit, ProductVariance])],
   providers: [
     ApiResponseService,
 

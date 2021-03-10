@@ -10,7 +10,7 @@ class DeleteProductService {
     private ProductRepository: Repository<Product>,
   ) {}
 
-  async execute(id: number): Promise<Product[]> {
+  async execute(id: number): Promise<any> {
     return this.ProductRepository.softDelete(id);
   }
 }

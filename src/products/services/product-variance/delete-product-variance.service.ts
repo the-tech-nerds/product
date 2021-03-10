@@ -10,7 +10,7 @@ class DeleteProductVarianceService {
     private productVarianceRepository: Repository<ProductVariance>,
   ) {}
 
-  async execute(id: number): Promise<ProductVariance[]> {
+  async execute(id: number): Promise<any> {
     return this.productVarianceRepository.softDelete(id);
   }
 }

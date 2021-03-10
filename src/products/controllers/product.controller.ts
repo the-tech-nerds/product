@@ -4,7 +4,7 @@ import {
   Delete,
   Get,
   Param,
-  Post,
+  // Post,
   Put,
   Res,
   UseGuards,
@@ -21,7 +21,7 @@ import {
 import { Product } from '../entities/product.entity';
 import { ProductRequest } from '../requests/product.request';
 import { ListProductsService } from '../services/product/list-products.service';
-import { CreateProductService } from '../services/product/create-product.service';
+// import { CreateProductService } from '../services/product/create-product.service';
 import { UpdateProductService } from '../services/product/update-product.service';
 import { FetchProductByIdService } from '../services/product/fetch-product-by-id.service';
 import { DeleteProductService } from '../services/product/delete-product.service';
@@ -31,7 +31,7 @@ export class ProductController {
   constructor(
     private readonly listProductsService: ListProductsService,
     private readonly apiResponseService: ApiResponseService,
-    private readonly createProductService: CreateProductService,
+    // private readonly createProductService: CreateProductService,
     private readonly updateProductService: UpdateProductService,
     private readonly fetchProductByIdService: FetchProductByIdService,
     private readonly deleteProductService: DeleteProductService,
@@ -42,19 +42,19 @@ export class ProductController {
     [PermissionTypes.PRODUCT.CREATE],
     PermissionTypeEnum.hasPermission,
   )
-  @Post('/')
-  async createProduct(
-    @CurrentUser('id') userId: any,
-    @Body() productRequest: ProductRequest,
-    @Res() res: Response,
-  ): Promise<Response<ResponseModel>> {
-    const data = await this.createProductService.create(userId, productRequest);
-    return this.apiResponseService.successResponse(
-      ['Product created successfully'],
-      data as Product,
-      res,
-    );
-  }
+  // @Post('/')
+  // async createProduct(
+  //   @CurrentUser('id') userId: any,
+  //   @Body() productRequest: ProductRequest,
+  //   @Res() res: Response,
+  // ): Promise<Response<ResponseModel>> {
+  //   const data = await this.createProductService.create(userId, productRequest);
+  //   return this.apiResponseService.successResponse(
+  //     ['Product created successfully'],
+  //     data as Product,
+  //     res,
+  //   );
+  // }
 
   @UseGuards(UserGuard)
   @HasPermissions(
