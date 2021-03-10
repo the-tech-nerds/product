@@ -49,11 +49,12 @@ export class FileController {
   }
 
   @Delete('/:id')
-  async DeleteShop(
+  async DeleteFile(
     @Param('id') id: number,
     @Body() item: any,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
+    console.log(id, item);
     const data = await this.uploadService.deleteFromS3(
       'khan-fresh-corner',
       item.folder,
@@ -61,7 +62,7 @@ export class FileController {
       item.url,
     );
     return this.apiResponseService.successResponse(
-      ['Shop has been deleted successfully'],
+      ['File has been deleted successfully'],
       data,
       res,
     );
