@@ -27,7 +27,7 @@ export class Product extends BaseEntity {
   @JoinColumn({ name: 'brand_id' })
   @ManyToOne(
     () => Brand,
-    brand => brand.id,
+    (brand) => brand.id,
   )
   brand_id: number;
 
@@ -35,13 +35,13 @@ export class Product extends BaseEntity {
   @JoinColumn({ name: 'shop_id' })
   @ManyToOne(
     () => Brand,
-    shop => shop.id,
+    (shop) => shop.id,
   )
   shop_id: number;
 
   @ManyToMany(
     () => Category,
-    categories => categories.products,
+    (categories) => categories.products,
   )
   @JoinTable()
   categories: Category[];

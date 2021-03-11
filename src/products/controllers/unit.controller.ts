@@ -45,8 +45,8 @@ class UnitController {
   @Post('/unit')
   async createUnit(
     @CurrentUser('id') userId: any,
-    @Body() unitRequest: UnitRequest,
-    @Res() res: Response,
+      @Body() unitRequest: UnitRequest,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.createUnitService.create(userId, unitRequest);
     return this.apiResponseService.successResponse(
@@ -76,9 +76,9 @@ class UnitController {
   @Put('/unit/:id')
   async updateUnit(
     @CurrentUser('id') userId: any,
-    @Param('id') id: number,
-    @Body() unitRequest: UnitRequest,
-    @Res() res: Response,
+      @Param('id') id: number,
+      @Body() unitRequest: UnitRequest,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.updateUnitService.execute(id, userId, unitRequest);
     return this.apiResponseService.successResponse(
@@ -93,7 +93,7 @@ class UnitController {
   @Get('/unit/:id')
   async getUnitById(
     @Param('id') id: number,
-    @Res() res: Response,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchUnitByIdService.execute(id);
     return this.apiResponseService.successResponse(
@@ -111,7 +111,7 @@ class UnitController {
   @Delete('/unit/:id')
   async DeleteUnit(
     @Param('id') id: number,
-    @Res() res: Response,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.deleteUnitService.execute(id);
     return this.apiResponseService.successResponse(

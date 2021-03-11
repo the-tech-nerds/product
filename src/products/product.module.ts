@@ -1,4 +1,3 @@
-import { ProductVariance } from './entities/product-variance.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
@@ -6,6 +5,7 @@ import {
   UploadService,
   FileService,
 } from '@the-tech-nerds/common-services';
+import { ProductVariance } from './entities/product-variance.entity';
 import { Product } from './entities/product.entity';
 import { ProductController } from './controllers/product.controller';
 import { ListProductsService } from './services/product/list-products.service';

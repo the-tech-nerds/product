@@ -83,9 +83,9 @@ export class ProductController {
   @Put('/:id')
   async updateProduct(
     @CurrentUser('id') userId: any,
-    @Param('id') id: number,
-    @Body() productRequest: ProductRequest,
-    @Res() res: Response,
+      @Param('id') id: number,
+      @Body() productRequest: ProductRequest,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.updateProductService.execute(
       id,
@@ -107,7 +107,7 @@ export class ProductController {
   @Get('/:id')
   async getProductById(
     @Param('id') id: number,
-    @Res() res: Response,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchProductByIdService.execute(id);
     return this.apiResponseService.successResponse(
@@ -125,7 +125,7 @@ export class ProductController {
   @Delete('/:id')
   async DeleteProduct(
     @Param('id') id: number,
-    @Res() res: Response,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.deleteProductService.execute(id);
     return this.apiResponseService.successResponse(

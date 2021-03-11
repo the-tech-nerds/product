@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity, Column, PrimaryGeneratedColumn, OneToMany,
+} from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from '../../products/entities/product.entity';
 
@@ -24,7 +26,7 @@ export class Shop extends BaseEntity {
 
   @OneToMany(
     () => Product,
-    product => product.brand_id,
+    (product) => product.brand_id,
   )
   products!: Product[];
 }

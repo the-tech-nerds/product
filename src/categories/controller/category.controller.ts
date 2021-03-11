@@ -40,8 +40,8 @@ export class CategoryController {
   @Post('/')
   async createCategory(
     @CurrentUser('id') userId: any,
-    @Body() categoryRequest: CategoryRequest,
-    @Res() res: Response,
+      @Body() categoryRequest: CategoryRequest,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.createCategoryService.create(
       userId,
@@ -69,9 +69,9 @@ export class CategoryController {
   @Put('/:id')
   async updateCategory(
     @CurrentUser('id') userId: any,
-    @Param('id') id: number,
-    @Body() categoryRequest: CategoryRequest,
-    @Res() res: Response,
+      @Param('id') id: number,
+      @Body() categoryRequest: CategoryRequest,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.updateCategoryService.execute(
       id,
@@ -89,7 +89,7 @@ export class CategoryController {
   @Get('/:id')
   async getCategoryById(
     @Param('id') id: number,
-    @Res() res: Response,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchCategoryByIdService.execute(id);
     return this.apiResponseService.successResponse(
@@ -103,7 +103,7 @@ export class CategoryController {
   @Put('/:id/status')
   async changeRoleStatus(
     @Param('id') id: number,
-    @Res() res: Response,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.changeStatusService.execute(id);
     return this.apiResponseService.successResponse(
@@ -117,7 +117,7 @@ export class CategoryController {
   @Delete('/:id')
   async DeleteCategory(
     @Param('id') id: number,
-    @Res() res: Response,
+      @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.deleteCategoryService.execute(id);
     return this.apiResponseService.successResponse(

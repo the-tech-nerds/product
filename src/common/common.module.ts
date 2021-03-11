@@ -1,4 +1,3 @@
-import { FileStorage } from './file/entities/storage.entity';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import {
@@ -6,6 +5,7 @@ import {
   UploadService,
   FileService,
 } from '@the-tech-nerds/common-services';
+import { FileStorage } from './file/entities/storage.entity';
 import { FileController } from './file/file.controller';
 import { FileStorageService } from './file/filte.service';
 
@@ -13,5 +13,6 @@ import { FileStorageService } from './file/filte.service';
   imports: [TypeOrmModule.forFeature([FileStorage])],
   providers: [ApiResponseService, UploadService, FileService, FileStorageService],
   controllers: [FileController],
+  exports: [FileStorageService],
 })
 export class CommonModule {}
