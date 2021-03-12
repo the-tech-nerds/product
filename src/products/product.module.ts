@@ -21,8 +21,9 @@ import { FetchProductVarianceByIdService } from './services/product-variance/fet
 import { DeleteProductVarianceService } from './services/product-variance/delete-product-variance.service';
 import { UpdateProductVarianceService } from './services/product-variance/update-product-variance.service';
 import { ProductVarianceController } from './controllers/product-variance.controller';
+import { ProductVariance } from './entities/product-variance.entity';
 @Module({
-  imports: [TypeOrmModule.forFeature([Product, Unit])],
+  imports: [TypeOrmModule.forFeature([Product, ProductVariance, Unit])],
   providers: [
     ApiResponseService,
 
