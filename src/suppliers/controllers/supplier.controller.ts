@@ -45,8 +45,8 @@ export class SupplierController {
   @Post('/')
   async createSupplier(
     @CurrentUser('id') userId: any,
-      @Body() supplierRequest: SupplierRequest,
-      @Res() res: Response,
+    @Body() supplierRequest: SupplierRequest,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.createSupplierService.create(
       userId,
@@ -82,9 +82,9 @@ export class SupplierController {
   @Put('/:id')
   async updateSupplier(
     @CurrentUser('id') userId: any,
-      @Param('id') id: number,
-      @Body() supplierRequest: SupplierRequest,
-      @Res() res: Response,
+    @Param('id') id: number,
+    @Body() supplierRequest: SupplierRequest,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.updateSupplierService.execute(
       id,
@@ -106,7 +106,7 @@ export class SupplierController {
   @Get('/:id')
   async getSupplierById(
     @Param('id') id: number,
-      @Res() res: Response,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchSupplierByIdService.execute(id);
     return this.apiResponseService.successResponse(
@@ -124,7 +124,7 @@ export class SupplierController {
   @Delete('/:id')
   async DeleteSupplier(
     @Param('id') id: number,
-      @Res() res: Response,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.deleteSupplierService.execute(id);
     return this.apiResponseService.successResponse(

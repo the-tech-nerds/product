@@ -1,6 +1,4 @@
-import {
-  Entity, Column, PrimaryGeneratedColumn, ManyToMany,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from '../../products/entities/product.entity';
 
@@ -22,8 +20,8 @@ export class Category extends BaseEntity {
   is_active: boolean;
 
   @ManyToMany(
-    (type) => Product,
-    (products) => products.categories,
+    type => Product,
+    products => products.categories,
   )
   products: Product[];
 }

@@ -10,5 +10,5 @@ export class ProductRequest {
 
   shop_id?: number;
 
-  status?: number;
+  status?: boolean;
 }

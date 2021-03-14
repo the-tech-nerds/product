@@ -25,15 +25,15 @@ export class Brand extends BaseEntity {
   supplier_id: number;
 
   @ManyToOne(
-    (type) => Supplier,
-    (supplier) => supplier.brand,
+    type => Supplier,
+    supplier => supplier.brand,
   )
   @JoinColumn({ name: 'supplier_id' })
   supplier: Supplier;
 
   @OneToMany(
     () => Product,
-    (product) => product.brand_id,
+    product => product.brand_id,
   )
   products!: Product[];
 }

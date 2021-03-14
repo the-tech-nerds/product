@@ -45,8 +45,8 @@ export class BrandController {
   @Post('/')
   async createBrand(
     @CurrentUser('id') userId: any,
-      @Body() brandRequest: BrandRequest,
-      @Res() res: Response,
+    @Body() brandRequest: BrandRequest,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.createBrandService.create(userId, brandRequest);
     return this.apiResponseService.successResponse(
@@ -76,9 +76,9 @@ export class BrandController {
   @Put('/:id')
   async updateBrand(
     @CurrentUser('id') userId: any,
-      @Param('id') id: number,
-      @Body() brandRequest: BrandRequest,
-      @Res() res: Response,
+    @Param('id') id: number,
+    @Body() brandRequest: BrandRequest,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.updateBrandService.execute(
       id,
@@ -97,7 +97,7 @@ export class BrandController {
   @Get('/:id')
   async getBrandById(
     @Param('id') id: number,
-      @Res() res: Response,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchBrandByIdService.execute(id);
     return this.apiResponseService.successResponse(
@@ -115,7 +115,7 @@ export class BrandController {
   @Delete('/:id')
   async DeleteBrand(
     @Param('id') id: number,
-      @Res() res: Response,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.deleteBrandService.execute(id);
     return this.apiResponseService.successResponse(

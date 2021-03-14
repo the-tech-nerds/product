@@ -35,14 +35,14 @@ export class ProductVariance extends BaseEntity {
   @JoinColumn({ name: 'product_id' })
   @ManyToOne(
     () => Product,
-    (product) => product.id,
+    product => product.id,
   )
   product_id: number;
 
   @JoinColumn({ name: 'unit_id' })
   @ManyToOne(
     () => Unit,
-    (unit) => unit.id,
+    unit => unit.id,
   )
   unit_id: number;
 

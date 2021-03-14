@@ -46,8 +46,8 @@ export class ShopController {
   @Post('/')
   async createShop(
     @CurrentUser('id') userId: any,
-      @Body() shopRequest: ShopRequest,
-      @Res() res: Response,
+    @Body() shopRequest: ShopRequest,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     userId = 1;
     const data = await this.createShopService.create(userId, shopRequest);
@@ -78,9 +78,9 @@ export class ShopController {
   @Put('/:id')
   async updateShop(
     @CurrentUser('id') userId: any,
-      @Param('id') id: number,
-      @Body() shopRequest: ShopRequest,
-      @Res() res: Response,
+    @Param('id') id: number,
+    @Body() shopRequest: ShopRequest,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.updateShopService.execute(id, userId, shopRequest);
     return this.apiResponseService.successResponse(
@@ -95,7 +95,7 @@ export class ShopController {
   @Get('/:id')
   async getShopById(
     @Param('id') id: number,
-      @Res() res: Response,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchShopByIdService.execute(id);
     return this.apiResponseService.successResponse(
@@ -113,7 +113,7 @@ export class ShopController {
   @Delete('/:id')
   async DeleteShop(
     @Param('id') id: number,
-      @Res() res: Response,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.deleteShopService.execute(id);
     return this.apiResponseService.successResponse(

@@ -11,9 +11,7 @@ import { Shop } from './entities/shop.entity';
 import { ShopController } from './controller/shop.controller';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Shop]),
-    CommonModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Shop]), CommonModule],
   providers: [
     CreateShopService,
     UpdateShopService,

@@ -45,8 +45,8 @@ export class ProductVarianceController {
   @Post('/')
   async createProductVariance(
     @CurrentUser('id') userId: any,
-      @Body() productVarianceRequest: ProductVarianceRequest,
-      @Res() res: Response,
+    @Body() productVarianceRequest: ProductVarianceRequest,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.createProductVarianceService.create(
       userId,
@@ -88,9 +88,9 @@ export class ProductVarianceController {
   @Put('/:id')
   async updateProductVariance(
     @CurrentUser('id') userId: any,
-      @Param('id') id: number,
-      @Body() productVarianceRequest: ProductVarianceRequest,
-      @Res() res: Response,
+    @Param('id') id: number,
+    @Body() productVarianceRequest: ProductVarianceRequest,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.updateProductVarianceService.execute(
       id,
@@ -112,7 +112,7 @@ export class ProductVarianceController {
   @Get('/:id')
   async getProductVarianceById(
     @Param('id') id: number,
-      @Res() res: Response,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchProductVarianceByIdService.execute(id);
     return this.apiResponseService.successResponse(
@@ -130,7 +130,7 @@ export class ProductVarianceController {
   @Delete('/:id')
   async DeleteProduct(
     @Param('id') id: number,
-      @Res() res: Response,
+    @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.deleteProductVarianceService.execute(id);
     return this.apiResponseService.successResponse(

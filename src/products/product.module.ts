@@ -27,7 +27,7 @@ import { DeleteProductVarianceService } from './services/product-variance/delete
 import { UpdateProductVarianceService } from './services/product-variance/update-product-variance.service';
 import { ProductVarianceController } from './controllers/product-variance.controller';
 @Module({
-  imports: [TypeOrmModule.forFeature([Product, Unit, ProductVariance])],
+  imports: [TypeOrmModule.forFeature([Product, ProductVariance, Unit])],
   providers: [
     ApiResponseService,
 

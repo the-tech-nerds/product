@@ -11,7 +11,12 @@ import { FileStorageService } from './file/filte.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([FileStorage])],
-  providers: [ApiResponseService, UploadService, FileService, FileStorageService],
+  providers: [
+    ApiResponseService,
+    UploadService,
+    FileService,
+    FileStorageService,
+  ],
   controllers: [FileController],
   exports: [FileStorageService],
 })
