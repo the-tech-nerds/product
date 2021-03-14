@@ -31,7 +31,7 @@ export class FileStorageService {
   }
 
   async getListByEntityId(entity: string, entity_id: number):Promise<FileStorageRequest[]> {
-    return  this.fileRepository.find({
+    return this.fileRepository.find({
       type: entity,
       type_id: entity_id,
     });
