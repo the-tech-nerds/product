@@ -65,12 +65,14 @@ export class ProductController {
   async getProducts(@Res() res: Response): Promise<Response<ResponseModel>> {
     try {
       const data = await this.listProductsService.execute();
+      console.log('product list : ', data);
       return this.apiResponseService.successResponse(
         ['Product list fetched successfully'],
         data as Product[],
         res,
       );
     } catch (e) {
+      console.log(e.toString());
       return this.apiResponseService.internalServerError([e.toString()], res);
     }
   }

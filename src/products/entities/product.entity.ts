@@ -11,6 +11,7 @@ import {
 import BaseEntity from '../../utils/entities/base-entity';
 import { Category } from '../../categories/entities/category.entity';
 import { Brand } from '../../brands/entities/brand.entity';
+import { Shop } from '../../shops/entities/shop.entity';
 
 @Entity({ name: 'products' })
 export class Product extends BaseEntity {
@@ -27,17 +28,17 @@ export class Product extends BaseEntity {
   @JoinColumn({ name: 'brand_id' })
   @ManyToOne(
     () => Brand,
-    brand => brand.id,
+    brand => brand.products,
   )
-  brand_id: number;
+  brand: Brand;
 
   @Index()
   @JoinColumn({ name: 'shop_id' })
   @ManyToOne(
-    () => Brand,
-    shop => shop.id,
+    () => Shop,
+    shop => shop.products,
   )
-  shop_id: number;
+  shop: Shop;
 
   @ManyToMany(
     () => Category,
