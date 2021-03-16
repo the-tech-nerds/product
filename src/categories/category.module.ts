@@ -9,6 +9,7 @@ import { DeleteCategoryService } from './service/delete-category.service';
 import { FetchCategoryByIdService } from './service/fetch-category-by-id.service';
 import { ListCategoryService } from './service/list-category.service';
 import { ChangeStatusService } from './service/change-status.service';
+import { MenuCategoryService } from './service/menu-category';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Category])],
@@ -20,6 +21,7 @@ import { ChangeStatusService } from './service/change-status.service';
     ListCategoryService,
     ChangeStatusService,
     ApiResponseService,
+    MenuCategoryService,
   ],
   controllers: [CategoryController],
 })
