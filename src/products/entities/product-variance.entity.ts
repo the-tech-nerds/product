@@ -10,7 +10,7 @@ import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from './product.entity';
 import { Unit } from './unit.entity';
 
-@Entity({ name: 'products' })
+@Entity({ name: 'product_variances' })
 export class ProductVariance extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
