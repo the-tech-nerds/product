@@ -23,6 +23,7 @@ import { FetchCategoryByIdService } from '../service/fetch-category-by-id.servic
 import { ListCategoryService } from '../service/list-category.service';
 import { ChangeStatusService } from '../service/change-status.service';
 import { DeleteCategoryService } from '../service/delete-category.service';
+import { MenuCategoryService } from '../service/menu-category';
 
 @Controller()
 export class CategoryController {
@@ -34,6 +35,7 @@ export class CategoryController {
     private readonly listCategoryService: ListCategoryService,
     private readonly changeStatusService: ChangeStatusService,
     private readonly deleteCategoryService: DeleteCategoryService,
+    private readonly menuCategoryService: MenuCategoryService,
   ) {}
 
   @UseGuards(UserGuard)
@@ -120,6 +122,18 @@ export class CategoryController {
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.deleteCategoryService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Category has been deleted successfully'],
+      data,
+      res,
+    );
+  }
+
+  @Get('/menu/all')
+  async GetCategoryMenu(
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.menuCategoryService.execute();
     return this.apiResponseService.successResponse(
       ['Category has been deleted successfully'],
       data,
