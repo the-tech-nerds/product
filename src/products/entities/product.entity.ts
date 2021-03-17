@@ -23,6 +23,9 @@ export class Product extends BaseEntity {
   @Column()
   name: string;
 
+  @Column({ type: 'text', nullable: true })
+  description: string;
+
   @Column()
   status: boolean;
 
