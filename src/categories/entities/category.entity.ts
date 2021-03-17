@@ -23,5 +23,5 @@ export class Category extends BaseEntity {
     type => Product,
     products => products.categories,
   )
-  products: Product[];
+  products!: Product[];
 }

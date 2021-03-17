@@ -26,8 +26,12 @@ import { FetchProductVarianceByIdService } from './services/product-variance/fet
 import { DeleteProductVarianceService } from './services/product-variance/delete-product-variance.service';
 import { UpdateProductVarianceService } from './services/product-variance/update-product-variance.service';
 import { ProductVarianceController } from './controllers/product-variance.controller';
+import { FetchCategoryByIdService } from '../categories/service/fetch-category-by-id.service';
+import { Category } from '../categories/entities/category.entity';
 @Module({
-  imports: [TypeOrmModule.forFeature([Product, ProductVariance, Unit])],
+  imports: [
+    TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category]),
+  ],
   providers: [
     ApiResponseService,
 
@@ -50,6 +54,8 @@ import { ProductVarianceController } from './controllers/product-variance.contro
     DeleteUnitService,
     UploadService,
     FileService,
+
+    FetchCategoryByIdService,
   ],
   controllers: [ProductController, ProductVarianceController, UnitController],
 })
