@@ -65,7 +65,6 @@ export class ProductController {
   async getProducts(@Res() res: Response): Promise<Response<ResponseModel>> {
     try {
       const data = await this.listProductsService.execute();
-      console.log('product list : ', data);
       return this.apiResponseService.successResponse(
         ['Product list fetched successfully'],
         data as Product[],
@@ -114,6 +113,24 @@ export class ProductController {
     const data = await this.fetchProductByIdService.execute(id);
     return this.apiResponseService.successResponse(
       ['Product fetched successfully'],
+      data as Product,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.PRODUCT.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Put('/:id/status')
+  async changeProductStatus(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.updateProductService.changeStatus(id);
+    return this.apiResponseService.successResponse(
+      ['category status updated successfully'],
       data as Product,
       res,
     );

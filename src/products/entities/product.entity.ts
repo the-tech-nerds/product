@@ -26,7 +26,7 @@ export class Product extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   description: string;
 
-  @Column()
+  @Column({ default: true })
   status: boolean;
 
   @Index()

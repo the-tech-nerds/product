@@ -15,6 +15,9 @@ export class CreateCategoryService {
     userId: number,
     categoryRequest: CategoryRequest,
   ): Promise<Category> {
+    categoryRequest.parent_id = categoryRequest.parent_id
+      ? categoryRequest.parent_id
+      : 0;
     return this.categoryRepository.save({
       ...categoryRequest,
       created_by: userId,

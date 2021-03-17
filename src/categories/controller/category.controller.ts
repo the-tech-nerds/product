@@ -103,7 +103,7 @@ export class CategoryController {
 
   @UseGuards(UserGuard)
   @Put('/:id/status')
-  async changeRoleStatus(
+  async changeCategoryStatus(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {

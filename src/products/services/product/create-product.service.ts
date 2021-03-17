@@ -15,6 +15,7 @@ class CreateProductService {
     userId: number,
     productRequest: ProductRequest,
   ): Promise<Product> {
+    console.log('pr create in service req: ', productRequest);
     return this.productRepository.save({
       ...productRequest,
       created_by: userId,
