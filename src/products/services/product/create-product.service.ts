@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from 'src/products/entities/product.entity';
 import { ProductRequest } from 'src/products/requests/product.request';
@@ -25,12 +25,15 @@ class CreateProductService {
 
     if (productRequest.category_id) {
       // @ts-ignore
-      product.categories = [
-        await this.fetchCategoryByIdService.execute(productRequest.category_id),
-      ];
+      const category = await this.fetchCategoryByIdService.execute(
+        productRequest.category_id,
+      );
+      if (!category) {
+        throw new BadRequestException('Not a valid category');
+      }
+      product.categories.push(category);
       return this.productRepository.save(product);
     }
-
     return product;
   }
 }
