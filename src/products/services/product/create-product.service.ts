@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Product } from 'src/products/entities/product.entity';
 import { ProductRequest } from 'src/products/requests/product.request';
@@ -17,21 +17,19 @@ class CreateProductService {
     userId: number,
     productRequest: ProductRequest,
   ): Promise<Product> {
+    console.log('product req: ', productRequest);
     const product = await this.productRepository.save({
       ...productRequest,
       created_by: userId,
     });
 
     if (productRequest.category_id) {
-      const categories = await this.fetchCategoryByIdService.execute(
+      // @ts-ignore
+      product.categories = await this.fetchCategoryByIdService.execute(
         productRequest.category_id,
       );
-      if (!categories) {
-        throw new BadRequestException('Category is not found');
-      }
-      // eslint-disable-next-line max-len
-      // @ts-ignore
-      product.categories = categories;
+
+      console.log('product saved and with category : ', product);
 
       return this.productRepository.save(product);
     }
