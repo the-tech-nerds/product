@@ -21,8 +21,7 @@ export class Category extends BaseEntity {
 
   @ManyToMany(
     () => Product,
-    products => products.categories,
-    { cascade: true },
+    (products: Product) => products.categories,
   )
   products!: Product[];
 }

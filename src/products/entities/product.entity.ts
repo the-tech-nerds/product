@@ -23,16 +23,25 @@ export class Product extends BaseEntity {
   @Column()
   name: string;
 
-  @Column({ type: 'text', nullable: true })
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
   description: string;
 
   @Column({ default: true })
   status: boolean;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({
+    type: 'int',
+    nullable: false,
+  })
   shop_id: number;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({
+    type: 'int',
+    nullable: true,
+  })
   brand_id: number;
 
   @Index()
@@ -53,7 +62,8 @@ export class Product extends BaseEntity {
 
   @ManyToMany(
     () => Category,
-    categories => categories.products,
+    (categories: Category) => categories.products,
+    { cascade: true },
   )
   @JoinTable({ name: 'product_categories' })
   categories: Category[];
