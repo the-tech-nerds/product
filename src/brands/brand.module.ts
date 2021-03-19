@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiResponseService } from '@the-tech-nerds/common-services';
+import { CommonModule } from '../common/common.module';
 import { BrandController } from './controller/brand.controller';
 import { Brand } from './entities/brand.entity';
 import { CreateBrandService } from './service/create-brand.service';
@@ -10,7 +11,7 @@ import { FetchBrandByIdService } from './service/fetch-by-id.service';
 import { UpdateBrandService } from './service/update-brand.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Brand])],
+  imports: [TypeOrmModule.forFeature([Brand]), CommonModule],
   providers: [
     CreateBrandService,
     UpdateBrandService,

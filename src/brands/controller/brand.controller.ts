@@ -87,7 +87,7 @@ export class BrandController {
     );
     return this.apiResponseService.successResponse(
       ['Brand has been updated successfully'],
-      data as Brand,
+      data,
       res,
     );
   }

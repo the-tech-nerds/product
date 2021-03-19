@@ -93,7 +93,7 @@ export class SupplierController {
     );
     return this.apiResponseService.successResponse(
       ['Supplier has been updated successfully'],
-      data as Supplier,
+      data,
       res,
     );
   }
