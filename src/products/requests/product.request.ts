@@ -8,7 +8,7 @@ export class ProductRequest {
 
   brand_id?: number;
 
-  category_id?: number;
+  category_ids?: number[];
 
   shop_id?: number;
 

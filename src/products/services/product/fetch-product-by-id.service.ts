@@ -17,8 +17,8 @@ export class FetchProductByIdService {
       'product',
       productId,
     );
-    const product = await this.ProductRepository.findOne({
-      id: productId,
+    const product = await this.ProductRepository.findOne(productId, {
+      relations: ['categories'],
     });
 
     return {

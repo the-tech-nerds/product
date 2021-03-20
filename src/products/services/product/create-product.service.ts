@@ -19,23 +19,24 @@ class CreateProductService {
     userId: number,
     productRequest: ProductRequest,
   ): Promise<Product> {
-    let category: Category | null = null;
-    if (productRequest.category_id) {
-      // @ts-ignore
-      category = await this.fetchCategoryByIdService.execute(
-        productRequest.category_id,
-      );
-      if (!category) {
-        throw new BadRequestException('Not a valid category');
-      }
-    }
     const product = await this.productRepository.save({
       ...productRequest,
       created_by: userId,
-      categories: category ? [category] : undefined,
     });
 
-    return product;
+    let categoryList: Category[] | null = null;
+    if (productRequest.category_ids) {
+      // @ts-ignore
+      categoryList = await this.fetchCategoryByIdService.getMultiCategories(
+        productRequest.category_ids,
+      );
+      if (!categoryList) {
+        throw new BadRequestException('Not a valid category');
+      }
+    }
+
+    product.categories = categoryList || [];
+    return this.productRepository.save(product);
   }
 }
 
