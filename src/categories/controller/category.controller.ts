@@ -82,7 +82,7 @@ export class CategoryController {
     );
     return this.apiResponseService.successResponse(
       ['Category has been updated successfully'],
-      data as Category,
+      data,
       res,
     );
   }
