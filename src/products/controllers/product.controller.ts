@@ -113,7 +113,7 @@ export class ProductController {
     const data = await this.fetchProductByIdService.execute(id);
     return this.apiResponseService.successResponse(
       ['Product fetched successfully'],
-      data as Product,
+      data,
       res,
     );
   }
