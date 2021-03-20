@@ -110,6 +110,7 @@ export class ProductController {
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchProductByIdService.execute(id);
+    console.log('product data: ', data);
     return this.apiResponseService.successResponse(
       ['Product fetched successfully'],
       data,

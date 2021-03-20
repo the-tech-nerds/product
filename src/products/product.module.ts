@@ -28,9 +28,11 @@ import { UpdateProductVarianceService } from './services/product-variance/update
 import { ProductVarianceController } from './controllers/product-variance.controller';
 import { FetchCategoryByIdService } from '../categories/service/fetch-category-by-id.service';
 import { Category } from '../categories/entities/category.entity';
+import { CommonModule } from '../common/common.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category]),
+    CommonModule,
   ],
   providers: [
     ApiResponseService,
