@@ -21,6 +21,7 @@ export class MenuCategoryService {
       parent_id: category.parent_id,
       slug: category.slug,
       is_active: category.is_active,
+      icon: !category.parent_id ? 'snowflake-o' : null,
     }));
 
     const menus = this.list_to_tree(mapData);
