@@ -33,7 +33,7 @@ export class Brand extends BaseEntity {
 
   @OneToMany(
     () => Product,
-    product => product.brand_id,
+    product => product.brand,
   )
   products!: Product[];
 }

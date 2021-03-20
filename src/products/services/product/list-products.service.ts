@@ -11,6 +11,8 @@ export class ListProductsService {
   ) {}
 
   async execute(): Promise<Product[]> {
-    return this.ProductRepository.find();
+    return this.ProductRepository.find({
+      relations: ['categories', 'shop', 'brand'],
+    });
   }
 }

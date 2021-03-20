@@ -25,4 +25,10 @@ export class FetchCategoryByIdService {
       category: item,
     };
   }
+
+  async getMultiCategories(
+    categoryIds: number[],
+  ): Promise<Category[] | undefined> {
+    return this.categoryRepository.findByIds(categoryIds);
+  }
 }

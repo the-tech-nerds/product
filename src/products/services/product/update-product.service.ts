@@ -24,6 +24,12 @@ class UpdateProductService {
     });
     return this.productRepository.findOne(id);
   }
+
+  async changeStatus(id: number): Promise<Product | undefined | void> {
+    const product = await this.productRepository.findOneOrFail(id, {});
+    product.status = !product.status;
+    return this.productRepository.save(product);
+  }
 }
 
 export { UpdateProductService };

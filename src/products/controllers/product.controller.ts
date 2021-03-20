@@ -110,8 +110,27 @@ export class ProductController {
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchProductByIdService.execute(id);
+    console.log('product data: ', data);
     return this.apiResponseService.successResponse(
       ['Product fetched successfully'],
+      data,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.PRODUCT.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Put('/:id/status')
+  async changeProductStatus(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.updateProductService.changeStatus(id);
+    return this.apiResponseService.successResponse(
+      ['category status updated successfully'],
       data as Product,
       res,
     );

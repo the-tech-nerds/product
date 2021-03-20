@@ -25,5 +25,6 @@ import { MenuCategoryService } from './service/menu-category';
     MenuCategoryService,
   ],
   controllers: [CategoryController],
+  exports: [FetchCategoryByIdService],
 })
 export class CategoryModule {}

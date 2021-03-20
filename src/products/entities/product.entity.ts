@@ -7,10 +7,13 @@ import {
   ManyToOne,
   JoinColumn,
   Index,
+  OneToMany,
 } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Category } from '../../categories/entities/category.entity';
 import { Brand } from '../../brands/entities/brand.entity';
+import { Shop } from '../../shops/entities/shop.entity';
+import { ProductVariance } from './product-variance.entity';
 
 @Entity({ name: 'products' })
 export class Product extends BaseEntity {
@@ -20,29 +23,54 @@ export class Product extends BaseEntity {
   @Column()
   name: string;
 
-  @Column()
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  description: string;
+
+  @Column({ default: true })
   status: boolean;
+
+  @Column({
+    type: 'int',
+    nullable: false,
+  })
+  shop_id: number;
+
+  @Column({
+    type: 'int',
+    nullable: true,
+  })
+  brand_id: number;
 
   @Index()
   @JoinColumn({ name: 'brand_id' })
   @ManyToOne(
     () => Brand,
-    brand => brand.id,
+    (brand: Brand) => brand.products,
   )
-  brand_id: number;
+  brand: Brand;
 
   @Index()
-  @JoinColumn({ name: 'shop_id' })
   @ManyToOne(
-    () => Brand,
-    shop => shop.id,
+    () => Shop,
+    (shop: Shop) => shop.products,
   )
-  shop_id: number;
+  @JoinColumn({ name: 'shop_id' })
+  shop: Shop;
 
   @ManyToMany(
     () => Category,
-    categories => categories.products,
+    (categories: Category) => categories.products,
+    { cascade: true },
   )
-  @JoinTable()
+  @JoinTable({ name: 'product_categories' })
   categories: Category[];
+
+  @OneToMany(
+    () => ProductVariance,
+    (productVariance: ProductVariance) => productVariance.product,
+  )
+  productVariances: ProductVariance[];
 }
