@@ -12,7 +12,6 @@ export class ErrorFilter implements ExceptionFilter {
   constructor(private readonly apiResponseService: ApiResponseService) {}
 
   catch(error: Error, host: ArgumentsHost): any {
-    console.log(error);
     const response = host.switchToHttp().getResponse();
     const status =
       error instanceof HttpException

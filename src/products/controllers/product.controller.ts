@@ -71,7 +71,6 @@ export class ProductController {
         res,
       );
     } catch (e) {
-      console.log(e.toString());
       return this.apiResponseService.internalServerError([e.toString()], res);
     }
   }
