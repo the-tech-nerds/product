@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LocalDateToUtc } from '../../../utils/date-time-conversion/date-time-conversion';
 import { ProductRequest } from '../../requests/product.request';
 import { Product } from '../../entities/product.entity';
+import { Category } from '../../../categories/entities/category.entity';
 
 @Injectable()
 class UpdateProductService {
@@ -22,7 +23,21 @@ class UpdateProductService {
       updated_by: userId,
       updated_at: LocalDateToUtc(new Date()),
     });
-    return this.productRepository.findOne(id);
+    const updatedProduct = await this.productRepository.findOneOrFail(id);
+
+    let categoryList: Category[] | null = null;
+    if (productRequest.category_ids) {
+      // @ts-ignore
+      categoryList = await this.fetchCategoryByIdService.getMultiCategories(
+        productRequest.category_ids,
+      );
+      if (!categoryList) {
+        throw new BadRequestException('Not a valid category');
+      }
+    }
+
+    updatedProduct.categories = categoryList || [];
+    return this.productRepository.save(updatedProduct);
   }
 
   async changeStatus(id: number): Promise<Product | undefined | void> {

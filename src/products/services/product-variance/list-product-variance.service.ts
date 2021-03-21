@@ -11,6 +11,8 @@ export class ListProductVarianceService {
   ) {}
 
   async execute(): Promise<ProductVariance[]> {
-    return this.productVarianceRepository.find();
+    return this.productVarianceRepository.find({
+      relations: ['product', 'unit'],
+    });
   }
 }

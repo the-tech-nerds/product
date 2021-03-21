@@ -28,6 +28,18 @@ export class ProductVariance extends BaseEntity {
   @Column({ nullable: true })
   color: string;
 
+  @Column({
+    type: 'int',
+    nullable: false,
+  })
+  product_id: number;
+
+  @Column({
+    type: 'int',
+    nullable: true,
+  })
+  unit_id: number;
+
   @Column({ default: true })
   status: boolean;
 

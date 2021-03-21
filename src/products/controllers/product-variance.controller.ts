@@ -42,7 +42,7 @@ export class ProductVarianceController {
     [PermissionTypes.PRODUCT.CREATE],
     PermissionTypeEnum.hasPermission,
   )
-  @Post('/')
+  @Post('/variance')
   async createProductVariance(
     @CurrentUser('id') userId: any,
     @Body() productVarianceRequest: ProductVarianceRequest,
@@ -64,7 +64,7 @@ export class ProductVarianceController {
     [PermissionTypes.PRODUCT.GET],
     PermissionTypeEnum.hasPermission,
   )
-  @Get('/')
+  @Get('/variance')
   async getProductVarianceList(
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
@@ -85,7 +85,7 @@ export class ProductVarianceController {
     [PermissionTypes.PRODUCT.UPDATE],
     PermissionTypeEnum.hasPermission,
   )
-  @Put('/:id')
+  @Put('/variance/:id')
   async updateProductVariance(
     @CurrentUser('id') userId: any,
     @Param('id') id: number,
@@ -109,7 +109,7 @@ export class ProductVarianceController {
     [PermissionTypes.PRODUCT.GET],
     PermissionTypeEnum.hasPermission,
   )
-  @Get('/:id')
+  @Get('/variance/:id')
   async getProductVarianceById(
     @Param('id') id: number,
     @Res() res: Response,
@@ -127,7 +127,7 @@ export class ProductVarianceController {
     [PermissionTypes.PRODUCT.DELETE],
     PermissionTypeEnum.hasPermission,
   )
-  @Delete('/:id')
+  @Delete('/variance/:id')
   async DeleteProduct(
     @Param('id') id: number,
     @Res() res: Response,
