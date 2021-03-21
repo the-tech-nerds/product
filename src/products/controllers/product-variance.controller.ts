@@ -64,12 +64,13 @@ export class ProductVarianceController {
     [PermissionTypes.PRODUCT.GET],
     PermissionTypeEnum.hasPermission,
   )
-  @Get('/variance')
+  @Get('/:productId/variance')
   async getProductVarianceList(
     @Res() res: Response,
+    @Param('productId') productId: number,
   ): Promise<Response<ResponseModel>> {
     try {
-      const data = await this.listProductVarianceService.execute();
+      const data = await this.listProductVarianceService.execute(productId);
       return this.apiResponseService.successResponse(
         ['Product variance list fetched successfully'],
         data as ProductVariance[],
