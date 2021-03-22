@@ -10,7 +10,10 @@ export class ListProductVarianceService {
     private productVarianceRepository: Repository<ProductVariance>,
   ) {}
 
-  async execute(): Promise<ProductVariance[]> {
-    return this.productVarianceRepository.find();
+  async execute(productId: number): Promise<ProductVariance[]> {
+    return this.productVarianceRepository.find({
+      where: { product_id: productId },
+      relations: ['product', 'unit'],
+    });
   }
 }

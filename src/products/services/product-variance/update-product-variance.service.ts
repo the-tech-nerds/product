@@ -24,6 +24,14 @@ class UpdateProductVarianceService {
     });
     return this.productVarianceRepository.findOne(id);
   }
+
+  async changeStatus(id: number): Promise<ProductVariance | undefined> {
+    const productVariance = await this.productVarianceRepository.findOneOrFail(
+      id,
+    );
+    productVariance.status = !productVariance.status;
+    return this.productVarianceRepository.save(productVariance);
+  }
 }
 
 export { UpdateProductVarianceService };

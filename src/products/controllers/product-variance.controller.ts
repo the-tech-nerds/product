@@ -42,7 +42,7 @@ export class ProductVarianceController {
     [PermissionTypes.PRODUCT.CREATE],
     PermissionTypeEnum.hasPermission,
   )
-  @Post('/')
+  @Post('/variance')
   async createProductVariance(
     @CurrentUser('id') userId: any,
     @Body() productVarianceRequest: ProductVarianceRequest,
@@ -64,12 +64,13 @@ export class ProductVarianceController {
     [PermissionTypes.PRODUCT.GET],
     PermissionTypeEnum.hasPermission,
   )
-  @Get('/')
+  @Get('/:productId/variance')
   async getProductVarianceList(
     @Res() res: Response,
+    @Param('productId') productId: number,
   ): Promise<Response<ResponseModel>> {
     try {
-      const data = await this.listProductVarianceService.execute();
+      const data = await this.listProductVarianceService.execute(productId);
       return this.apiResponseService.successResponse(
         ['Product variance list fetched successfully'],
         data as ProductVariance[],
@@ -85,7 +86,7 @@ export class ProductVarianceController {
     [PermissionTypes.PRODUCT.UPDATE],
     PermissionTypeEnum.hasPermission,
   )
-  @Put('/:id')
+  @Put('/variance/:id')
   async updateProductVariance(
     @CurrentUser('id') userId: any,
     @Param('id') id: number,
@@ -106,10 +107,28 @@ export class ProductVarianceController {
 
   @UseGuards(UserGuard)
   @HasPermissions(
+    [PermissionTypes.PRODUCT.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Put('variance/:id/status')
+  async changeProductVarianceStatus(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.updateProductVarianceService.changeStatus(id);
+    return this.apiResponseService.successResponse(
+      ['Product variance status updated successfully'],
+      data as ProductVariance,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @HasPermissions(
     [PermissionTypes.PRODUCT.GET],
     PermissionTypeEnum.hasPermission,
   )
-  @Get('/:id')
+  @Get('/variance/:id')
   async getProductVarianceById(
     @Param('id') id: number,
     @Res() res: Response,
@@ -117,7 +136,7 @@ export class ProductVarianceController {
     const data = await this.fetchProductVarianceByIdService.execute(id);
     return this.apiResponseService.successResponse(
       ['Product variance fetched successfully'],
-      data as ProductVariance,
+      data,
       res,
     );
   }
@@ -127,7 +146,7 @@ export class ProductVarianceController {
     [PermissionTypes.PRODUCT.DELETE],
     PermissionTypeEnum.hasPermission,
   )
-  @Delete('/:id')
+  @Delete('/variance/:id')
   async DeleteProduct(
     @Param('id') id: number,
     @Res() res: Response,
