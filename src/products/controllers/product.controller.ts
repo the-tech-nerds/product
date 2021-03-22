@@ -87,10 +87,13 @@ export class ProductController {
     @Body() productRequest: ProductRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
+    const categoryIds = productRequest.category_ids;
+    delete productRequest.category_ids;
     const data = await this.updateProductService.execute(
       id,
       userId,
       productRequest,
+      categoryIds,
     );
     return this.apiResponseService.successResponse(
       ['Product has been updated successfully'],
@@ -110,7 +113,6 @@ export class ProductController {
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchProductByIdService.execute(id);
-    console.log('product data: ', data);
     return this.apiResponseService.successResponse(
       ['Product fetched successfully'],
       data,
@@ -130,7 +132,7 @@ export class ProductController {
   ): Promise<Response<ResponseModel>> {
     const data = await this.updateProductService.changeStatus(id);
     return this.apiResponseService.successResponse(
-      ['category status updated successfully'],
+      ['Product status updated successfully'],
       data as Product,
       res,
     );

@@ -107,6 +107,24 @@ export class ProductVarianceController {
 
   @UseGuards(UserGuard)
   @HasPermissions(
+    [PermissionTypes.PRODUCT.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Put('variance/:id/status')
+  async changeProductVarianceStatus(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.updateProductVarianceService.changeStatus(id);
+    return this.apiResponseService.successResponse(
+      ['Product variance status updated successfully'],
+      data as ProductVariance,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @HasPermissions(
     [PermissionTypes.PRODUCT.GET],
     PermissionTypeEnum.hasPermission,
   )
@@ -118,7 +136,7 @@ export class ProductVarianceController {
     const data = await this.fetchProductVarianceByIdService.execute(id);
     return this.apiResponseService.successResponse(
       ['Product variance fetched successfully'],
-      data as ProductVariance,
+      data,
       res,
     );
   }

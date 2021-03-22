@@ -17,31 +17,39 @@ class UpdateProductService {
     id: number,
     userId: number,
     productRequest: ProductRequest,
+    categoryIds: number[] | undefined,
   ): Promise<Product | undefined> {
+    const productUpdateReq = productRequest;
+    console.log('in update product. categoryIds: ', categoryIds);
+    console.log('in update product. req data original', productRequest);
     await this.productRepository.update(id, {
-      ...productRequest,
+      ...productUpdateReq,
       updated_by: userId,
       updated_at: LocalDateToUtc(new Date()),
     });
+
+    console.log('product updated');
     const updatedProduct = await this.productRepository.findOneOrFail(id);
 
+    console.log('updated product', updatedProduct);
     let categoryList: Category[] | null = null;
-    if (productRequest.category_ids) {
+    if (categoryIds) {
       // @ts-ignore
       categoryList = await this.fetchCategoryByIdService.getMultiCategories(
-        productRequest.category_ids,
+        categoryIds,
       );
       if (!categoryList) {
         throw new BadRequestException('Not a valid category');
       }
     }
 
+    console.log('category list', categoryList);
     updatedProduct.categories = categoryList || [];
     return this.productRepository.save(updatedProduct);
   }
 
   async changeStatus(id: number): Promise<Product | undefined | void> {
-    const product = await this.productRepository.findOneOrFail(id, {});
+    const product = await this.productRepository.findOneOrFail(id);
     product.status = !product.status;
     return this.productRepository.save(product);
   }
