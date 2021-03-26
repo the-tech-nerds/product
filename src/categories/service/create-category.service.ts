@@ -18,9 +18,11 @@ export class CreateCategoryService {
     categoryRequest.parent_id = categoryRequest.parent_id
       ? categoryRequest.parent_id
       : 0;
-    return this.categoryRepository.save({
+    const category = await this.categoryRepository.save({
       ...categoryRequest,
       created_by: userId,
     });
+
+    return category;
   }
 }
