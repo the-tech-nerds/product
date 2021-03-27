@@ -21,5 +21,6 @@ import { ShopController } from './controller/shop.controller';
     ApiResponseService,
   ],
   controllers: [ShopController],
+  exports: [FetchShopByIdService],
 })
 export class ShopModule {}

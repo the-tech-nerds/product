@@ -29,14 +29,17 @@ import { ProductVarianceController } from './controllers/product-variance.contro
 import { FetchCategoryByIdService } from '../categories/service/fetch-category-by-id.service';
 import { Category } from '../categories/entities/category.entity';
 import { CommonModule } from '../common/common.module';
+import { Shop } from '../shops/entities/shop.entity';
+import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service';
+
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category]),
+    TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category, Shop]),
     CommonModule,
   ],
   providers: [
     ApiResponseService,
-
+    FetchShopByIdService,
     ListProductsService,
     CreateProductService,
     UpdateProductService,

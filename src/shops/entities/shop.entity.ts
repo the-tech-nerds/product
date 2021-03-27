@@ -1,6 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
-import { Product } from '../../products/entities/product.entity';
+import { ProductVariance } from '../../products/entities/product-variance.entity';
 
 @Entity({ name: 'shops' })
 export class Shop extends BaseEntity {
@@ -22,9 +28,17 @@ export class Shop extends BaseEntity {
   })
   address: string;
 
-  @OneToMany(
-    () => Product,
-    product => product.shop,
+  // @OneToMany(
+  //   () => Product,
+  //   (product: Product) => product.shop,
+  // )
+  // products!: Product[];
+
+  @ManyToMany(
+    () => ProductVariance,
+    (productVariance: ProductVariance) => productVariance.shops,
+    { eager: true },
   )
-  products!: Product[];
+  @JoinTable({ name: 'shop_has_variances' })
+  productVariances!: ProductVariance[];
 }

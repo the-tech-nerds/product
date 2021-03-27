@@ -3,12 +3,14 @@ import {
   Entity,
   Index,
   JoinColumn,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from './product.entity';
 import { Unit } from './unit.entity';
+import { Shop } from '../../shops/entities/shop.entity';
 
 @Entity({ name: 'product_variances' })
 export class ProductVariance extends BaseEntity {
@@ -50,6 +52,12 @@ export class ProductVariance extends BaseEntity {
     (product: Product) => product.productVariances,
   )
   product: Product;
+
+  @ManyToMany(
+    () => Shop,
+    (shop: Shop) => shop.productVariances,
+  )
+  shops: Shop[];
 
   @JoinColumn({ name: 'unit_id' })
   @ManyToOne(

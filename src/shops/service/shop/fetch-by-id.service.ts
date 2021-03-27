@@ -22,4 +22,8 @@ export class FetchShopByIdService {
       shop: item,
     };
   }
+
+  async findByIds(shopIds: number[]): Promise<any | undefined> {
+    return this.shopRepository.findByIds(shopIds);
+  }
 }

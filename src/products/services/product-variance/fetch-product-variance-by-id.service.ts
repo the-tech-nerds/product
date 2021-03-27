@@ -19,6 +19,9 @@ export class FetchProductVarianceByIdService {
     );
     const productVariance = await this.productVarianceRepository.findOneOrFail(
       id,
+      {
+        relations: ['shops'],
+      },
     );
 
     return {
