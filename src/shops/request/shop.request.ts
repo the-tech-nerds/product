@@ -7,4 +7,6 @@ export class ShopRequest {
   description?: string;
 
   address?: string;
+
+  type_id?: number;
 }

@@ -23,6 +23,9 @@ export class Shop extends BaseEntity {
   })
   description: string;
 
+  @Column('integer', { default: ShopTypes[0].value })
+  type_id: number;
+
   @Column({
     type: 'text',
     nullable: true,
