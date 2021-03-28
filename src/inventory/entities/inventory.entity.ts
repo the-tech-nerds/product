@@ -7,7 +7,7 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
-import { ProductVariance } from '../../products/entities/product-variance.entity';
+// import { ProductVariance } from '../../products/entities/product-variance.entity';
 import { Shop } from '../../shops/entities/shop.entity';
 
 export class Inventory extends BaseEntity {
@@ -23,12 +23,12 @@ export class Inventory extends BaseEntity {
   @Column({ type: 'int', nullable: false })
   product_variance_id: number;
 
-  @ManyToOne(
-    () => ProductVariance,
-    productVariance => productVariance.inventories,
-  )
-  @JoinColumn({ name: 'product_variance_id' })
-  productVariance: ProductVariance;
+  // @ManyToOne(
+  //   () => ProductVariance,
+  //   productVariance => productVariance.inventories,
+  // )
+  // @JoinColumn({ name: 'product_variance_id' })
+  // productVariance: ProductVariance;
 
   @ManyToMany(
     () => Shop,

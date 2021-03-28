@@ -63,9 +63,9 @@ export class ProductVariance extends BaseEntity {
   @Column({ nullable: true })
   unit_value: string;
 
-  @OneToMany(
-    () => Inventory,
-    inventory => inventory.productVariance,
-  )
-  inventories!: Inventory[];
+  // @OneToMany(
+  //   () => Inventory,
+  //   inventory => inventory.productVariance,
+  // )
+  // inventories!: Inventory[];
 }
