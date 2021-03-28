@@ -1,5 +1,6 @@
 import {
   Column,
+  Entity,
   JoinColumn,
   JoinTable,
   ManyToMany,
@@ -10,6 +11,7 @@ import BaseEntity from '../../utils/entities/base-entity';
 import { ProductVariance } from '../../products/entities/product-variance.entity';
 import { Shop } from '../../shops/entities/shop.entity';
 
+@Entity({ name: 'inventories' })
 export class Inventory extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

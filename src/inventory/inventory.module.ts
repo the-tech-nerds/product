@@ -9,15 +9,20 @@ import { DeleteInventoryService } from './service/delete-inventory.service';
 import { ListInventoryService } from './service/fetch-all-inventory.service';
 import { FetchInventoryByIdService } from './service/fetch-inventory-by-id.service';
 import { UpdateInventoryService } from './service/update-inventory.service';
+import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service';
+import { Shop } from '../shops/entities/shop.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Inventory]), CommonModule],
+  imports: [TypeOrmModule.forFeature([Inventory, Shop]), CommonModule],
   providers: [
     CreateInventoryService,
     UpdateInventoryService,
     DeleteInventoryService,
     FetchInventoryByIdService,
     ListInventoryService,
+
+    FetchShopByIdService,
+
     ApiResponseService,
   ],
   controllers: [InventoryController],
