@@ -3,8 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ProductVariance } from 'src/products/entities/product-variance.entity';
 import { Repository } from 'typeorm';
 import { ProductVarianceRequest } from '../../requests/product-variance.request';
-
-const { v4: uuidv4 } = require('uuid');
+import { LocalDateToUtc } from '../../../utils/date-time-conversion/date-time-conversion';
+import { generateSku } from '../../../utils/utils';
 
 @Injectable()
 class CreateProductVarianceService {
@@ -17,9 +17,13 @@ class CreateProductVarianceService {
     userId: number,
     productVarianceRequest: ProductVarianceRequest,
   ): Promise<ProductVariance> {
-    productVarianceRequest.sku = `p-${productVarianceRequest.price}-i-${
-      productVarianceRequest.product_id
-    }-${uuidv4()}`;
+    // eslint-disable-next-line max-len
+    const skuRequest: SkuModel = {
+      price: productVarianceRequest.price,
+      productId: productVarianceRequest.product_id,
+      date: LocalDateToUtc(new Date()),
+    };
+    productVarianceRequest.sku = generateSku(skuRequest);
 
     return this.productVarianceRepository.save({
       ...productVarianceRequest,
