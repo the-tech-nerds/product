@@ -20,6 +20,7 @@ import { ShopModule } from './shops/shop.module';
 import * as ormconfig from './database';
 import { SupplierModule } from './suppliers/supplier.module';
 import { CommonModule } from './common/common.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CommonModule } from './common/common.module';
     CacheModule,
     ShopModule,
     ProductModule,
+    InventoryModule,
     SupplierModule,
     CategoryModule,
     BrandModule,

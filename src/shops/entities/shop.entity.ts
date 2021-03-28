@@ -1,6 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToMany,
+} from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from '../../products/entities/product.entity';
+import { Inventory } from '../../inventory/entities/inventory.entity';
 
 @Entity({ name: 'shops' })
 export class Shop extends BaseEntity {
@@ -27,4 +34,10 @@ export class Shop extends BaseEntity {
     product => product.shop,
   )
   products!: Product[];
+
+  @ManyToMany(
+    () => Inventory,
+    (inventories: Inventory) => inventories.shops,
+  )
+  inventories: Inventory[];
 }
