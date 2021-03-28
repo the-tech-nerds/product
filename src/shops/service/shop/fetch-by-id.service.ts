@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { FileStorageService } from 'src/common/file/filte.service';
 import { Repository } from 'typeorm';
 import { Shop } from '../../entities/shop.entity';
-import { Category } from '../../../categories/entities/category.entity';
 
 @Injectable()
 export class FetchShopByIdService {
