@@ -11,7 +11,6 @@ class CreateProductService {
   constructor(
     @InjectRepository(Product)
     private productRepository: Repository<Product>,
-    // private categoryRepository: Cate<Product>,
     private fetchCategoryByIdService: FetchCategoryByIdService,
   ) {}
 
