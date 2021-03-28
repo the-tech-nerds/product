@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LocalDateToUtc } from 'src/utils/date-time-conversion/date-time-conversion';
 import { Inventory } from '../entities/inventory.entity';
 import { InventoryRequest } from '../request/inventory.request';
+import { Shop } from '../../shops/entities/shop.entity';
 
 @Injectable()
 class UpdateInventoryService {
@@ -22,7 +23,21 @@ class UpdateInventoryService {
       updated_by: userId,
       updated_at: LocalDateToUtc(new Date()),
     });
-    return this.inventoryRepository.findOne(id);
+    const updatedInventory = await this.inventoryRepository.findOneOrFail(id);
+
+    let shopList: Shop[] | null = null;
+    if (inventoryRequest.shop_ids) {
+      // @ts-ignore
+      shopList = await this.fetchShopByIdService.getMultiShops(
+        inventoryRequest.shop_ids,
+      );
+      if (!shopList) {
+        throw new BadRequestException('Not a valid shop');
+      }
+    }
+
+    updatedInventory.shops = shopList || [];
+    return this.inventoryRepository.save(updatedInventory);
   }
 }
 export { UpdateInventoryService };
