@@ -5,6 +5,7 @@ import {
   OneToMany,
   ManyToMany,
 } from 'typeorm';
+import { ShopTypes } from '@the-tech-nerds/common-services';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from '../../products/entities/product.entity';
 import { Inventory } from '../../inventory/entities/inventory.entity';
