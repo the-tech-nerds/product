@@ -24,6 +24,7 @@ import { ListCategoryService } from '../service/list-category.service';
 import { ChangeStatusService } from '../service/change-status.service';
 import { DeleteCategoryService } from '../service/delete-category.service';
 import { MenuCategoryService } from '../service/menu-category';
+import { FetchCategoryBySlugService } from '../service/fetch-category-by-slug.service';
 
 @Controller()
 export class CategoryController {
@@ -36,6 +37,7 @@ export class CategoryController {
     private readonly changeStatusService: ChangeStatusService,
     private readonly deleteCategoryService: DeleteCategoryService,
     private readonly menuCategoryService: MenuCategoryService,
+    private readonly fetchCategoryBySlugService: FetchCategoryBySlugService,
   ) {}
 
   @UseGuards(UserGuard)
@@ -97,6 +99,19 @@ export class CategoryController {
     return this.apiResponseService.successResponse(
       ['Category fetched successfully'],
       data as Category,
+      res,
+    );
+  }
+
+  @Get('/slug/:slug')
+  async getCategoryBySlug(
+    @Param('slug') slug: string,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.fetchCategoryBySlugService.execute(slug);
+    return this.apiResponseService.successResponse(
+      ['Category fetched successfully'],
+      data,
       res,
     );
   }
