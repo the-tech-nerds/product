@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LocalDateToUtc } from 'src/utils/date-time-conversion/date-time-conversion';
-import { Inventory } from '../entities/inventory.entity';
+import { Inventory, InventoryStatusType } from '../entities/inventory.entity';
 import { InventoryRequest } from '../request/inventory.request';
 import { Shop } from '../../shops/entities/shop.entity';
 
@@ -39,5 +39,16 @@ class UpdateInventoryService {
     updatedInventory.shops = shopList || [];
     return this.inventoryRepository.save(updatedInventory);
   }
+
+  async changeStatus(id: number): Promise<Inventory | undefined | void> {
+    const inventory = await this.inventoryRepository.findOneOrFail(id);
+    inventory.status =
+      inventory.status === InventoryStatusType.DRAFT
+        ? InventoryStatusType.ACTIVE
+        : InventoryStatusType.DRAFT;
+
+    return this.inventoryRepository.save(inventory);
+  }
 }
+
 export { UpdateInventoryService };

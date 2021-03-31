@@ -13,7 +13,7 @@ export class InventoryRequest {
   @IsNotEmpty({ message: 'Shop is required.' })
   shop_ids: number[];
 
-  status?: boolean;
+  status?: number;
 
   stock_in_time?: Date;
 }

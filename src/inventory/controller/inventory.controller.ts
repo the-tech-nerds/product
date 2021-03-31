@@ -100,6 +100,24 @@ export class InventoryController {
 
   @UseGuards(UserGuard)
   @HasPermissions(
+    [PermissionTypes.INVENTORY.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Put('/:id/status')
+  async changeInventoryStatus(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.updateInventoryService.changeStatus(id);
+    return this.apiResponseService.successResponse(
+      ['Inventory status updated successfully'],
+      data as Inventory,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @HasPermissions(
     [PermissionTypes.INVENTORY.GET],
     PermissionTypeEnum.hasPermission,
   )
