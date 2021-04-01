@@ -11,6 +11,7 @@ import { FetchCategoryByIdService } from './service/fetch-category-by-id.service
 import { ListCategoryService } from './service/list-category.service';
 import { ChangeStatusService } from './service/change-status.service';
 import { MenuCategoryService } from './service/menu-category';
+import { FetchCategoryBySlugService } from './service/fetch-category-by-slug.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Category]), CommonModule],
@@ -23,6 +24,7 @@ import { MenuCategoryService } from './service/menu-category';
     ChangeStatusService,
     ApiResponseService,
     MenuCategoryService,
+    FetchCategoryBySlugService,
   ],
   controllers: [CategoryController],
   exports: [FetchCategoryByIdService],

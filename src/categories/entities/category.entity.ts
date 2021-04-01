@@ -6,6 +6,7 @@ import {
   Index,
 } from 'typeorm';
 import { ShopTypes } from '@the-tech-nerds/common-services';
+import { FileStorage } from '../../common/file/entities/storage.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from '../../products/entities/product.entity';
 
@@ -35,4 +36,6 @@ export class Category extends BaseEntity {
     (products: Product) => products.categories,
   )
   products!: Product[];
+
+  files: FileStorage[];
 }
