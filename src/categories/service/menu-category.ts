@@ -1,25 +1,29 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, IsNull } from 'typeorm';
+import { getConnection } from 'typeorm';
+import { FileStorage } from '../../common/file/entities/storage.entity';
 import { Category } from '../entities/category.entity';
 
 @Injectable()
 export class MenuCategoryService {
-  constructor(
-    @InjectRepository(Category)
-    private categoryRepository: Repository<Category>,
-  ) {}
-
   async execute(): Promise<any> {
-    const data = await this.categoryRepository.find({
-      deleted_at: IsNull(),
-      is_active: true,
-    });
+    const data = await getConnection()
+      .createQueryBuilder()
+      .select('category')
+      .from(Category, 'category')
+      .leftJoinAndMapMany(
+        'category.files',
+        FileStorage,
+        'file',
+        'category.id = file.type_id and file.type ="category"',
+      )
+      .where('category.is_active =1')
+      .getMany();
     const mapData = data.map((category: any, index: any) => ({
       id: category.id,
       name: category.name,
       parent_id: category.parent_id,
       slug: category.slug,
+      images: category.files.map((x: FileStorage) => x.url),
       is_active: category.is_active,
       icon: !category.parent_id ? 'snowflake-o' : null,
     }));
