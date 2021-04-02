@@ -82,6 +82,7 @@ export class ShopController {
     @Body() shopRequest: ShopRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
+    console.log(shopRequest);
     const data = await this.updateShopService.execute(id, userId, shopRequest);
     return this.apiResponseService.successResponse(
       ['Shop has been updated successfully'],
