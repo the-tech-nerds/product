@@ -5,6 +5,7 @@ import { ProductRequest } from 'src/products/requests/product.request';
 import { FetchCategoryByIdService } from 'src/categories/service/fetch-category-by-id.service';
 import { Repository } from 'typeorm';
 import { Category } from 'src/categories/entities/category.entity';
+import { convertToSlug } from 'src/utils/utils';
 
 @Injectable()
 class CreateProductService {
@@ -20,6 +21,7 @@ class CreateProductService {
   ): Promise<Product> {
     const product = await this.productRepository.save({
       ...productRequest,
+      slug: convertToSlug(productRequest.name),
       created_by: userId,
     });
 
@@ -38,5 +40,4 @@ class CreateProductService {
     return this.productRepository.save(product);
   }
 }
-
 export { CreateProductService };

@@ -44,6 +44,12 @@ export class Product extends BaseEntity {
   })
   brand_id: number;
 
+  @Column({
+    type: 'text',
+    nullable: false,
+  })
+  slug: string;
+
   @Index()
   @JoinColumn({ name: 'brand_id' })
   @ManyToOne(

@@ -21,3 +21,10 @@ export const generateSku = (skuModel: SkuModel): string =>
   `p-${skuModel.price}-i-${skuModel.productId}-dt-${
     skuModel.date
   }-ud-${uuidv4()}`;
+
+export const convertToSlug = (Text: string) => {
+  const slug = `${Text.toLowerCase()
+    .replace(/ /g, '-')
+    .replace(/[^\w-]+/g, '')}-${String(new Date().valueOf())}`;
+  return slug;
+};
