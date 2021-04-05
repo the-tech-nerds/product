@@ -44,10 +44,8 @@ export class Product extends BaseEntity {
   })
   brand_id: number;
 
-  @Column({
-    type: 'text',
-    nullable: false,
-  })
+  @Column({ nullable: true })
+  @Index({ unique: true })
   slug: string;
 
   @Index()

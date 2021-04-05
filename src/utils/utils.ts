@@ -22,8 +22,9 @@ export const generateSku = (skuModel: SkuModel): string =>
     skuModel.date
   }-ud-${uuidv4()}`;
 
-export const convertToSlug = (Text: string) => {
-  const slug = `${Text.toLowerCase()
+export const convertToSlug = (text: string) => {
+  const slug = `${text
+    .toLowerCase()
     .replace(/ /g, '-')
     .replace(/[^\w-]+/g, '')}-${String(new Date().valueOf())}`;
   return slug;
