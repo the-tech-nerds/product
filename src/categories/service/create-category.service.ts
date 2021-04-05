@@ -1,6 +1,7 @@
-import { Injectable, BadRequestException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { convertToSlug } from '../../utils/utils';
 import { Category } from '../entities/category.entity';
 import { CategoryRequest } from '../request/category.request';
 
@@ -18,14 +19,9 @@ export class CreateCategoryService {
     categoryRequest.parent_id = categoryRequest.parent_id
       ? categoryRequest.parent_id
       : 0;
-    const slug = await this.categoryRepository.find({
-      slug: categoryRequest.slug,
-    });
-    if (slug) {
-      throw new BadRequestException('Slug must be unique.');
-    }
     const category = await this.categoryRepository.save({
       ...categoryRequest,
+      slug: convertToSlug(categoryRequest.name),
       created_by: userId,
     });
 
