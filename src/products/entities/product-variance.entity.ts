@@ -45,6 +45,12 @@ export class ProductVariance extends BaseEntity {
   @Column({ default: true })
   status: boolean;
 
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  description: string;
+
   @Index()
   @JoinColumn({ name: 'product_id' })
   @ManyToOne(
