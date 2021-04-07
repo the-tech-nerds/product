@@ -1,7 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 import { ShopTypes } from '@the-tech-nerds/common-services';
 import BaseEntity from '../../utils/entities/base-entity';
-import { Product } from '../../products/entities/product.entity';
 import { ProductVariance } from '../../products/entities/product-variance.entity';
 import { Inventory } from '../../inventory/entities/inventory.entity';
 
@@ -33,13 +32,6 @@ export class Shop extends BaseEntity {
   //   (product: Product) => product.shop,
   // )
   // products!: Product[];
-
-  @ManyToMany(
-    () => ProductVariance,
-    (productVariance: ProductVariance) => productVariance.shops,
-    { eager: true },
-  )
-  products!: Product[];
 
   @ManyToMany(
     () => Inventory,

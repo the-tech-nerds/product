@@ -3,6 +3,7 @@ import {
   Entity,
   Index,
   JoinColumn,
+  JoinTable,
   ManyToMany,
   ManyToOne,
   OneToMany,
@@ -59,6 +60,7 @@ export class ProductVariance extends BaseEntity {
     () => Shop,
     (shop: Shop) => shop.productVariances,
   )
+  @JoinTable({ name: 'shop_has_variances' })
   shops: Shop[];
 
   @JoinColumn({ name: 'unit_id' })
