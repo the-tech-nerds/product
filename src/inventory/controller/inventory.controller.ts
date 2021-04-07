@@ -64,7 +64,7 @@ export class InventoryController {
     [PermissionTypes.INVENTORY.GET],
     PermissionTypeEnum.hasPermission,
   )
-  @Get('/list/all')
+  @Get('/')
   async getInventorys(@Res() res: Response): Promise<Response<ResponseModel>> {
     const data = await this.listInventoryService.execute();
     return this.apiResponseService.successResponse(
