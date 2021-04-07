@@ -34,7 +34,7 @@ class UpdateProductVarianceService {
     let shops: Shop[] | null = null;
     if (shop_ids) {
       // @ts-ignore
-      shops = await this.shopByIdsService.findByIds(shop_ids);
+      shops = await this.shopByIdsService.getMultiShops(shop_ids);
       if (!shops) {
         throw new BadRequestException('Not the valid shops');
       }
