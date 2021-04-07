@@ -17,4 +17,6 @@ export class ProductVarianceRequest {
   unit_id?: number;
 
   unit_value?: string;
+
+  description?: string;
 }
