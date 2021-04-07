@@ -13,7 +13,7 @@ export class ListProductVarianceService {
   async execute(productId: number): Promise<ProductVariance[]> {
     return this.productVarianceRepository.find({
       where: { product_id: productId },
-      relations: ['product', 'unit'],
+      relations: ['product', 'unit', 'shops'],
     });
   }
 }

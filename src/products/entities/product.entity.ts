@@ -12,7 +12,6 @@ import {
 import BaseEntity from '../../utils/entities/base-entity';
 import { Category } from '../../categories/entities/category.entity';
 import { Brand } from '../../brands/entities/brand.entity';
-import { Shop } from '../../shops/entities/shop.entity';
 import { ProductVariance } from './product-variance.entity';
 
 @Entity({ name: 'products' })
@@ -52,13 +51,13 @@ export class Product extends BaseEntity {
   )
   brand: Brand;
 
-  @Index()
-  @ManyToOne(
-    () => Shop,
-    (shop: Shop) => shop.products,
-  )
-  @JoinColumn({ name: 'shop_id' })
-  shop: Shop;
+  // @Index()
+  // @ManyToOne(
+  //   () => Shop,
+  //   (shop: Shop) => shop.products,
+  // )
+  // @JoinColumn({ name: 'shop_id' })
+  // shop: Shop;
 
   @ManyToMany(
     () => Category,
