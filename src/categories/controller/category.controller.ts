@@ -25,6 +25,7 @@ import { ChangeStatusService } from '../service/change-status.service';
 import { DeleteCategoryService } from '../service/delete-category.service';
 import { MenuCategoryService } from '../service/menu-category';
 import { FetchCategoryBySlugService } from '../service/fetch-category-by-slug.service';
+import { FetchCategoryByShopService } from '../service/fetch-category-by-shop.service';
 
 @Controller()
 export class CategoryController {
@@ -38,6 +39,7 @@ export class CategoryController {
     private readonly deleteCategoryService: DeleteCategoryService,
     private readonly menuCategoryService: MenuCategoryService,
     private readonly fetchCategoryBySlugService: FetchCategoryBySlugService,
+    private readonly fetchCategoryByShopService: FetchCategoryByShopService,
   ) {}
 
   @UseGuards(UserGuard)
@@ -117,6 +119,20 @@ export class CategoryController {
   }
 
   @UseGuards(UserGuard)
+  @Get('/shop/:shopId')
+  async getCategoryByShop(
+    @Param('shopId') shopId: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.fetchCategoryByShopService.execute(shopId);
+    return this.apiResponseService.successResponse(
+      ['Category fetched successfully'],
+      data,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
   @Put('/:id/status')
   async changeCategoryStatus(
     @Param('id') id: number,
@@ -132,7 +148,7 @@ export class CategoryController {
 
   @UseGuards(UserGuard)
   @Delete('/:id')
-  async DeleteCategory(
+  async deleteCategory(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {

@@ -77,6 +77,30 @@ export class ProductController {
 
   @UseGuards(UserGuard)
   @HasPermissions(
+    [PermissionTypes.PRODUCT.GET],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Get('/category/:categoryId')
+  async getProductsFromCategory(
+    @Res() res: Response,
+    @Param('categoryId') categoryId: number,
+  ): Promise<Response<ResponseModel>> {
+    try {
+      const data = await this.listProductsService.getProductsFromCategory(
+        categoryId,
+      );
+      return this.apiResponseService.successResponse(
+        ['Product list fetched successfully'],
+        data as Product[],
+        res,
+      );
+    } catch (e) {
+      return this.apiResponseService.internalServerError([e.toString()], res);
+    }
+  }
+
+  @UseGuards(UserGuard)
+  @HasPermissions(
     [PermissionTypes.PRODUCT.UPDATE],
     PermissionTypeEnum.hasPermission,
   )
@@ -144,7 +168,7 @@ export class ProductController {
     PermissionTypeEnum.hasPermission,
   )
   @Delete('/:id')
-  async DeleteProduct(
+  async deleteProduct(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
