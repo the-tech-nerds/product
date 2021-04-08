@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { convertToSlug } from 'src/utils/utils';
 import { LocalDateToUtc } from '../../../utils/date-time-conversion/date-time-conversion';
 import { ProductRequest } from '../../requests/product.request';
 import { Product } from '../../entities/product.entity';
@@ -24,6 +25,7 @@ class UpdateProductService {
     await this.productRepository.update(id, {
       ...productRequest,
       updated_by: userId,
+      slug: convertToSlug(productRequest.name),
       updated_at: LocalDateToUtc(new Date()),
     });
     const updatedProduct = await this.productRepository.findOneOrFail(id);

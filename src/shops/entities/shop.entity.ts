@@ -25,6 +25,10 @@ export class Shop extends BaseEntity {
     type: 'text',
     nullable: true,
   })
+  @Column({ default: true })
+  is_active: boolean;
+
+  @Column()
   address: string;
 
   // @OneToMany(

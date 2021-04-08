@@ -23,4 +23,6 @@ export class ProductVarianceRequest {
     message: 'Product variance need to assign under at-least a shop',
   })
   shop_ids: number[];
+
+  description?: string;
 }

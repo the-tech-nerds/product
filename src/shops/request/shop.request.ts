@@ -9,4 +9,6 @@ export class ShopRequest {
   address?: string;
 
   type_id?: number;
+
+  is_active?: boolean;
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LocalDateToUtc } from 'src/utils/date-time-conversion/date-time-conversion';
+import { convertToSlug } from 'src/utils/utils';
 import { Category } from '../entities/category.entity';
 import { CategoryRequest } from '../request/category.request';
 
@@ -20,6 +21,7 @@ export class UpdateCategoryService {
     await this.categoryRepository.update(id, {
       ...categoryRequest,
       updated_by: userId,
+      slug: convertToSlug(categoryRequest.name),
       updated_at: LocalDateToUtc(new Date()),
     });
     return this.categoryRepository.findOne(id);
