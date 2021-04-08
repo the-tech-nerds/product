@@ -14,9 +14,8 @@ export class FetchCategoryByShopService {
 
   async execute(shopId: number): Promise<any | undefined> {
     const shop = await this.fetchShopByIdService.execute(shopId);
-
     return this.categoryRepository.find({
-      type_id: shop.type_id,
+      type_id: shop?.shop?.type_id,
       deleted_at: IsNull(),
     });
   }

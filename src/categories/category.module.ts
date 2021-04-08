@@ -14,9 +14,10 @@ import { MenuCategoryService } from './service/menu-category';
 import { FetchCategoryBySlugService } from './service/fetch-category-by-slug.service';
 import { FetchCategoryByShopService } from './service/fetch-category-by-shop.service';
 import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service';
+import { Shop } from '../shops/entities/shop.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Category]), CommonModule],
+  imports: [TypeOrmModule.forFeature([Category, Shop]), CommonModule],
   providers: [
     CreateCategoryService,
     UpdateCategoryService,

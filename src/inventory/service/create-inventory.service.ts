@@ -20,6 +20,7 @@ class CreateInventoryService {
     inventoryRequest: InventoryRequest,
   ): Promise<Inventory> {
     inventoryRequest.stock_in_time = LocalDateToUtc(new Date());
+    console.log(inventoryRequest);
     const inventory = await this.inventoryRepository.save({
       ...inventoryRequest,
       created_by: userId,

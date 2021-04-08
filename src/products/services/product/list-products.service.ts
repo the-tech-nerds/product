@@ -20,7 +20,6 @@ export class ListProductsService {
 
   async getProductsFromCategory(categoryId: number): Promise<Product[]> {
     const category = await this.fetchCategoryByIdService.execute(categoryId);
-
-    return category.products;
+    return category?.category?.products || [];
   }
 }
