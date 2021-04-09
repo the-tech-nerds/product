@@ -25,6 +25,7 @@ import { DeleteInventoryService } from '../service/delete-inventory.service';
 import { ListInventoryService } from '../service/fetch-all-inventory.service';
 import { FetchInventoryByIdService } from '../service/fetch-inventory-by-id.service';
 import { UpdateInventoryService } from '../service/update-inventory.service';
+import { InventoryUpdateRequest } from '../request/inventory-update.request';
 
 @Controller()
 export class InventoryController {
@@ -83,13 +84,13 @@ export class InventoryController {
   async updateInventory(
     @CurrentUser('id') userId: any,
     @Param('id') id: number,
-    @Body() inventoryRequest: InventoryRequest,
+    @Body() inventoryUpdateRequest: InventoryUpdateRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.updateInventoryService.execute(
       id,
       userId,
-      inventoryRequest,
+      inventoryUpdateRequest,
     );
     return this.apiResponseService.successResponse(
       ['Inventory has been updated successfully'],

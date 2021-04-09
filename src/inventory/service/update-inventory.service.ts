@@ -1,35 +1,50 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { LocalDateToUtc } from 'src/utils/date-time-conversion/date-time-conversion';
 import { Inventory, InventoryStatusType } from '../entities/inventory.entity';
 import { InventoryRequest } from '../request/inventory.request';
-import { Shop } from '../../shops/entities/shop.entity';
+import { InventoryUpdateRequest } from '../request/inventory-update.request';
 
 @Injectable()
 class UpdateInventoryService {
   constructor(
     @InjectRepository(Inventory)
     private inventoryRepository: Repository<Inventory>,
+    private inventoryRequest: InventoryRequest,
   ) {}
 
   async execute(
     id: number,
     userId: number,
-    inventoryRequest: InventoryRequest,
-  ): Promise<Inventory | undefined> {
+    inventoryUpdateRequest: InventoryUpdateRequest,
+  ): Promise<Inventory> {
+    const inventory = await this.inventoryRepository.findOneOrFail(id);
+
+    this.inventoryRequest = {
+      price: inventoryUpdateRequest.price,
+      stock_count: inventoryUpdateRequest.stock_count,
+      product_variance_id: inventory.product_variance_id,
+      shop_ids: [],
+    };
+
+    delete this.inventoryRequest.shop_ids;
+
     await this.inventoryRepository.update(id, {
-      ...inventoryRequest,
+      ...this.inventoryRequest,
       updated_by: userId,
       updated_at: LocalDateToUtc(new Date()),
     });
-    const updatedInventory = await this.inventoryRepository.findOneOrFail(id);
+
+    return this.inventoryRepository.findOneOrFail(id);
+
+    /* const updatedInventory = await this.inventoryRepository.findOneOrFail(id);
 
     let shopList: Shop[] | null = null;
-    if (inventoryRequest.shop_ids) {
+    if (inventoryUpdateRequest.shop_ids) {
       // @ts-ignore
       shopList = await this.fetchShopByIdService.getMultiShops(
-        inventoryRequest.shop_ids,
+        inventoryUpdateRequest.shop_ids,
       );
       if (!shopList) {
         throw new BadRequestException('Not a valid shop');
@@ -37,7 +52,7 @@ class UpdateInventoryService {
     }
 
     updatedInventory.shops = shopList || [];
-    return this.inventoryRepository.save(updatedInventory);
+    return this.inventoryRepository.save(updatedInventory); */
   }
 
   async changeStatus(id: number): Promise<Inventory | undefined | void> {

@@ -11,6 +11,7 @@ import { FetchInventoryByIdService } from './service/fetch-inventory-by-id.servi
 import { UpdateInventoryService } from './service/update-inventory.service';
 import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service';
 import { Shop } from '../shops/entities/shop.entity';
+import { InventoryRequest } from './request/inventory.request';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Inventory, Shop]), CommonModule],
@@ -24,6 +25,8 @@ import { Shop } from '../shops/entities/shop.entity';
     FetchShopByIdService,
 
     ApiResponseService,
+
+    InventoryRequest,
   ],
   controllers: [InventoryController],
 })
