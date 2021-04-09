@@ -122,12 +122,12 @@ export class ProductController {
     );
   }
 
-  @Get('/public/:id')
+  @Get('/public/:slug')
   async getPublicProductById(
-    @Param('id') id: number,
+    @Param('slug') slug: string,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    const data = await this.productDetailsService.execute(id);
+    const data = await this.productDetailsService.execute(slug);
     return this.apiResponseService.successResponse(
       ['Product fetched successfully'],
       data,

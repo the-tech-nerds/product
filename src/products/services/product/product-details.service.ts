@@ -7,7 +7,7 @@ import { Unit } from '../../entities/unit.entity';
 
 @Injectable()
 export class ProductDetailsService {
-  async execute(productId: number): Promise<any | undefined> {
+  async execute(slug: string): Promise<any | undefined> {
     const product = await getConnection()
       .createQueryBuilder()
       .select('product')
@@ -18,7 +18,7 @@ export class ProductDetailsService {
         'file',
         'product.id = file.type_id and file.type ="product"',
       )
-      .where(`product.id =${productId}`)
+      .where(`product.slug =${slug}`)
       .getOne();
     const productVariance = await getConnection()
       .createQueryBuilder()
@@ -36,7 +36,7 @@ export class ProductDetailsService {
         'unit',
         'variance.unit_id = unit.id',
       )
-      .where(`variance.product_id =${productId}`)
+      .where(`variance.id =${product?.id}`)
       .getMany();
 
     const productInfo = {
@@ -55,7 +55,6 @@ export class ProductDetailsService {
       unit_value: v.unit_value,
       unit_name: v.unit.name,
       images: v.files.map((f: FileStorage) => f.url),
-      inventories: v.inventories,
     }));
     return {
       productInfo,
