@@ -4,6 +4,7 @@ import { ProductModule } from './products/product.module';
 import { ShopModule } from './shops/shop.module';
 import { CategoryModule } from './categories/category.module';
 import { SupplierModule } from './suppliers/supplier.module';
+import { WishlistModule } from './wishlist/wishlist.module';
 
 export const routes: Routes = [
   {
@@ -25,5 +26,9 @@ export const routes: Routes = [
   {
     path: '/brand',
     module: BrandModule,
+  },
+  {
+    path: '/wishlist',
+    module: WishlistModule,
   },
 ];
