@@ -36,7 +36,7 @@ export class ProductDetailsService {
         'unit',
         'variance.unit_id = unit.id',
       )
-      .where(`variance.id =${product?.id}`)
+      .where(`variance.product_id =${product?.id}`)
       .getMany();
 
     const productInfo = {
