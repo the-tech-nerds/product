@@ -11,6 +11,7 @@ import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from './product.entity';
 import { Unit } from './unit.entity';
 import { Inventory } from '../../inventory/entities/inventory.entity';
+import { FileStorage } from '../../common/file/entities/storage.entity';
 
 @Entity({ name: 'product_variances' })
 export class ProductVariance extends BaseEntity {
@@ -74,4 +75,6 @@ export class ProductVariance extends BaseEntity {
     inventory => inventory.productVariance,
   )
   inventories!: Inventory[];
+
+  files: FileStorage[];
 }

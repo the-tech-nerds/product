@@ -29,6 +29,7 @@ import { ProductVarianceController } from './controllers/product-variance.contro
 import { FetchCategoryByIdService } from '../categories/service/fetch-category-by-id.service';
 import { Category } from '../categories/entities/category.entity';
 import { CommonModule } from '../common/common.module';
+import { ProductDetailsService } from './services/product/product-details.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category]),
@@ -42,6 +43,7 @@ import { CommonModule } from '../common/common.module';
     UpdateProductService,
     FetchProductByIdService,
     DeleteProductService,
+    ProductDetailsService,
 
     ListProductVarianceService,
     CreateProductVarianceService,
