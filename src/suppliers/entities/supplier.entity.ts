@@ -30,9 +30,12 @@ export class Supplier extends BaseEntity {
 
   @Column({
     type: 'text',
-    nullable: false,
+    nullable: true,
   })
   email: string;
+
+  @Column({ default: true })
+  is_active: boolean;
 
   @OneToMany(
     type => Brand,
