@@ -43,7 +43,7 @@ export class ProductDetailsService {
       slug: product?.slug,
       name: product?.name,
       description: product?.description,
-      images: product?.files.map((f: FileStorage) => f.url),
+      images: product?.images.map((f: FileStorage) => f.url),
     };
     const varianceInfoes = productVariance.map((v: ProductVariance) => ({
       id: v.id,
@@ -54,7 +54,7 @@ export class ProductDetailsService {
       description: v.description,
       unit_value: v.unit_value,
       unit_name: v.unit.name,
-      images: v.files.map((f: FileStorage) => f.url),
+      images: v.images.map((f: FileStorage) => f.url),
     }));
     return {
       productInfo,

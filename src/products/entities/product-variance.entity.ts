@@ -76,5 +76,5 @@ export class ProductVariance extends BaseEntity {
   )
   inventories!: Inventory[];
 
-  files: FileStorage[];
+  images: FileStorage[];
 }

@@ -22,6 +22,7 @@ import { Product } from '../entities/product.entity';
 import { ProductRequest } from '../requests/product.request';
 import { ListProductsService } from '../services/product/list-products.service';
 import { CreateProductService } from '../services/product/create-product.service';
+import { CreateMockProductsService } from '../services/product/create-mock-products.service';
 import { UpdateProductService } from '../services/product/update-product.service';
 import { FetchProductByIdService } from '../services/product/fetch-product-by-id.service';
 import { DeleteProductService } from '../services/product/delete-product.service';
@@ -37,6 +38,7 @@ export class ProductController {
     private readonly fetchProductByIdService: FetchProductByIdService,
     private readonly deleteProductService: DeleteProductService,
     private readonly productDetailsService: ProductDetailsService,
+    private readonly createMockProductService: CreateMockProductsService,
   ) {}
 
   @UseGuards(UserGuard)
@@ -54,6 +56,19 @@ export class ProductController {
     return this.apiResponseService.successResponse(
       ['Product created successfully'],
       data as Product,
+      res,
+    );
+  }
+
+  @Post('/mock')
+  async createMockProducts(
+    @CurrentUser('id') userId: any,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    await this.createMockProductService.create();
+    return this.apiResponseService.successResponse(
+      ['Product created successfully'],
+      null,
       res,
     );
   }

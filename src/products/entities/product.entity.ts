@@ -79,5 +79,5 @@ export class Product extends BaseEntity {
   )
   productVariances: ProductVariance[];
 
-  files: FileStorage[];
+  images: FileStorage[];
 }
