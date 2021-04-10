@@ -21,12 +21,18 @@ export class Brand extends BaseEntity {
   @Column()
   description: string;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ default: true })
+  is_active: boolean;
+
+  @Column({ type: 'int', nullable: true })
   supplier_id: number;
 
   @ManyToOne(
     type => Supplier,
     supplier => supplier.brand,
+    {
+      cascade: ['update', 'insert'],
+    },
   )
   @JoinColumn({ name: 'supplier_id' })
   supplier: Supplier;

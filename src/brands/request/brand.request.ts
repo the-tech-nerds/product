@@ -4,7 +4,9 @@ export class BrandRequest {
   @IsNotEmpty({ message: 'Brand name is required.' })
   name: string;
 
-  supplier_id: number;
+  supplier_id?: number;
 
-  description: string;
+  description?: string;
+
+  is_active?: boolean;
 }
