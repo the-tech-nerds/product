@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Product } from 'src/products/entities/product.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-// import { ProductRequest } from 'src/products/requests/product.request';
 import { FetchCategoryByIdService } from 'src/categories/service/fetch-category-by-id.service';
 import { Repository } from 'typeorm';
 import { ProductVariance } from 'src/products/entities/product-variance.entity';
 import { FileStorage } from 'src/common/file/entities/storage.entity';
-// import { Category } from 'src/categories/entities/category.entity';
-// import { convertToSlug } from 'src/utils/utils';
 
 @Injectable()
 export class CreateMockProductsService {
@@ -79,24 +76,5 @@ export class CreateMockProductsService {
     await this.productVarianceRepository.save(productsVariances);
     await this.storageRepository.save(productImages);
     await this.storageRepository.save(productVarianceImages);
-    // const product = await this.productRepository.save({
-    //   ...productRequest,
-    //   slug: convertToSlug(productRequest.name),
-    //   created_by: userId,
-    // });
-
-    // let categoryList: Category[] | null = null;
-    // if (productRequest.category_ids) {
-    //   // @ts-ignore
-    //   categoryList = await this.fetchCategoryByIdService.getMultiCategories(
-    //     productRequest.category_ids,
-    //   );
-    //   if (!categoryList) {
-    //     throw new BadRequestException('Not a valid category');
-    //   }
-    // }
-
-    // product.categories = categoryList || [];
-    // return this.productRepository.save(product);
   }
 }
