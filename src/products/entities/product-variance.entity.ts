@@ -7,6 +7,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { FileStorage } from 'src/common/file/entities/storage.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from './product.entity';
 import { Unit } from './unit.entity';
@@ -74,4 +75,6 @@ export class ProductVariance extends BaseEntity {
     inventory => inventory.productVariance,
   )
   inventories!: Inventory[];
+
+  images: FileStorage[];
 }

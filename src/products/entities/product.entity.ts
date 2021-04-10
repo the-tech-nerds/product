@@ -9,6 +9,7 @@ import {
   Index,
   OneToMany,
 } from 'typeorm';
+import { FileStorage } from 'src/common/file/entities/storage.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Category } from '../../categories/entities/category.entity';
 import { Brand } from '../../brands/entities/brand.entity';
@@ -77,4 +78,6 @@ export class Product extends BaseEntity {
     (productVariance: ProductVariance) => productVariance.product,
   )
   productVariances: ProductVariance[];
+
+  images: FileStorage[];
 }
