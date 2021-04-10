@@ -7,11 +7,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { FileStorage } from 'src/common/file/entities/storage.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from './product.entity';
 import { Unit } from './unit.entity';
 import { Inventory } from '../../inventory/entities/inventory.entity';
+import { FileStorage } from '../../common/file/entities/storage.entity';
 
 @Entity({ name: 'product_variances' })
 export class ProductVariance extends BaseEntity {

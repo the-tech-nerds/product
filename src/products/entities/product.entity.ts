@@ -9,12 +9,12 @@ import {
   Index,
   OneToMany,
 } from 'typeorm';
-import { FileStorage } from 'src/common/file/entities/storage.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Category } from '../../categories/entities/category.entity';
 import { Brand } from '../../brands/entities/brand.entity';
 import { Shop } from '../../shops/entities/shop.entity';
 import { ProductVariance } from './product-variance.entity';
+import { FileStorage } from '../../common/file/entities/storage.entity';
 
 @Entity({ name: 'products' })
 export class Product extends BaseEntity {

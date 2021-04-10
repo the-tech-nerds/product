@@ -30,6 +30,7 @@ import { ProductVarianceController } from './controllers/product-variance.contro
 import { FetchCategoryByIdService } from '../categories/service/fetch-category-by-id.service';
 import { Category } from '../categories/entities/category.entity';
 import { CommonModule } from '../common/common.module';
+import { ProductDetailsService } from './services/product/product-details.service';
 import { CreateMockProductsService } from './services/product/create-mock-products.service';
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { CreateMockProductsService } from './services/product/create-mock-produc
     UpdateProductService,
     FetchProductByIdService,
     DeleteProductService,
+    ProductDetailsService,
 
     ListProductVarianceService,
     CreateProductVarianceService,

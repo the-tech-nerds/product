@@ -26,6 +26,7 @@ import { CreateMockProductsService } from '../services/product/create-mock-produ
 import { UpdateProductService } from '../services/product/update-product.service';
 import { FetchProductByIdService } from '../services/product/fetch-product-by-id.service';
 import { DeleteProductService } from '../services/product/delete-product.service';
+import { ProductDetailsService } from '../services/product/product-details.service';
 
 @Controller()
 export class ProductController {
@@ -36,6 +37,7 @@ export class ProductController {
     private readonly updateProductService: UpdateProductService,
     private readonly fetchProductByIdService: FetchProductByIdService,
     private readonly deleteProductService: DeleteProductService,
+    private readonly productDetailsService: ProductDetailsService,
     private readonly createMockProductService: CreateMockProductsService,
   ) {}
 
@@ -128,6 +130,19 @@ export class ProductController {
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchProductByIdService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Product fetched successfully'],
+      data,
+      res,
+    );
+  }
+
+  @Get('/public/:slug')
+  async getPublicProductById(
+    @Param('slug') slug: string,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.productDetailsService.execute(slug);
     return this.apiResponseService.successResponse(
       ['Product fetched successfully'],
       data,
