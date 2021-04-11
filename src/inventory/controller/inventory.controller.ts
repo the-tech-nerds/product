@@ -46,7 +46,7 @@ export class InventoryController {
   @Post('/')
   async createInventory(
     @CurrentUser('id') userId: any,
-    @Body() inventoryRequest: InventoryRequest,
+    @Body() inventoryRequest: InventoryRequest[],
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.createInventoryService.create(
@@ -55,7 +55,7 @@ export class InventoryController {
     );
     return this.apiResponseService.successResponse(
       ['Inventory created successfully'],
-      data as Inventory,
+      data as Inventory[],
       res,
     );
   }
