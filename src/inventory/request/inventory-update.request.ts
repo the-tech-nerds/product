@@ -1,19 +1,13 @@
 import { IsNotEmpty } from 'class-validator';
 
-export class InventoryRequest {
-  @IsNotEmpty({ message: 'Product Variance is required.' })
-  product_variance_id: number;
-
+export class InventoryUpdateRequest {
   @IsNotEmpty({ message: 'Stock quantity is required.' })
   stock_count: number;
 
   @IsNotEmpty({ message: 'Price is required.' })
   price: number;
 
-  @IsNotEmpty({ message: 'Shop is required.' })
-  shop_ids: number[];
-
-  status?: number;
+  shop_ids?: number[];
 
   stock_in_time?: Date;
 }

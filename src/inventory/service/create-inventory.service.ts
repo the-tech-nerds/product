@@ -17,27 +17,37 @@ class CreateInventoryService {
 
   async create(
     userId: number,
-    inventoryRequest: InventoryRequest,
-  ): Promise<Inventory> {
-    inventoryRequest.stock_in_time = LocalDateToUtc(new Date());
-    const inventory = await this.inventoryRepository.save({
-      ...inventoryRequest,
-      created_by: userId,
-    });
-
-    let shopList: Shop[] | null = null;
-    if (inventoryRequest.shop_ids) {
+    inventoryRequest: InventoryRequest[],
+  ): Promise<Inventory[]> {
+    const inventoryList: Inventory[] = [];
+    for (const inventory of inventoryRequest) {
       // @ts-ignore
-      shopList = await this.fetchShopByIdService.getMultiShops(
-        inventoryRequest.shop_ids,
-      );
-      if (!shopList) {
-        throw new BadRequestException('Not a valid shop');
-      }
-    }
+      const inventoryTemp = await this.inventoryRepository.save({
+        stock_in_time: LocalDateToUtc(new Date()),
+        product_variance_id: inventory.product_variance_id,
+        stock_count: inventory.stock_count,
+        price: inventory.price,
+        shop_ids: inventory.shop_ids,
+        status: inventory.status || 1,
+        created_by: userId,
+      });
 
-    inventory.shops = shopList || [];
-    return this.inventoryRepository.save(inventory);
+      let shopList: Shop[] | null = null;
+      if (inventory.shop_ids) {
+        // @ts-ignore
+        shopList = await this.fetchShopByIdService.getMultiShops(
+          inventory.shop_ids,
+        );
+        if (!shopList) {
+          throw new BadRequestException('Not a valid shop');
+        }
+      }
+
+      inventoryTemp.shops = shopList || [];
+      // @ts-ignore
+      inventoryList.push(await this.inventoryRepository.save(inventoryTemp));
+    }
+    return inventoryList;
   }
 }
 

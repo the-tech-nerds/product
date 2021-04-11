@@ -17,9 +17,14 @@ export class FetchCategoryByIdService {
       'category',
       categoryId,
     );
-    const item = await this.categoryRepository.findOne({
-      id: categoryId,
-    });
+    const item = await this.categoryRepository.findOne(
+      {
+        id: categoryId,
+      },
+      {
+        relations: ['products'],
+      },
+    );
     return {
       images: files,
       category: item,

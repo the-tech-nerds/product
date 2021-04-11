@@ -25,6 +25,7 @@ import { DeleteInventoryService } from '../service/delete-inventory.service';
 import { ListInventoryService } from '../service/fetch-all-inventory.service';
 import { FetchInventoryByIdService } from '../service/fetch-inventory-by-id.service';
 import { UpdateInventoryService } from '../service/update-inventory.service';
+import { InventoryUpdateRequest } from '../request/inventory-update.request';
 
 @Controller()
 export class InventoryController {
@@ -45,7 +46,7 @@ export class InventoryController {
   @Post('/')
   async createInventory(
     @CurrentUser('id') userId: any,
-    @Body() inventoryRequest: InventoryRequest,
+    @Body() inventoryRequest: InventoryRequest[],
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.createInventoryService.create(
@@ -54,7 +55,7 @@ export class InventoryController {
     );
     return this.apiResponseService.successResponse(
       ['Inventory created successfully'],
-      data as Inventory,
+      data as Inventory[],
       res,
     );
   }
@@ -64,8 +65,8 @@ export class InventoryController {
     [PermissionTypes.INVENTORY.GET],
     PermissionTypeEnum.hasPermission,
   )
-  @Get('/list/all')
-  async getInventorys(@Res() res: Response): Promise<Response<ResponseModel>> {
+  @Get('/')
+  async getInventories(@Res() res: Response): Promise<Response<ResponseModel>> {
     const data = await this.listInventoryService.execute();
     return this.apiResponseService.successResponse(
       ['Inventory list fetched successfully'],
@@ -83,17 +84,35 @@ export class InventoryController {
   async updateInventory(
     @CurrentUser('id') userId: any,
     @Param('id') id: number,
-    @Body() inventoryRequest: InventoryRequest,
+    @Body() inventoryUpdateRequest: InventoryUpdateRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.updateInventoryService.execute(
       id,
       userId,
-      inventoryRequest,
+      inventoryUpdateRequest,
     );
     return this.apiResponseService.successResponse(
       ['Inventory has been updated successfully'],
       data,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.INVENTORY.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Put('/:id/status')
+  async changeInventoryStatus(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.updateInventoryService.changeStatus(id);
+    return this.apiResponseService.successResponse(
+      ['Inventory status updated successfully'],
+      data as Inventory,
       res,
     );
   }

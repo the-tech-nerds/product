@@ -30,10 +30,14 @@ import { ProductVarianceController } from './controllers/product-variance.contro
 import { FetchCategoryByIdService } from '../categories/service/fetch-category-by-id.service';
 import { Category } from '../categories/entities/category.entity';
 import { CommonModule } from '../common/common.module';
+import { Shop } from '../shops/entities/shop.entity';
+import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service';
+
 import { ProductDetailsService } from './services/product/product-details.service';
 import { CreateMockProductsService } from './services/product/create-mock-products.service';
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category, Shop]),
     TypeOrmModule.forFeature([
       Product,
       ProductVariance,
@@ -45,7 +49,7 @@ import { CreateMockProductsService } from './services/product/create-mock-produc
   ],
   providers: [
     ApiResponseService,
-
+    FetchShopByIdService,
     ListProductsService,
     CreateProductService,
     CreateMockProductsService,

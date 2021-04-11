@@ -11,6 +11,11 @@ import BaseEntity from '../../utils/entities/base-entity';
 import { ProductVariance } from '../../products/entities/product-variance.entity';
 import { Shop } from '../../shops/entities/shop.entity';
 
+export enum InventoryStatusType {
+  ACTIVE = 1,
+  DRAFT = 0,
+}
+
 @Entity({ name: 'inventories' })
 export class Inventory extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -21,6 +26,13 @@ export class Inventory extends BaseEntity {
 
   @Column()
   stock_count: number;
+
+  @Column({
+    type: 'enum',
+    enum: InventoryStatusType,
+    default: InventoryStatusType.DRAFT,
+  })
+  status: InventoryStatusType;
 
   @Column({ type: 'int', nullable: false })
   product_variance_id: number;

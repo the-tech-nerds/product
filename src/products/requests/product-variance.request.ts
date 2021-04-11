@@ -1,4 +1,4 @@
-import { IsNotEmpty } from 'class-validator';
+import { ArrayMinSize, IsArray, IsNotEmpty } from 'class-validator';
 
 export class ProductVarianceRequest {
   @IsNotEmpty({ message: 'Product variance title is required.' })
@@ -17,6 +17,12 @@ export class ProductVarianceRequest {
   unit_id?: number;
 
   unit_value?: string;
+
+  @IsArray({ message: 'Product variance need to assign under at-least a shop' })
+  @ArrayMinSize(1, {
+    message: 'Product variance need to assign under at-least a shop',
+  })
+  shop_ids: number[];
 
   description?: string;
 }
