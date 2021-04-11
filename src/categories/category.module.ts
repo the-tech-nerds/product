@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiResponseService } from '@the-tech-nerds/common-services';
+import { Product } from 'src/products/entities/product.entity';
 import { CommonModule } from '../common/common.module';
 import { Category } from './entities/category.entity';
 import { CategoryController } from './controller/category.controller';
@@ -15,9 +16,10 @@ import { FetchCategoryBySlugService } from './service/fetch-category-by-slug.ser
 import { FetchCategoryByShopService } from './service/fetch-category-by-shop.service';
 import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service';
 import { Shop } from '../shops/entities/shop.entity';
+import { FetchProductsByCategorySlugService } from './service/fetch-products-by-category-slug.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Category, Shop]), CommonModule],
+  imports: [TypeOrmModule.forFeature([Category, Shop, Product]), CommonModule],
   providers: [
     CreateCategoryService,
     UpdateCategoryService,
@@ -28,6 +30,7 @@ import { Shop } from '../shops/entities/shop.entity';
     ApiResponseService,
     MenuCategoryService,
     FetchCategoryBySlugService,
+    FetchProductsByCategorySlugService,
     FetchCategoryByShopService,
     FetchShopByIdService,
   ],

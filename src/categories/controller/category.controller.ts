@@ -2,6 +2,8 @@ import {
   ApiResponseService,
   CurrentUser,
   UserGuard,
+  Paginate,
+  PaginateQuery,
 } from '@the-tech-nerds/common-services';
 import {
   Body,
@@ -26,6 +28,7 @@ import { DeleteCategoryService } from '../service/delete-category.service';
 import { MenuCategoryService } from '../service/menu-category';
 import { FetchCategoryBySlugService } from '../service/fetch-category-by-slug.service';
 import { FetchCategoryByShopService } from '../service/fetch-category-by-shop.service';
+import { FetchProductsByCategorySlugService } from '../service/fetch-products-by-category-slug.service';
 
 @Controller()
 export class CategoryController {
@@ -39,6 +42,7 @@ export class CategoryController {
     private readonly deleteCategoryService: DeleteCategoryService,
     private readonly menuCategoryService: MenuCategoryService,
     private readonly fetchCategoryBySlugService: FetchCategoryBySlugService,
+    private readonly fetchProductsByCategorySlugService: FetchProductsByCategorySlugService,
     private readonly fetchCategoryByShopService: FetchCategoryByShopService,
   ) {}
 
@@ -105,6 +109,23 @@ export class CategoryController {
     );
   }
 
+  @Get('/:slug/products')
+  async getProductsByCategorySlug(
+    @Param('slug') slug: string,
+    @Paginate() query: PaginateQuery,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.fetchProductsByCategorySlugService.execute(
+      slug,
+      query,
+    );
+    return this.apiResponseService.successResponse(
+      ['Products fetched successfully'],
+      data,
+      res,
+    );
+  }
+
   @Get('/slug/:slug')
   async getCategoryBySlug(
     @Param('slug') slug: string,
@@ -166,7 +187,7 @@ export class CategoryController {
   ): Promise<Response<ResponseModel>> {
     const data = await this.menuCategoryService.execute();
     return this.apiResponseService.successResponse(
-      ['Category has been deleted successfully'],
+      ['Category menu has been fetched successfully'],
       data,
       res,
     );

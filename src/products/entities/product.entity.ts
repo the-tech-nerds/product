@@ -13,6 +13,7 @@ import BaseEntity from '../../utils/entities/base-entity';
 import { Category } from '../../categories/entities/category.entity';
 import { Brand } from '../../brands/entities/brand.entity';
 import { ProductVariance } from './product-variance.entity';
+import { FileStorage } from '../../common/file/entities/storage.entity';
 
 @Entity({ name: 'products' })
 export class Product extends BaseEntity {
@@ -76,4 +77,6 @@ export class Product extends BaseEntity {
     (productVariance: ProductVariance) => productVariance.product,
   )
   productVariances: ProductVariance[];
+
+  images: FileStorage[];
 }
