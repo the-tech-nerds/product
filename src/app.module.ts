@@ -21,7 +21,6 @@ import * as ormconfig from './database';
 import { SupplierModule } from './suppliers/supplier.module';
 import { CommonModule } from './common/common.module';
 import { InventoryModule } from './inventory/inventory.module';
-import { WishlistModule } from './wishlist/wishlist.module';
 
 @Module({
   imports: [
@@ -38,7 +37,6 @@ import { WishlistModule } from './wishlist/wishlist.module';
     SupplierModule,
     CategoryModule,
     BrandModule,
-    WishlistModule,
     CommonModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

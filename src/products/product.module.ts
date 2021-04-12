@@ -5,6 +5,7 @@ import {
   UploadService,
   FileService,
 } from '@the-tech-nerds/common-services';
+import { FileStorage } from 'src/common/file/entities/storage.entity';
 import { ProductVariance } from './entities/product-variance.entity';
 import { Product } from './entities/product.entity';
 import { ProductController } from './controllers/product.controller';
@@ -29,17 +30,29 @@ import { ProductVarianceController } from './controllers/product-variance.contro
 import { FetchCategoryByIdService } from '../categories/service/fetch-category-by-id.service';
 import { Category } from '../categories/entities/category.entity';
 import { CommonModule } from '../common/common.module';
+import { Shop } from '../shops/entities/shop.entity';
+import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service';
+
 import { ProductDetailsService } from './services/product/product-details.service';
+import { CreateMockProductsService } from './services/product/create-mock-products.service';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category]),
+    TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category, Shop]),
+    TypeOrmModule.forFeature([
+      Product,
+      ProductVariance,
+      Unit,
+      Category,
+      FileStorage,
+    ]),
     CommonModule,
   ],
   providers: [
     ApiResponseService,
-
+    FetchShopByIdService,
     ListProductsService,
     CreateProductService,
+    CreateMockProductsService,
     UpdateProductService,
     FetchProductByIdService,
     DeleteProductService,

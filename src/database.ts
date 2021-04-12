@@ -1,4 +1,5 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import { InventoryVariance } from './products/entities/inventory-variance.view';
 
 const ormconfig: TypeOrmModuleOptions = {
   type: 'mysql',
@@ -8,7 +9,7 @@ const ormconfig: TypeOrmModuleOptions = {
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE_NAME,
   maxQueryExecutionTime: 10000,
-  entities: [`${__dirname}/**/*.entity{.ts,.js}`],
+  entities: [`${__dirname}/**/*.entity{.ts,.js}`, InventoryVariance],
 
   // We are using migrations, synchronize should be set to false.
   synchronize: true,

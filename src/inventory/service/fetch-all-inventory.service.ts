@@ -12,7 +12,7 @@ class ListInventoryService {
 
   async execute(): Promise<Inventory[]> {
     return this.inventoryRepository.find({
-      relations: ['supplier'],
+      relations: ['productVariance', 'productVariance.product', 'shops'],
       where: {
         deleted_at: IsNull(),
       },

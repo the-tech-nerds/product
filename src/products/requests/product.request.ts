@@ -10,7 +10,5 @@ export class ProductRequest {
 
   category_ids?: number[];
 
-  shop_id?: number;
-
   status?: boolean;
 }

@@ -1,34 +1,45 @@
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { ProductVariance } from 'src/products/entities/product-variance.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { FetchShopByIdService } from '../../../shops/service/shop/fetch-by-id.service';
 import { ProductVarianceRequest } from '../../requests/product-variance.request';
-import { LocalDateToUtc } from '../../../utils/date-time-conversion/date-time-conversion';
-import { generateSku } from '../../../utils/utils';
+import { Shop } from '../../../shops/entities/shop.entity';
+
+const { v4: uuidv4 } = require('uuid');
 
 @Injectable()
 class CreateProductVarianceService {
   constructor(
     @InjectRepository(ProductVariance)
     private productVarianceRepository: Repository<ProductVariance>,
+    private shopByIdsService: FetchShopByIdService,
   ) {}
 
   async create(
     userId: number,
     productVarianceRequest: ProductVarianceRequest,
-  ): Promise<ProductVariance> {
-    // eslint-disable-next-line max-len
-    const skuRequest: SkuModel = {
-      price: productVarianceRequest.price,
-      productId: productVarianceRequest.product_id,
-      date: LocalDateToUtc(new Date()),
-    };
-    productVarianceRequest.sku = generateSku(skuRequest);
-
-    return this.productVarianceRepository.save({
+  ): Promise<ProductVariance | null> {
+    productVarianceRequest.sku = `p-${productVarianceRequest.price}-i-${
+      productVarianceRequest.product_id
+    }-${uuidv4()}`;
+    // eslint-disable-next-line @typescript-eslint/naming-convention
+    const { shop_ids = null } = productVarianceRequest;
+    const updatedProductVariance = await this.productVarianceRepository.save({
       ...productVarianceRequest,
       created_by: userId,
     });
+
+    let shops: Shop[] | null = null;
+    if (shop_ids) {
+      // @ts-ignore
+      shops = await this.shopByIdsService.getMultiShops(shop_ids);
+      if (!shops) {
+        throw new BadRequestException('Not the valid shops');
+      }
+    }
+    updatedProductVariance.shops = shops || [];
+    return this.productVarianceRepository.save(updatedProductVariance);
   }
 }
 

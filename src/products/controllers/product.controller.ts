@@ -22,6 +22,7 @@ import { Product } from '../entities/product.entity';
 import { ProductRequest } from '../requests/product.request';
 import { ListProductsService } from '../services/product/list-products.service';
 import { CreateProductService } from '../services/product/create-product.service';
+import { CreateMockProductsService } from '../services/product/create-mock-products.service';
 import { UpdateProductService } from '../services/product/update-product.service';
 import { FetchProductByIdService } from '../services/product/fetch-product-by-id.service';
 import { DeleteProductService } from '../services/product/delete-product.service';
@@ -37,6 +38,7 @@ export class ProductController {
     private readonly fetchProductByIdService: FetchProductByIdService,
     private readonly deleteProductService: DeleteProductService,
     private readonly productDetailsService: ProductDetailsService,
+    private readonly createMockProductService: CreateMockProductsService,
   ) {}
 
   @UseGuards(UserGuard)
@@ -58,6 +60,19 @@ export class ProductController {
     );
   }
 
+  @Post('/mock')
+  async createMockProducts(
+    @CurrentUser('id') userId: any,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    await this.createMockProductService.create();
+    return this.apiResponseService.successResponse(
+      ['Product created successfully'],
+      null,
+      res,
+    );
+  }
+
   @UseGuards(UserGuard)
   @HasPermissions(
     [PermissionTypes.PRODUCT.GET],
@@ -67,6 +82,30 @@ export class ProductController {
   async getProducts(@Res() res: Response): Promise<Response<ResponseModel>> {
     try {
       const data = await this.listProductsService.execute();
+      return this.apiResponseService.successResponse(
+        ['Product list fetched successfully'],
+        data as Product[],
+        res,
+      );
+    } catch (e) {
+      return this.apiResponseService.internalServerError([e.toString()], res);
+    }
+  }
+
+  @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.PRODUCT.GET],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Get('/category/:categoryId')
+  async getProductsFromCategory(
+    @Res() res: Response,
+    @Param('categoryId') categoryId: number,
+  ): Promise<Response<ResponseModel>> {
+    try {
+      const data = await this.listProductsService.getProductsFromCategory(
+        categoryId,
+      );
       return this.apiResponseService.successResponse(
         ['Product list fetched successfully'],
         data as Product[],
@@ -159,7 +198,7 @@ export class ProductController {
     PermissionTypeEnum.hasPermission,
   )
   @Delete('/:id')
-  async DeleteProduct(
+  async deleteProduct(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {

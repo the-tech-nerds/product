@@ -1,24 +1,31 @@
+import { ProductVariance } from 'src/products/entities/product-variance.entity';
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, IsNull } from 'typeorm';
+import { getConnection } from 'typeorm';
+import { FileStorage } from 'src/common/file/entities/storage.entity';
 import { Wishlist } from '../entities/wishlist.entity';
 
 @Injectable()
 class FetchWishlistByUserIdService {
-  constructor(
-    @InjectRepository(Wishlist)
-    private wishlistRepository: Repository<Wishlist>,
-  ) {}
-
   async execute(userId: number): Promise<any | undefined> {
-    const items = await this.wishlistRepository.find({
-      created_by: userId,
-      deleted_at: IsNull(),
-    });
-    const wishlists = items.map((w: Wishlist) => ({
-      id: w.id,
-      product_variance_id: w.product_variance_Id,
-    }));
+    const wishlists = await getConnection()
+      .createQueryBuilder()
+      .select('wishlist')
+      .from(Wishlist, 'wishlist')
+      .leftJoinAndMapOne(
+        'wishlist.product_variance',
+        ProductVariance,
+        'variance',
+        'variance.id = wishlist.product_variance_Id',
+      )
+      .leftJoinAndMapMany(
+        'product.images',
+        FileStorage,
+        'file',
+        'product.id = file.type_id and file.type ="product"',
+      )
+      .where(`wishlist.created_by =${userId}`)
+      .getMany();
+
     return wishlists;
   }
 }
