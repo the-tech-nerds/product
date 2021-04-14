@@ -59,7 +59,7 @@ export class ProductDetailsService {
       description: v.description,
       unit_value: v.unit_value,
       unit_name: v.unit.name,
-      is_stock: !!invetoryVariances.find(x => x.id === v.id),
+      stock_count: invetoryVariances.find(x => x.id === v.id)?.stock_count,
       images: v.images.map((f: FileStorage) => f.url),
     }));
     return {
