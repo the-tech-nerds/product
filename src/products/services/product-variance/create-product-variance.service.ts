@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { ProductVariance } from 'src/products/entities/product-variance.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { FetchShopByIdService } from '../../../shops/service/shop/fetch-by-id.service';
 import { ProductVarianceRequest } from '../../requests/product-variance.request';
 import { Shop } from '../../../shops/entities/shop.entity';
 
@@ -12,6 +13,7 @@ class CreateProductVarianceService {
   constructor(
     @InjectRepository(ProductVariance)
     private productVarianceRepository: Repository<ProductVariance>,
+    private shopByIdsService: FetchShopByIdService,
   ) {}
 
   async create(
@@ -31,7 +33,7 @@ class CreateProductVarianceService {
     let shops: Shop[] | null = null;
     if (shop_ids) {
       // @ts-ignore
-      shops = await this.shopByIdsService.findByIds(shop_ids);
+      shops = await this.shopByIdsService.getMultiShops(shop_ids);
       if (!shops) {
         throw new BadRequestException('Not the valid shops');
       }
