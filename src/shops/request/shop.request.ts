@@ -7,4 +7,8 @@ export class ShopRequest {
   description?: string;
 
   address?: string;
+
+  type_id?: number;
+
+  is_active?: boolean;
 }

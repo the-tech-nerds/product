@@ -1,5 +1,19 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  JoinTable,
+  ManyToOne,
+  JoinColumn,
+  Index,
+  OneToMany,
+} from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
+import { Category } from '../../categories/entities/category.entity';
+import { Brand } from '../../brands/entities/brand.entity';
+import { ProductVariance } from './product-variance.entity';
+import { FileStorage } from '../../common/file/entities/storage.entity';
 
 @Entity({ name: 'products' })
 export class Product extends BaseEntity {
@@ -7,11 +21,62 @@ export class Product extends BaseEntity {
   id: number;
 
   @Column()
-  title: string;
+  name: string;
 
-  @Column()
-  price: number;
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  description: string;
 
-  @Column()
-  is_active: boolean;
+  @Column({ default: true })
+  status: boolean;
+
+  @Column({
+    type: 'int',
+    nullable: false,
+  })
+  shop_id: number;
+
+  @Column({
+    type: 'int',
+    nullable: true,
+  })
+  brand_id: number;
+
+  @Column({ nullable: true })
+  @Index({ unique: true })
+  slug: string;
+
+  @Index()
+  @JoinColumn({ name: 'brand_id' })
+  @ManyToOne(
+    () => Brand,
+    (brand: Brand) => brand.products,
+  )
+  brand: Brand;
+
+  // @Index()
+  // @ManyToOne(
+  //   () => Shop,
+  //   (shop: Shop) => shop.products,
+  // )
+  // @JoinColumn({ name: 'shop_id' })
+  // shop: Shop;
+
+  @ManyToMany(
+    () => Category,
+    (categories: Category) => categories.products,
+    { cascade: true },
+  )
+  @JoinTable({ name: 'product_categories' })
+  categories: Category[];
+
+  @OneToMany(
+    () => ProductVariance,
+    (productVariance: ProductVariance) => productVariance.product,
+  )
+  productVariances: ProductVariance[];
+
+  images: FileStorage[];
 }

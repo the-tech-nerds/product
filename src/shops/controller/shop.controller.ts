@@ -1,6 +1,9 @@
 import {
   ApiResponseService,
   CurrentUser,
+  HasPermissions,
+  PermissionTypeEnum,
+  PermissionTypes,
   UserGuard,
 } from '@the-tech-nerds/common-services';
 import {
@@ -35,41 +38,43 @@ export class ShopController {
   ) {}
 
   @UseGuards(UserGuard)
+  @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SHOP.CREATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Post('/')
   async createShop(
     @CurrentUser('id') userId: any,
     @Body() shopRequest: ShopRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      userId = 1;
-      const data = await this.createShopService.create(userId, shopRequest);
-      return this.apiResponseService.successResponse(
-        ['shop created successfully'],
-        data as Shop,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    userId = 1;
+    const data = await this.createShopService.create(userId, shopRequest);
+    return this.apiResponseService.successResponse(
+      ['shop created successfully'],
+      data as Shop,
+      res,
+    );
   }
 
-  @UseGuards(UserGuard)
+  // @UseGuards(UserGuard)
+  // @HasPermissions([PermissionTypes.SHOP.GET], PermissionTypeEnum.hasPermission)
   @Get('/list/all')
   async getShops(@Res() res: Response): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.listShopService.execute();
-      return this.apiResponseService.successResponse(
-        ['Shop list fetched successfully'],
-        data as Shop[],
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.listShopService.execute();
+    return this.apiResponseService.successResponse(
+      ['Shop list fetched successfully'],
+      data as Shop[],
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SHOP.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Put('/:id')
   async updateShop(
     @CurrentUser('id') userId: any,
@@ -77,55 +82,44 @@ export class ShopController {
     @Body() shopRequest: ShopRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.updateShopService.execute(
-        id,
-        userId,
-        shopRequest,
-      );
-      return this.apiResponseService.successResponse(
-        ['Shop has been updated successfully'],
-        data as Shop,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.updateShopService.execute(id, userId, shopRequest);
+    return this.apiResponseService.successResponse(
+      ['Shop has been updated successfully'],
+      data as Shop,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions([PermissionTypes.SHOP.GET], PermissionTypeEnum.hasPermission)
   @Get('/:id')
   async getShopById(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.fetchShopByIdService.execute(id);
-      return this.apiResponseService.successResponse(
-        ['Shop fetched successfully'],
-        data as Shop,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.fetchShopByIdService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Shop fetched successfully'],
+      data,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SHOP.DELETE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Delete('/:id')
   async DeleteShop(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.deleteShopService.execute(id);
-      return this.apiResponseService.successResponse(
-        ['Shop has been deleted successfully'],
-        data,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.deleteShopService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Shop has been deleted successfully'],
+      data,
+      res,
+    );
   }
 }

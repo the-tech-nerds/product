@@ -1,6 +1,9 @@
 import {
   ApiResponseService,
   CurrentUser,
+  HasPermissions,
+  PermissionTypeEnum,
+  PermissionTypes,
   UserGuard,
 } from '@the-tech-nerds/common-services';
 import {
@@ -35,43 +38,47 @@ export class SupplierController {
   ) {}
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SUPPLIER.CREATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Post('/')
   async createSupplier(
     @CurrentUser('id') userId: any,
     @Body() supplierRequest: SupplierRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.createSupplierService.create(
-        userId,
-        supplierRequest,
-      );
-      return this.apiResponseService.successResponse(
-        ['Supplier created successfully'],
-        data as Supplier,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.createSupplierService.create(
+      userId,
+      supplierRequest,
+    );
+    return this.apiResponseService.successResponse(
+      ['Supplier created successfully'],
+      data as Supplier,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SUPPLIER.GET],
+    PermissionTypeEnum.hasPermission,
+  )
   @Get('/list/all')
   async getSuppliers(@Res() res: Response): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.listSupplierService.execute();
-      return this.apiResponseService.successResponse(
-        ['Supplier list fetched successfully'],
-        data as Supplier[],
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.listSupplierService.execute();
+    return this.apiResponseService.successResponse(
+      ['Supplier list fetched successfully'],
+      data as Supplier[],
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SUPPLIER.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Put('/:id')
   async updateSupplier(
     @CurrentUser('id') userId: any,
@@ -79,55 +86,51 @@ export class SupplierController {
     @Body() supplierRequest: SupplierRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.updateSupplierService.execute(
-        id,
-        userId,
-        supplierRequest,
-      );
-      return this.apiResponseService.successResponse(
-        ['Supplier has been updated successfully'],
-        data as Supplier,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.updateSupplierService.execute(
+      id,
+      userId,
+      supplierRequest,
+    );
+    return this.apiResponseService.successResponse(
+      ['Supplier has been updated successfully'],
+      data,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SUPPLIER.GET],
+    PermissionTypeEnum.hasPermission,
+  )
   @Get('/:id')
   async getSupplierById(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.fetchSupplierByIdService.execute(id);
-      return this.apiResponseService.successResponse(
-        ['Supplier fetched successfully'],
-        data as Supplier,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.fetchSupplierByIdService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Supplier fetched successfully'],
+      data as Supplier,
+      res,
+    );
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.SUPPLIER.DELETE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Delete('/:id')
   async DeleteSupplier(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    try {
-      const data = await this.deleteSupplierService.execute(id);
-      return this.apiResponseService.successResponse(
-        ['Supplier has been deleted successfully'],
-        data,
-        res,
-      );
-    } catch (e) {
-      return this.apiResponseService.internalServerError([e.toString()], res);
-    }
+    const data = await this.deleteSupplierService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Supplier has been deleted successfully'],
+      data,
+      res,
+    );
   }
 }

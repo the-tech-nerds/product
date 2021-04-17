@@ -9,6 +9,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { RouterModule } from 'nest-router';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { JwtModule } from '@nestjs/jwt';
+import { CategoryModule } from './categories/category.module';
+import { BrandModule } from './brands/brand.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './products/product.module';
@@ -17,6 +19,8 @@ import configuration from './config/configuration';
 import { ShopModule } from './shops/shop.module';
 import * as ormconfig from './database';
 import { SupplierModule } from './suppliers/supplier.module';
+import { CommonModule } from './common/common.module';
+import { InventoryModule } from './inventory/inventory.module';
 
 @Module({
   imports: [
@@ -26,10 +30,14 @@ import { SupplierModule } from './suppliers/supplier.module';
     }),
     TypeOrmModule.forRoot(ormconfig),
     RouterModule.forRoutes(routes),
-    ProductModule,
     CacheModule,
     ShopModule,
+    ProductModule,
+    InventoryModule,
     SupplierModule,
+    CategoryModule,
+    BrandModule,
+    CommonModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({

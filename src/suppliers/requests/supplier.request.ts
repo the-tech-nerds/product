@@ -8,7 +8,9 @@ export class SupplierRequest {
 
   address?: string;
 
-  phone: string;
+  phone?: string;
 
-  email: string;
+  email?: string;
+
+  is_active?: boolean;
 }

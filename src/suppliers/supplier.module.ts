@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiResponseService } from '@the-tech-nerds/common-services';
+import { CommonModule } from '../common/common.module';
 import { SupplierController } from './controllers/supplier.controller';
 import { Supplier } from './entities/supplier.entity';
 import { CreateSupplierService } from './services/create-supplierservice';
@@ -10,7 +11,7 @@ import { FetchSupplierByIdService } from './services/fetch-by-id.service';
 import { UpdateSupplierService } from './services/update-supplier.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Supplier])],
+  imports: [TypeOrmModule.forFeature([Supplier]), CommonModule],
   providers: [
     CreateSupplierService,
     UpdateSupplierService,

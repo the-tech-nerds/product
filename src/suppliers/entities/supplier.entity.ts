@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Brand } from '../../brands/entities/brand.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 
 @Entity({ name: 'suppliers' })
@@ -29,7 +30,16 @@ export class Supplier extends BaseEntity {
 
   @Column({
     type: 'text',
-    nullable: false,
+    nullable: true,
   })
   email: string;
+
+  @Column({ default: true })
+  is_active: boolean;
+
+  @OneToMany(
+    type => Brand,
+    brand => brand.supplier,
+  )
+  brand: Brand[];
 }
