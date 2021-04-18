@@ -11,7 +11,7 @@ services:
     container_name: product
     build:
       context: ./
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     environment:
       domain: ${DOMAIN}
     restart: always
