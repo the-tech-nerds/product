@@ -45,6 +45,20 @@ export class ProductController {
     private readonly fetchProductsBySearchParam: FetchProductsBySearchParamService,
   ) {}
 
+  @Get('/search')
+  async getProductsByCategorySlug(
+    @Paginate() paginateQuery: PaginateQuery,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    paginateQuery.search = paginateQuery.search?.split(',')[0];
+    const data = await this.fetchProductsBySearchParam.execute(paginateQuery);
+    return this.apiResponseService.successResponse(
+      ['Products fetched successfully'],
+      data,
+      res,
+    );
+  }
+
   @UseGuards(UserGuard)
   @HasPermissions(
     [PermissionTypes.PRODUCT.CREATE],
@@ -209,19 +223,6 @@ export class ProductController {
     const data = await this.deleteProductService.execute(id);
     return this.apiResponseService.successResponse(
       ['Product has been deleted successfully'],
-      data,
-      res,
-    );
-  }
-
-  @Get('/search')
-  async getProductsByCategorySlug(
-    @Paginate() paginateQuery: PaginateQuery,
-    @Res() res: Response,
-  ): Promise<Response<ResponseModel>> {
-    const data = await this.fetchProductsBySearchParam.execute(paginateQuery);
-    return this.apiResponseService.successResponse(
-      ['Products fetched successfully'],
       data,
       res,
     );
