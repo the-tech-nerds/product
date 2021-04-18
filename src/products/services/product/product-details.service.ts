@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { getConnection } from 'typeorm';
+import { getConnection, getManager, MoreThan } from 'typeorm';
+import { InventoryVariance } from '../../entities/inventory-variance.view';
 import { Product } from '../../entities/product.entity';
 import { FileStorage } from '../../../common/file/entities/storage.entity';
 import { ProductVariance } from '../../entities/product-variance.entity';
@@ -13,19 +14,23 @@ export class ProductDetailsService {
       .select('product')
       .from(Product, 'product')
       .leftJoinAndMapMany(
-        'product.files',
+        'product.images',
         FileStorage,
         'file',
         'product.id = file.type_id and file.type ="product"',
       )
-      .where(`product.slug =${slug}`)
+      .where(`product.slug ='${slug}'`)
       .getOne();
+    const invetoryVariances = await getManager().find(InventoryVariance, {
+      product_id: product?.id,
+      stock_count: MoreThan(0),
+    });
     const productVariance = await getConnection()
       .createQueryBuilder()
       .select('variance')
       .from(ProductVariance, 'variance')
       .leftJoinAndMapMany(
-        'variance.files',
+        'variance.images',
         FileStorage,
         'file',
         'variance.id = file.type_id and file.type ="product-variance"',
@@ -54,6 +59,7 @@ export class ProductDetailsService {
       description: v.description,
       unit_value: v.unit_value,
       unit_name: v.unit.name,
+      stock_count: invetoryVariances.find(x => x.id === v.id)?.stock_count,
       images: v.images.map((f: FileStorage) => f.url),
     }));
     return {
