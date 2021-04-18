@@ -40,7 +40,7 @@ export class WishlistController {
       wishlistRequest,
     );
     return this.apiResponseService.successResponse(
-      ['Brand created successfully'],
+      ['Wishlist created successfully'],
       data as Wishlist,
       res,
     );
@@ -54,7 +54,7 @@ export class WishlistController {
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchWishlistByUserIdService.execute(userId);
     return this.apiResponseService.successResponse(
-      ['Brand list fetched successfully'],
+      ['Wishlist fetched successfully'],
       data,
       res,
     );
@@ -68,7 +68,7 @@ export class WishlistController {
   ): Promise<Response<ResponseModel>> {
     const data = await this.deleteWishlistService.execute(id);
     return this.apiResponseService.successResponse(
-      ['Brand has been deleted successfully'],
+      ['Wishlist has been deleted successfully'],
       data,
       res,
     );

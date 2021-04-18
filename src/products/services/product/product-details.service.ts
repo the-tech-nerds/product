@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { getConnection, getManager, MoreThan } from 'typeorm';
-import { InventoryVariance } from '../../entities/inventory-variance.view';
+import { InventoryVariance } from 'src/products/view/inventory-variance.view';
 import { Product } from '../../entities/product.entity';
 import { FileStorage } from '../../../common/file/entities/storage.entity';
 import { ProductVariance } from '../../entities/product-variance.entity';
@@ -54,6 +54,7 @@ export class ProductDetailsService {
       id: v.id,
       title: v.title,
       sku: v.sku,
+      product_id: v.product_id,
       price: v.price,
       color: v.color,
       description: v.description,
