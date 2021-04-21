@@ -50,7 +50,9 @@ export class ProductController {
     @Paginate() paginateQuery: PaginateQuery,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
+    console.log('paginateQuery', paginateQuery);
     paginateQuery.search = paginateQuery.search?.split(',')[0];
+    console.log('paginateQuery', paginateQuery);
     const data = await this.fetchProductsBySearchParam.execute(paginateQuery);
     return this.apiResponseService.successResponse(
       ['Products fetched successfully'],
