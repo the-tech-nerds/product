@@ -23,15 +23,15 @@ export class FetchProductsByCategorySlugService {
   ): Promise<Paginated<Product>> {
     const queryBuilder = this.productRepository
       .createQueryBuilder('product')
+      .leftJoinAndMapMany(
+        'product.images',
+        FileStorage,
+        'file_product',
+        'product.id = file_product.type_id and file_product.type ="product"',
+      )
       .leftJoinAndSelect('product.categories', 'categories')
       .leftJoinAndSelect('product.productVariances', 'variants')
       .leftJoinAndSelect('variants.unit', 'unit')
-      .leftJoinAndMapMany(
-        'variants.images',
-        FileStorage,
-        'file',
-        'variants.id = file.type_id and file.type ="product_variance"',
-      )
       .where('product.status = :status', { status: 1 })
       .where('categories.slug = :slug', { slug });
 
