@@ -8,12 +8,12 @@ import { FetchCategoryByIdService } from '../../../categories/service/fetch-cate
 export class ListProductsService {
   constructor(
     @InjectRepository(Product)
-    private ProductRepository: Repository<Product>,
+    private productRepository: Repository<Product>,
     private fetchCategoryByIdService: FetchCategoryByIdService,
   ) {}
 
   async execute(): Promise<Product[]> {
-    return this.ProductRepository.find({
+    return this.productRepository.find({
       relations: ['categories', 'brand'],
     });
   }

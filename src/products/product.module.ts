@@ -35,6 +35,7 @@ import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service'
 
 import { ProductDetailsService } from './services/product/product-details.service';
 import { CreateMockProductsService } from './services/product/create-mock-products.service';
+import { FetchProductsBySearchParamService } from './services/product/fetch-products-by-search-param.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category, Shop]),
@@ -63,7 +64,7 @@ import { CreateMockProductsService } from './services/product/create-mock-produc
     UpdateProductVarianceService,
     FetchProductVarianceByIdService,
     DeleteProductVarianceService,
-
+    FetchProductsBySearchParamService,
     CreateUnitService,
     UpdateUnitService,
     ListUnitService,

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { getConnection, getManager, MoreThan } from 'typeorm';
-import { InventoryVariance } from '../../entities/inventory-variance.view';
+import { InventoryVariance } from 'src/products/view/inventory-variance.view';
 import { Product } from '../../entities/product.entity';
 import { FileStorage } from '../../../common/file/entities/storage.entity';
 import { ProductVariance } from '../../entities/product-variance.entity';
@@ -21,7 +21,7 @@ export class ProductDetailsService {
       )
       .where(`product.slug ='${slug}'`)
       .getOne();
-    const invetoryVariances = await getManager().find(InventoryVariance, {
+    const inventoryVariances = await getManager().find(InventoryVariance, {
       product_id: product?.id,
       stock_count: MoreThan(0),
     });
@@ -54,12 +54,13 @@ export class ProductDetailsService {
       id: v.id,
       title: v.title,
       sku: v.sku,
+      product_id: v.product_id,
       price: v.price,
       color: v.color,
       description: v.description,
       unit_value: v.unit_value,
       unit_name: v.unit.name,
-      stock_count: invetoryVariances.find(x => x.id === v.id)?.stock_count,
+      stock_count: inventoryVariances.find(x => x.id === v.id)?.stock_count,
       images: v.images.map((f: FileStorage) => f.url),
     }));
     return {

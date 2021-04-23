@@ -14,6 +14,8 @@ import {
   ApiResponseService,
   CurrentUser,
   HasPermissions,
+  Paginate,
+  PaginateQuery,
   PermissionTypeEnum,
   PermissionTypes,
   UserGuard,
@@ -27,6 +29,7 @@ import { UpdateProductService } from '../services/product/update-product.service
 import { FetchProductByIdService } from '../services/product/fetch-product-by-id.service';
 import { DeleteProductService } from '../services/product/delete-product.service';
 import { ProductDetailsService } from '../services/product/product-details.service';
+import { FetchProductsBySearchParamService } from '../services/product/fetch-products-by-search-param.service';
 
 @Controller()
 export class ProductController {
@@ -39,7 +42,22 @@ export class ProductController {
     private readonly deleteProductService: DeleteProductService,
     private readonly productDetailsService: ProductDetailsService,
     private readonly createMockProductService: CreateMockProductsService,
+    private readonly fetchProductsBySearchParam: FetchProductsBySearchParamService,
   ) {}
+
+  @Get('/search')
+  async getProductsByCategorySlug(
+    @Paginate() paginateQuery: PaginateQuery,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    paginateQuery.search = paginateQuery.search?.split(',')[0];
+    const data = await this.fetchProductsBySearchParam.execute(paginateQuery);
+    return this.apiResponseService.successResponse(
+      ['Products fetched successfully'],
+      data,
+      res,
+    );
+  }
 
   @UseGuards(UserGuard)
   @HasPermissions(

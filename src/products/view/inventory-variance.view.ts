@@ -1,6 +1,7 @@
 import { ViewEntity, ViewColumn, Connection } from 'typeorm';
 import { Inventory } from '../../inventory/entities/inventory.entity';
-import { ProductVariance } from './product-variance.entity';
+import { ProductVariance } from '../entities/product-variance.entity';
+import { Unit } from '../entities/unit.entity';
 
 @ViewEntity({
   expression: (connection: Connection) =>
@@ -12,12 +13,15 @@ import { ProductVariance } from './product-variance.entity';
       .addSelect('variance.product_id', 'product_id')
       .addSelect('inventory.price', 'stock_price')
       .addSelect('inventory.stock_count', 'stock_count')
-      .from(ProductVariance, 'variance')
+      .addSelect('variance.unit_value', 'unit_value')
+      .addSelect('unit.name', 'unit_name')
+      .from(Inventory, 'inventory')
       .leftJoin(
-        Inventory,
-        'inventory',
+        ProductVariance,
+        'variance',
         'inventory.product_variance_id = variance.id',
-      ),
+      )
+      .leftJoin(Unit, 'unit', 'variance.unit_id = unit.id'),
 })
 export class InventoryVariance {
   @ViewColumn()
@@ -37,4 +41,10 @@ export class InventoryVariance {
 
   @ViewColumn()
   stock_count: number;
+
+  @ViewColumn()
+  unit_value: number;
+
+  @ViewColumn()
+  unit_name: string;
 }
