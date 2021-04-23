@@ -31,7 +31,6 @@ export class CreateMockProductsService {
           created_by: 1,
           slug: `product-${key + 1}`,
           categories,
-          shop_id: 1,
         } as Product),
     );
 
@@ -48,9 +47,6 @@ export class CreateMockProductsService {
           product_id: key + 1,
         } as ProductVariance),
     );
-
-    console.log(products[0]);
-    console.log(productsVariances[0]);
 
     const productImages: FileStorage[] = [...Array(count).keys()].map(
       (_, key: number) =>
