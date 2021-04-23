@@ -21,6 +21,12 @@ export class FetchProductsBySearchParamService {
   async execute(paginateQuery: PaginateQuery): Promise<Paginated<Product>> {
     const queryBuilder = this.productRepository
       .createQueryBuilder('product')
+      .leftJoinAndMapMany(
+        'product.images',
+        FileStorage,
+        'file_product',
+        'product.id = file_product.type_id and file_product.type ="product"',
+      )
       .leftJoinAndSelect('product.categories', 'categories')
       .leftJoinAndSelect('product.productVariances', 'variants')
       .leftJoinAndSelect('variants.unit', 'unit')
