@@ -25,6 +25,14 @@ export class ProductDetailsService {
       product_id: product?.id,
       stock_count: MoreThan(0),
     });
+    // count total stock
+    let stock = 0;
+    inventoryVariances.forEach(element => {
+      if (element.stock_count) {
+        stock += element.stock_count;
+      }
+    });
+
     const productVariance = await getConnection()
       .createQueryBuilder()
       .select('variance')
@@ -60,9 +68,10 @@ export class ProductDetailsService {
       description: v.description,
       unit_value: v.unit_value,
       unit_name: v.unit.name,
-      stock_count: inventoryVariances.find(x => x.id === v.id)?.stock_count,
+      stock_count: stock,
       images: v.images.map((f: FileStorage) => f.url),
     }));
+    console.log(varianceInfoes);
     return {
       productInfo,
       product_variances: varianceInfoes,

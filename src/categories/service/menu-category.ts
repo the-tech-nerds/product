@@ -29,7 +29,10 @@ export class MenuCategoryService {
     }));
 
     const menus = this.list_to_tree(mapData);
-    return menus;
+    return {
+      total: mapData.length,
+      menus,
+    };
   }
 
   private list_to_tree(list: any) {
