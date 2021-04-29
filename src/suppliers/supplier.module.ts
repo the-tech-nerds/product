@@ -21,5 +21,6 @@ import { UpdateSupplierService } from './services/update-supplier.service';
     ApiResponseService,
   ],
   controllers: [SupplierController],
+  exports: [FetchSupplierByIdService],
 })
 export class SupplierModule {}
