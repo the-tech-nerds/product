@@ -17,6 +17,7 @@ import { FetchCategoryByShopService } from './service/fetch-category-by-shop.ser
 import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service';
 import { Shop } from '../shops/entities/shop.entity';
 import { FetchProductsByCategorySlugService } from './service/fetch-products-by-category-slug.service';
+import { FetchChildCategoriesService } from './service/fetch-child-categories.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Category, Shop, Product]), CommonModule],
@@ -33,8 +34,9 @@ import { FetchProductsByCategorySlugService } from './service/fetch-products-by-
     FetchProductsByCategorySlugService,
     FetchCategoryByShopService,
     FetchShopByIdService,
+    FetchChildCategoriesService,
   ],
   controllers: [CategoryController],
-  exports: [FetchCategoryByIdService],
+  exports: [FetchCategoryByIdService, FetchChildCategoriesService],
 })
 export class CategoryModule {}
