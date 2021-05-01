@@ -36,6 +36,7 @@ import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service'
 import { ProductDetailsService } from './services/product/product-details.service';
 import { CreateMockProductsService } from './services/product/create-mock-products.service';
 import { FetchProductsBySearchParamService } from './services/product/fetch-products-by-search-param.service';
+import { FetchChildCategoriesService } from '../categories/service/fetch-child-categories.service';
 @Module({
   imports: [
     TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category, Shop]),
@@ -74,6 +75,7 @@ import { FetchProductsBySearchParamService } from './services/product/fetch-prod
     FileService,
 
     FetchCategoryByIdService,
+    FetchChildCategoriesService,
   ],
   controllers: [ProductController, ProductVarianceController, UnitController],
 })

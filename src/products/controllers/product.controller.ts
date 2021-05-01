@@ -124,6 +124,7 @@ export class ProductController {
       const data = await this.listProductsService.getProductsFromCategory(
         categoryId,
       );
+
       return this.apiResponseService.successResponse(
         ['Product list fetched successfully'],
         data as Product[],
