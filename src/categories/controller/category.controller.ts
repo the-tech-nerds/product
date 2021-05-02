@@ -13,6 +13,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -112,11 +113,13 @@ export class CategoryController {
   @Get('/:slug/products')
   async getProductsByCategorySlug(
     @Param('slug') slug: string,
+    @Query('shop_id') shopId: string,
     @Paginate() query: PaginateQuery,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.fetchProductsByCategorySlugService.execute(
       slug,
+      shopId,
       query,
     );
     return this.apiResponseService.successResponse(

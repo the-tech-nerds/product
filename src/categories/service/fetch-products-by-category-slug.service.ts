@@ -19,9 +19,10 @@ export class FetchProductsByCategorySlugService {
 
   async execute(
     slug: string,
+    shopId: string,
     query: PaginateQuery,
   ): Promise<Paginated<Product>> {
-    const queryBuilder = this.productRepository
+    let queryBuilder = this.productRepository
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.categories', 'categories')
       .leftJoinAndSelect('product.productVariances', 'variants')
@@ -32,8 +33,15 @@ export class FetchProductsByCategorySlugService {
         'variants.id = file_product_variant.type_id and file_product_variant.type ="product_variance"',
       )
       .leftJoinAndSelect('variants.unit', 'unit')
+      .leftJoinAndSelect('variants.shops', 'shops')
       .where('product.status = :status', { status: 1 })
       .where('categories.slug = :slug', { slug });
+
+    if (shopId) {
+      queryBuilder = queryBuilder.where('shops.id = :shopId', {
+        shopId: Number(shopId),
+      });
+    }
 
     return paginate(query, queryBuilder, Product, {
       sortableColumns: ['id'],
