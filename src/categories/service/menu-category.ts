@@ -28,11 +28,7 @@ export class MenuCategoryService {
       icon: !category.parent_id ? 'snowflake-o' : null,
     }));
 
-    const menus = this.list_to_tree(mapData);
-    return {
-      total: mapData.length,
-      menus,
-    };
+    return this.list_to_tree(mapData);
   }
 
   private list_to_tree(list: any) {

@@ -71,7 +71,6 @@ export class ProductDetailsService {
       stock_count: stock,
       images: v.images.map((f: FileStorage) => f.url),
     }));
-    console.log(varianceInfoes);
     return {
       productInfo,
       product_variances: varianceInfoes,
