@@ -11,9 +11,7 @@ class ListSupplierService {
   ) {}
 
   async execute(): Promise<Supplier[]> {
-    return this.supplierRepository.find({
-      is_active: true,
-    });
+    return this.supplierRepository.find();
   }
 }
 

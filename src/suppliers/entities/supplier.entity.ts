@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Brand } from '../../brands/entities/brand.entity';
 import BaseEntity from '../../utils/entities/base-entity';
+import { Product } from '../../products/entities/product.entity';
 
 @Entity({ name: 'suppliers' })
 export class Supplier extends BaseEntity {
@@ -41,5 +42,11 @@ export class Supplier extends BaseEntity {
     type => Brand,
     brand => brand.supplier,
   )
-  brand: Brand[];
+  brands: Brand[];
+
+  @OneToMany(
+    type => Product,
+    product => product.supplier,
+  )
+  products: Product[];
 }
