@@ -22,7 +22,6 @@ class CreateWishlistService {
       product_id: wishlistRequest.product_variance_Id,
       deleted_at: IsNull(),
     });
-    console.log(wishlist);
     if (wishlist) {
       throw new BadRequestException('Already in wishlist.');
     }

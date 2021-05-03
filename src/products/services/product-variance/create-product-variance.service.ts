@@ -2,6 +2,8 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { ProductVariance } from 'src/products/entities/product-variance.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { FileStorageService } from 'src/common/file/filte.service';
+import { FileStorage } from '@the-tech-nerds/common-services/dist/upload/model/file-storage.model';
 import { FetchShopByIdService } from '../../../shops/service/shop/fetch-by-id.service';
 import { ProductVarianceRequest } from '../../requests/product-variance.request';
 import { Shop } from '../../../shops/entities/shop.entity';
@@ -14,6 +16,7 @@ class CreateProductVarianceService {
     @InjectRepository(ProductVariance)
     private productVarianceRepository: Repository<ProductVariance>,
     private shopByIdsService: FetchShopByIdService,
+    private fileStorageService: FileStorageService,
   ) {}
 
   async create(
@@ -30,6 +33,17 @@ class CreateProductVarianceService {
       created_by: userId,
     });
 
+    let productImage = null;
+    if (productVarianceRequest.product_id) {
+      const imageList = (await this.fileStorageService.getListByEntityId(
+        'product',
+        productVarianceRequest.product_id,
+      )) as FileStorage[];
+      if (imageList.length) {
+        [productImage] = imageList;
+      }
+    }
+
     let shops: Shop[] | null = null;
     if (shop_ids) {
       // @ts-ignore
@@ -39,6 +53,15 @@ class CreateProductVarianceService {
       }
     }
     updatedProductVariance.shops = shops || [];
+    if (productImage) {
+      await this.fileStorageService.create([
+        {
+          url: productImage.url || '',
+          type: 'product_variance',
+          type_id: updatedProductVariance.id,
+        },
+      ]);
+    }
     return this.productVarianceRepository.save(updatedProductVariance);
   }
 }

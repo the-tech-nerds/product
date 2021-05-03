@@ -9,9 +9,11 @@ import { DeleteBrandService } from './service/delete-brand.service';
 import { ListBrandService } from './service/fetch-all-brand.service';
 import { FetchBrandByIdService } from './service/fetch-by-id.service';
 import { UpdateBrandService } from './service/update-brand.service';
+import { FetchSupplierByIdService } from '../suppliers/services/fetch-by-id.service';
+import { Supplier } from '../suppliers/entities/supplier.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Brand]), CommonModule],
+  imports: [TypeOrmModule.forFeature([Brand, Supplier]), CommonModule],
   providers: [
     CreateBrandService,
     UpdateBrandService,
@@ -19,6 +21,8 @@ import { UpdateBrandService } from './service/update-brand.service';
     FetchBrandByIdService,
     ListBrandService,
     ApiResponseService,
+
+    FetchSupplierByIdService,
   ],
   controllers: [BrandController],
 })

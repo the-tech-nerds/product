@@ -69,6 +69,21 @@ export class BrandController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions([PermissionTypes.BRAND.GET], PermissionTypeEnum.hasPermission)
+  @Get('/list/all/:supplierId')
+  async getBrandsBySupplierId(
+    @Res() res: Response,
+    @Param('supplierId') supplierId: number,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.listBrandService.getBrandsBySupplierId(supplierId);
+    return this.apiResponseService.successResponse(
+      ['Brand list fetched successfully'],
+      data as Brand[],
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
   @HasPermissions(
     [PermissionTypes.BRAND.UPDATE],
     PermissionTypeEnum.hasPermission,
