@@ -5,8 +5,8 @@ import { Category } from '../entities/category.entity';
 
 @Injectable()
 export class MenuCategoryService {
-  async execute(): Promise<any> {
-    const data = await getConnection()
+  async execute(shopTypeId: string | null = null): Promise<any> {
+    let queryBuilder = await getConnection()
       .createQueryBuilder()
       .select('category')
       .from(Category, 'category')
@@ -16,8 +16,16 @@ export class MenuCategoryService {
         'file',
         'category.id = file.type_id and file.type ="category"',
       )
-      .where('category.is_active =1')
-      .getMany();
+      .where('category.is_active =1');
+
+    if (shopTypeId) {
+      queryBuilder = queryBuilder.andWhere('category.type_id = :typeId', {
+        typeId: shopTypeId,
+      });
+    }
+
+    const data = await queryBuilder.getMany();
+
     const mapData = data.map((category: any, index: any) => ({
       id: category.id,
       name: category.name,
@@ -38,15 +46,21 @@ export class MenuCategoryService {
     let i;
 
     for (i = 0; i < list.length; i += 1) {
-      map[list[i].id] = i; // initialize the map
-      list[i].children = []; // initialize the children
+      if (list[i] !== 'undefined') {
+        map[list[i].id] = i; // initialize the map
+        list[i].children = []; // initialize the children
+      }
     }
     for (i = 0; i < list.length; i += 1) {
       node = list[i];
-      if (node.parent_id !== 0) {
-        list[map[node.parent_id]].children.push(node);
-      } else {
-        roots.push(node);
+      if (node) {
+        if (node.parent_id !== 0) {
+          if (list[map[node.parent_id]]) {
+            list[map[node.parent_id]].children.push(node);
+          }
+        } else {
+          roots.push(node);
+        }
       }
     }
     return roots;
