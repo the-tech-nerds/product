@@ -187,8 +187,9 @@ export class CategoryController {
   @Get('/menu/all')
   async GetCategoryMenu(
     @Res() res: Response,
+    @Query('shop_type_id') shopTypeId: string,
   ): Promise<Response<ResponseModel>> {
-    const data = await this.menuCategoryService.execute();
+    const data = await this.menuCategoryService.execute(shopTypeId);
     return this.apiResponseService.successResponse(
       ['Category menu has been fetched successfully'],
       data,
