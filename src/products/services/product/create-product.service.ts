@@ -22,6 +22,7 @@ class CreateProductService {
     const product = await this.productRepository.save({
       ...productRequest,
       slug: convertToSlug(productRequest.name),
+      brand_id: productRequest.brand_id || 0,
       created_by: userId,
     });
 

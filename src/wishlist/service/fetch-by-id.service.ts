@@ -33,7 +33,6 @@ class FetchWishlistByUserIdService {
       .where(`wishlist.created_by =${userId}`)
       .getMany();
 
-    console.log(wishlists);
     const list = wishlists.map(x => {
       let item = {};
       let stock = 0;

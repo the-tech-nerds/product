@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, SelectQueryBuilder } from 'typeorm';
 import {
   paginate,
   PaginateQuery,
@@ -8,9 +8,6 @@ import {
 } from '@the-tech-nerds/common-services';
 import { Product } from 'src/products/entities/product.entity';
 import { FileStorage } from 'src/common/file/entities/storage.entity';
-
-// import { STATUS_CODES } from 'http';
-
 @Injectable()
 export class FetchProductsBySearchParamService {
   constructor(
@@ -18,24 +15,38 @@ export class FetchProductsBySearchParamService {
     private productRepository: Repository<Product>,
   ) {}
 
-  async execute(paginateQuery: PaginateQuery): Promise<Paginated<Product>> {
-    const queryBuilder = this.productRepository
+  async execute(
+    paginateQuery: PaginateQuery,
+    shopId: string,
+  ): Promise<Paginated<Product>> {
+    let queryBuilder: SelectQueryBuilder<any> = this.productRepository
       .createQueryBuilder('product')
       .leftJoinAndSelect('product.categories', 'categories')
       .leftJoinAndSelect('product.productVariances', 'variants')
       .leftJoinAndSelect('variants.unit', 'unit')
+      .leftJoinAndSelect('variants.shops', 'shops')
       .leftJoinAndMapMany(
         'variants.images',
         FileStorage,
         'file',
-        'variants.id = file.type_id and file.type ="product_variance"',
+        'variants.id = file.type_id and file.type ="product-  variance"',
       )
       .where('product.status = :status', { status: 1 });
-    // .where('categories.slug = :slug', { searchQuery });
+
+    if (shopId) {
+      queryBuilder = queryBuilder.andWhere('shops.id = :shopId', {
+        shopId: 1,
+      });
+    }
 
     return paginate(paginateQuery, queryBuilder, Product, {
       sortableColumns: ['id'],
-      searchableColumns: ['name', 'slug'],
+      searchableColumns: [
+        'product.name',
+        'product.slug',
+        'variants.title',
+        'categories.name',
+      ],
       defaultSortBy: [['id', 'ASC']],
     });
   }

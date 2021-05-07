@@ -3,13 +3,21 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FileStorage } from './entities/storage.entity';
 import { FileStorageRequest } from './requests/fileStorage.request';
-
 @Injectable()
 export class FileStorageService {
   constructor(
     @InjectRepository(FileStorage)
     private fileRepository: Repository<FileStorage>,
   ) {}
+
+  async create(entities: FileStorageRequest[] = []) {
+    const promises: Promise<FileStorage>[] = [];
+    entities.map(entity => {
+      promises.push(this.fileRepository.save(entity));
+      return entity;
+    });
+    await Promise.all(promises);
+  }
 
   async update(fileStorageRequestuest: FileStorageRequest[]): Promise<any> {
     const result = Object.keys(fileStorageRequestuest).map(key => ({

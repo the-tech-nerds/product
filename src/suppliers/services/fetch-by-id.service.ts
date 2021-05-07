@@ -17,13 +17,19 @@ class FetchSupplierByIdService {
       'supplier',
       supplierId,
     );
-    const item = await this.supplierRepository.findOne({
-      id: supplierId,
-    });
+    const item = await this.supplierRepository.findOne(
+      {
+        id: supplierId,
+      },
+      {
+        relations: ['brands'],
+      },
+    );
     return {
       images: files,
       supplier: item,
     };
   }
 }
+
 export { FetchSupplierByIdService };

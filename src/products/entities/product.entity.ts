@@ -14,6 +14,7 @@ import { Category } from '../../categories/entities/category.entity';
 import { Brand } from '../../brands/entities/brand.entity';
 import { ProductVariance } from './product-variance.entity';
 import { FileStorage } from '../../common/file/entities/storage.entity';
+import { Supplier } from '../../suppliers/entities/supplier.entity';
 
 @Entity({ name: 'products' })
 export class Product extends BaseEntity {
@@ -34,6 +35,11 @@ export class Product extends BaseEntity {
 
   @Column({
     type: 'int',
+  })
+  supplier_id: number;
+
+  @Column({
+    type: 'int',
     nullable: true,
   })
   brand_id: number;
@@ -41,6 +47,14 @@ export class Product extends BaseEntity {
   @Column({ nullable: true })
   @Index({ unique: true })
   slug: string;
+
+  @Index()
+  @JoinColumn({ name: 'supplier_id' })
+  @ManyToOne(
+    () => Supplier,
+    (supplier: Supplier) => supplier.products,
+  )
+  supplier: Supplier;
 
   @Index()
   @JoinColumn({ name: 'brand_id' })

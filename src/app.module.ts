@@ -48,6 +48,7 @@ import { InventoryModule } from './inventory/inventory.module';
       }),
       inject: [ConfigService],
     }),
+    ShopModule,
   ],
   controllers: [AppController],
   providers: [AppService, JwtStrategy],

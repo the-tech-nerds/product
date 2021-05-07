@@ -29,7 +29,7 @@ export class Brand extends BaseEntity {
 
   @ManyToOne(
     type => Supplier,
-    supplier => supplier.brand,
+    supplier => supplier.brands,
     {
       cascade: ['update', 'insert'],
     },

@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -49,9 +50,13 @@ export class ProductController {
   async getProductsByCategorySlug(
     @Paginate() paginateQuery: PaginateQuery,
     @Res() res: Response,
+    @Query('shop_id') shopId: string,
   ): Promise<Response<ResponseModel>> {
     paginateQuery.search = paginateQuery.search?.split(',')[0];
-    const data = await this.fetchProductsBySearchParam.execute(paginateQuery);
+    const data = await this.fetchProductsBySearchParam.execute(
+      paginateQuery,
+      shopId,
+    );
     return this.apiResponseService.successResponse(
       ['Products fetched successfully'],
       data,
@@ -124,6 +129,7 @@ export class ProductController {
       const data = await this.listProductsService.getProductsFromCategory(
         categoryId,
       );
+
       return this.apiResponseService.successResponse(
         ['Product list fetched successfully'],
         data as Product[],
