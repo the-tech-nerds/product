@@ -37,7 +37,7 @@ services:
     networks:
       - groceryshop
     volumes:
-       - "./data/redis:/data"
+      - "./data/redis:/data"
   productdb:
     image: mysql:5.7
     container_name: productdb

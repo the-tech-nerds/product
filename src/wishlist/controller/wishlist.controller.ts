@@ -30,7 +30,7 @@ export class WishlistController {
 
   @UseGuards(UserGuard)
   @Post('/')
-  async createBrand(
+  async create(
     @CurrentUser('id') userId: any,
     @Body() wishlistRequest: WishlistRequest,
     @Res() res: Response,
@@ -48,7 +48,7 @@ export class WishlistController {
 
   @UseGuards(UserGuard)
   @Get('/list/all')
-  async getBrands(
+  async gets(
     @CurrentUser('id') userId: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
@@ -62,11 +62,25 @@ export class WishlistController {
 
   @UseGuards(UserGuard)
   @Delete('/:id')
-  async DeleteBrand(
+  async Delete(
     @Param('id') id: number,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.deleteWishlistService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Wishlist has been deleted successfully'],
+      data,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @Delete('/all')
+  async DeleteAll(
+    @CurrentUser('id') userId: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.deleteWishlistService.deleteAll(userId);
     return this.apiResponseService.successResponse(
       ['Wishlist has been deleted successfully'],
       data,
