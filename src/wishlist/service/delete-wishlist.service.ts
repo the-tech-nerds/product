@@ -13,6 +13,12 @@ class DeleteWishlistService {
   async execute(id: number): Promise<UpdateResult> {
     return this.wishlistRepository.softDelete(id);
   }
+
+  async deleteAll(userId: number): Promise<UpdateResult> {
+    return this.wishlistRepository.softDelete({
+      created_by: userId,
+    });
+  }
 }
 
 export { DeleteWishlistService };
