@@ -9,7 +9,7 @@ const ormconfig: TypeOrmModuleOptions = {
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_DATABASE_NAME,
-  maxQueryExecutionTime: 10000,
+  maxQueryExecutionTime: 100,
   entities: [
     `${__dirname}/**/*.entity{.ts,.js}`,
     InventoryVariance,
@@ -18,11 +18,12 @@ const ormconfig: TypeOrmModuleOptions = {
 
   // We are using migrations, synchronize should be set to false.
   synchronize: true,
+  keepConnectionAlive: true,
 
   // Run migrations automatically,
   // you can disable this if you prefer running migration manually.
   migrationsRun: false,
-  logging: true,
+  logging: false,
   logger: 'file',
 
   // Allow both start:prod and start:dev to use migrations
@@ -33,6 +34,16 @@ const ormconfig: TypeOrmModuleOptions = {
     // Location of migration should be inside src folder
     // to be compiled into dist/ folder.
     migrationsDir: 'src/migrations',
+  },
+  // cache: {
+  //   type: "redis",
+  //   options: {
+  //     host: "redis",
+  //     port: 6379
+  //   }
+  // },
+  extra: {
+    connectionLimit: 100,
   },
 };
 export = ormconfig;

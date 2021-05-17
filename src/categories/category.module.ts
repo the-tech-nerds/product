@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ApiResponseService } from '@the-tech-nerds/common-services';
+import {
+  ApiResponseService,
+  CacheModule,
+} from '@the-tech-nerds/common-services';
 import { Product } from 'src/products/entities/product.entity';
 import { CommonModule } from '../common/common.module';
 import { Category } from './entities/category.entity';
@@ -20,7 +23,11 @@ import { FetchProductsByCategorySlugService } from './service/fetch-products-by-
 import { FetchChildCategoriesService } from './service/fetch-child-categories.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Category, Shop, Product]), CommonModule],
+  imports: [
+    TypeOrmModule.forFeature([Category, Shop, Product]),
+    CommonModule,
+    CacheModule,
+  ],
   providers: [
     CreateCategoryService,
     UpdateCategoryService,
