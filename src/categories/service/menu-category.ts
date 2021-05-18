@@ -1,21 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CacheService } from '@the-tech-nerds/common-services';
 import { getConnection } from 'typeorm';
 import { FileStorage } from '../../common/file/entities/storage.entity';
 import { Category } from '../entities/category.entity';
 
 @Injectable()
 export class MenuCategoryService {
-  constructor(private readonly cacheService: CacheService) {}
-
   async execute(shopTypeId: string | null = null): Promise<any> {
-    const cachedCategories = await this.cacheService.get(
-      'cached-menu-categories',
-    );
-    if (cachedCategories) {
-      return cachedCategories;
-    }
-
     let queryBuilder = await getConnection()
       .createQueryBuilder()
       .select('category')
@@ -49,7 +39,7 @@ export class MenuCategoryService {
     return this.list_to_tree(mapData);
   }
 
-  private async list_to_tree(list: any) {
+  private list_to_tree(list: any) {
     const map: any = {};
     let node;
     const roots: any[] = [];
@@ -74,7 +64,6 @@ export class MenuCategoryService {
       }
     }
 
-    await this.cacheService.set('cached-menu-categories', roots);
     return roots;
   }
 }
