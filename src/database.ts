@@ -42,8 +42,8 @@ const ormconfig: TypeOrmModuleOptions = {
   //     port: 6379
   //   }
   // },
-  extra: {
-    connectionLimit: 100,
-  },
+  // extra: {
+  //   connectionLimit: 100,
+  // },
 };
 export = ormconfig;
