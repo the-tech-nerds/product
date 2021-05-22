@@ -44,7 +44,7 @@ export class CreateMockProductsService {
           created_by: 1,
           unit_id: 1,
           unit_value: '3',
-          product_id: key + 1,
+          // product_id: key + 1,
         } as ProductVariance),
     );
 
