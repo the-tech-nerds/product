@@ -1,4 +1,12 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { ProductVariance } from 'src/products/entities/product-variance.entity';
+import { Shop } from 'src/shops/entities/shop.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class FileStorage {
@@ -13,4 +21,24 @@ export class FileStorage {
 
   @Column({ nullable: true })
   type_id: number;
+
+  @ManyToOne(
+    () => ProductVariance,
+    (productVariance: ProductVariance) => productVariance.images,
+    { nullable: true },
+  )
+  @JoinColumn({
+    name: 'productVarianceId',
+  })
+  productVariance: ProductVariance;
+
+  @ManyToOne(
+    () => Shop,
+    (shop: Shop) => shop.images,
+    { nullable: true },
+  )
+  @JoinColumn({
+    name: 'shop_id',
+  })
+  shop: Shop;
 }

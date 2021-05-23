@@ -51,6 +51,7 @@ class FetchWishlistByUserIdService {
         unit_name: x.vwProductVariance.unit_name,
         product_name: x.vwProductVariance.product_name,
         product_slug: x.vwProductVariance.product_slug,
+        variance_name: x.vwProductVariance.variance_name,
         images: x.images.map((f: FileStorage) => f.url),
       };
       return item;

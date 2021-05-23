@@ -35,15 +35,13 @@ const ormconfig: TypeOrmModuleOptions = {
     // to be compiled into dist/ folder.
     migrationsDir: 'src/migrations',
   },
-  // cache: {
-  //   type: "redis",
-  //   options: {
-  //     host: "redis",
-  //     port: 6379
-  //   }
-  // },
-  // extra: {
-  //   connectionLimit: 100,
-  // },
+  cache: {
+    type: 'redis',
+    duration: 1000,
+    options: {
+      host: 'redis',
+      port: 6379,
+    },
+  },
 };
 export = ormconfig;

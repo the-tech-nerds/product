@@ -19,7 +19,7 @@ class CreateWishlistService {
     const wishlist = await this.wishlistRepository.findOne({
       created_by: userId,
       product_variance_Id: wishlistRequest.product_variance_Id,
-      product_id: wishlistRequest.product_variance_Id,
+      product_id: wishlistRequest.product_id,
       deleted_at: IsNull(),
     });
     if (wishlist) {

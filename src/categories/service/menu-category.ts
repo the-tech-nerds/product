@@ -16,7 +16,8 @@ export class MenuCategoryService {
         'file',
         'category.id = file.type_id and file.type ="category"',
       )
-      .where('category.is_active =1');
+      .where('category.is_active =1')
+      .cache(true);
 
     if (shopTypeId) {
       queryBuilder = queryBuilder.andWhere('category.type_id = :typeId', {

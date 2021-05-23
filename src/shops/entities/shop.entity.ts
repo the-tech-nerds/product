@@ -1,5 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToMany,
+  OneToMany,
+} from 'typeorm';
 import { ShopTypes } from '@the-tech-nerds/common-services';
+import { FileStorage } from 'src/common/file/entities/storage.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { ProductVariance } from '../../products/entities/product-variance.entity';
 import { Inventory } from '../../inventory/entities/inventory.entity';
@@ -48,4 +55,10 @@ export class Shop extends BaseEntity {
     (productVariance: ProductVariance) => productVariance.shops,
   )
   productVariances: ProductVariance[];
+
+  @OneToMany(
+    () => FileStorage,
+    (fileStorage: FileStorage) => fileStorage.shop,
+  )
+  images: FileStorage[];
 }
