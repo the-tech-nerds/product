@@ -35,7 +35,7 @@ export class FetchProductsBySearchParamService {
 
     if (shopId) {
       queryBuilder = queryBuilder.andWhere('shops.id = :shopId', {
-        shopId: 1,
+        shopId,
       });
     }
 

@@ -11,9 +11,13 @@ class ListShopService {
   ) {}
 
   async execute(): Promise<Shop[]> {
-    return this.shopRepository.find({
-      deleted_at: IsNull(),
-    });
+    return this.shopRepository
+      .createQueryBuilder('shops')
+      .where({
+        deleted_at: IsNull(),
+      })
+      .leftJoinAndSelect('shops.images', 'images')
+      .getMany();
   }
 }
 
