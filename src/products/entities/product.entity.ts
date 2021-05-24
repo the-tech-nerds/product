@@ -79,4 +79,7 @@ export class Product extends BaseEntity {
   productVariances: ProductVariance[];
 
   images: FileStorage[];
+
+  @Column()
+  image: string;
 }

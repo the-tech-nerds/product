@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   ManyToMany,
   Index,
+  OneToMany,
 } from 'typeorm';
 import { ShopTypes } from '@the-tech-nerds/common-services';
 import { FileStorage } from '../../common/file/entities/storage.entity';
@@ -37,5 +38,12 @@ export class Category extends BaseEntity {
   )
   products!: Product[];
 
+  @OneToMany(
+    () => FileStorage,
+    (fileStorage: FileStorage) => fileStorage.category,
+  )
   files: FileStorage[];
+
+  @Column()
+  image: string;
 }

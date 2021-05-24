@@ -61,4 +61,7 @@ export class Shop extends BaseEntity {
     (fileStorage: FileStorage) => fileStorage.shop,
   )
   images: FileStorage[];
+
+  @Column()
+  image: string;
 }
