@@ -19,13 +19,13 @@ export class FileStorageService {
     await Promise.all(promises);
   }
 
-  async update(fileStorageRequestuest: FileStorageRequest[]): Promise<any> {
-    const result = Object.keys(fileStorageRequestuest).map(key => {
+  async update(fileStorageRequest: FileStorageRequest[]): Promise<any> {
+    const result = Object.keys(fileStorageRequest).map(key => {
       const fileItem: any = {
-        id: fileStorageRequestuest[Number(key)].id,
-        type: fileStorageRequestuest[Number(key)].type,
-        type_id: fileStorageRequestuest[Number(key)].type_id,
-        url: fileStorageRequestuest[Number(key)].url,
+        id: fileStorageRequest[Number(key)].id,
+        type: fileStorageRequest[Number(key)].type,
+        type_id: fileStorageRequest[Number(key)].type_id,
+        url: fileStorageRequest[Number(key)].url,
       };
       return fileItem;
     });

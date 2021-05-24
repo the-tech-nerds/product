@@ -46,7 +46,7 @@ export class Brand extends BaseEntity {
 
   @OneToMany(
     () => FileStorage,
-    (fileStorage: FileStorage) => fileStorage.shop,
+    (fileStorage: FileStorage) => fileStorage.brand,
   )
   images: FileStorage[];
 
