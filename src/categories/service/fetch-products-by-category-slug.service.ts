@@ -67,7 +67,7 @@ export class FetchProductsByCategorySlugService {
       'unit.description',
       'shops.id',
       'images.url',
-      'images.productVarianceId',
+      'images.product_variance_id',
     ]);
 
     return paginate(query, queryBuilder, Product, {
