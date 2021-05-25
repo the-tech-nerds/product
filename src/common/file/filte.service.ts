@@ -31,20 +31,9 @@ export class FileStorageService {
     });
     const ids = result.map(x => x.id);
     const items = await this.fileRepository.findByIds(ids);
-    items.forEach(element => {
+    items.forEach((element: any) => {
       const file = result.filter(x => x.id === element.id)[0];
-      element.type_id = file.type_id || 0;
-      if (file.type === 'product') {
-        element.product_id = file.type_id;
-      } else if (file.type === 'shop') {
-        element.shop_id = file.type_id;
-      } else if (file.type === 'product_variance') {
-        element.product_variance_id = file.type_id;
-      } else if (file.type === 'category') {
-        element.category_id = file.type_id;
-      } else if (file.type === 'brand') {
-        element.brand_id = file.type_id;
-      }
+      element[`${file.type}_id`] = file.type_id;
     });
     await this.fileRepository.save(items);
     await this.updateUrlToEntity(items[0].type, items[0].url, items[0].type_id);
