@@ -7,6 +7,9 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Product } from '../../../products/entities/product.entity';
+import { Category } from '../../../categories/entities/category.entity';
+import { Brand } from '../../../brands/entities/brand.entity';
 
 @Entity()
 export class FileStorage {
@@ -22,15 +25,30 @@ export class FileStorage {
   @Column({ nullable: true })
   type_id: number;
 
+  @Column({ nullable: true })
+  product_id: number;
+
+  @Column({ nullable: true })
+  product_variance_id: number;
+
+  @Column({ nullable: true })
+  shop_id: number;
+
+  @Column({ nullable: true })
+  category_id: number;
+
+  @Column({ nullable: true })
+  brand_id: number;
+
   @ManyToOne(
     () => ProductVariance,
     (productVariance: ProductVariance) => productVariance.images,
     { nullable: true },
   )
   @JoinColumn({
-    name: 'productVarianceId',
+    name: 'product_variance_id',
   })
-  productVariance: ProductVariance;
+  product_variance: ProductVariance;
 
   @ManyToOne(
     () => Shop,
@@ -41,4 +59,34 @@ export class FileStorage {
     name: 'shop_id',
   })
   shop: Shop;
+
+  @ManyToOne(
+    () => Product,
+    (product: Product) => product.images,
+    { nullable: true },
+  )
+  @JoinColumn({
+    name: 'product_id',
+  })
+  product: Product;
+
+  @ManyToOne(
+    () => Category,
+    (category: Category) => category.files,
+    { nullable: true },
+  )
+  @JoinColumn({
+    name: 'category_id',
+  })
+  category: Category;
+
+  @ManyToOne(
+    () => Brand,
+    (brand: Brand) => brand.images,
+    { nullable: true },
+  )
+  @JoinColumn({
+    name: 'brand_id',
+  })
+  brand: Brand;
 }

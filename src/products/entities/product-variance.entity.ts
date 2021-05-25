@@ -88,7 +88,7 @@ export class ProductVariance extends BaseEntity {
 
   @OneToMany(
     () => FileStorage,
-    fileStorage => fileStorage.productVariance,
+    fileStorage => fileStorage.product_variance,
   )
   images: FileStorage[];
 

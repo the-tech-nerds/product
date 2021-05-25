@@ -9,6 +9,7 @@ import {
 import { Supplier } from '../../suppliers/entities/supplier.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from '../../products/entities/product.entity';
+import { FileStorage } from '../../common/file/entities/storage.entity';
 
 @Entity({ name: 'brands' })
 export class Brand extends BaseEntity {
@@ -42,4 +43,13 @@ export class Brand extends BaseEntity {
     product => product.brand,
   )
   products!: Product[];
+
+  @OneToMany(
+    () => FileStorage,
+    (fileStorage: FileStorage) => fileStorage.brand,
+  )
+  images: FileStorage[];
+
+  @Column()
+  image: string;
 }
