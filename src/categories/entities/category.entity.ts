@@ -44,6 +44,9 @@ export class Category extends BaseEntity {
   )
   files: FileStorage[];
 
-  @Column()
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
   image: string;
 }

@@ -50,6 +50,9 @@ export class Brand extends BaseEntity {
   )
   images: FileStorage[];
 
-  @Column()
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
   image: string;
 }

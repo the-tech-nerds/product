@@ -80,6 +80,9 @@ export class Product extends BaseEntity {
 
   images: FileStorage[];
 
-  @Column()
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
   image: string;
 }

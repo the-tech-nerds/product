@@ -34,11 +34,11 @@ export class ProductVariance extends BaseEntity {
   @Column({ nullable: true })
   color: string;
 
-  // @Column({
-  //   type: 'int',
-  //   nullable: false,
-  // })
-  // product_id: number;
+  @Column({
+    type: 'int',
+    nullable: false,
+  })
+  product_id: number;
 
   @Column({
     type: 'int',
@@ -92,6 +92,9 @@ export class ProductVariance extends BaseEntity {
   )
   images: FileStorage[];
 
-  @Column()
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
   image: string;
 }
