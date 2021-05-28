@@ -36,8 +36,12 @@ export class MenuCategoryService {
       is_active: category.is_active,
       icon: !category.parent_id ? 'snowflake-o' : null,
     }));
-
-    return this.list_to_tree(mapData);
+    const total = mapData?.length;
+    const menus = await this.list_to_tree(mapData);
+    return {
+      total,
+      menus,
+    };
   }
 
   private list_to_tree(list: any) {

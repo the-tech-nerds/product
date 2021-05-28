@@ -61,7 +61,7 @@ export class FileStorageService {
       entity = 'shops';
     } else if (entity === 'product') {
       entity = 'products';
-    } else if (entity === 'product_variance') {
+    } else if (entity === 'product-variance') {
       entity = 'product_variances';
     } else if (entity === 'brand') {
       entity = 'brands';

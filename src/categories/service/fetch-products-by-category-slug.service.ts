@@ -27,7 +27,7 @@ export class FetchProductsByCategorySlugService {
       .leftJoinAndSelect('product.productVariances', 'variants')
       .leftJoinAndSelect('variants.unit', 'unit')
       .leftJoinAndSelect('variants.shops', 'shops')
-      .leftJoinAndSelect('variants.images', 'images')
+      // .leftJoinAndSelect('variants.images', 'images')
       .where('product.status = :status', { status: 1 })
       .andWhere('categories.slug = :slug', { slug });
 
@@ -45,6 +45,7 @@ export class FetchProductsByCategorySlugService {
       'product.supplier_id',
       'product.brand_id',
       'product.slug',
+      'product.image',
       'categories.id',
       // 'categories.name',
       // 'categories.slug',
@@ -66,8 +67,8 @@ export class FetchProductsByCategorySlugService {
       'unit.name',
       'unit.description',
       'shops.id',
-      'images.url',
-      'images.product_variance_id',
+      // 'images.url',
+      // 'images.product_variance_id',
     ]);
 
     return paginate(query, queryBuilder, Product, {

@@ -7,7 +7,7 @@ import {
   Paginated,
 } from '@the-tech-nerds/common-services';
 import { Product } from 'src/products/entities/product.entity';
-import { FileStorage } from 'src/common/file/entities/storage.entity';
+// import { FileStorage } from 'src/common/file/entities/storage.entity';
 @Injectable()
 export class FetchProductsBySearchParamService {
   constructor(
@@ -25,12 +25,12 @@ export class FetchProductsBySearchParamService {
       .leftJoinAndSelect('product.productVariances', 'variants')
       .leftJoinAndSelect('variants.unit', 'unit')
       .leftJoinAndSelect('variants.shops', 'shops')
-      .leftJoinAndMapMany(
-        'variants.images',
-        FileStorage,
-        'file',
-        'variants.id = file.type_id and file.type ="product-  variance"',
-      )
+      // .leftJoinAndMapMany(
+      //   'variants.images',
+      //   FileStorage,
+      //   'file',
+      //   'variants.id = file.type_id and file.type ="product_variance"',
+      // )
       .where('product.status = :status', { status: 1 });
 
     if (shopId) {
