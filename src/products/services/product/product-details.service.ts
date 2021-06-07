@@ -21,17 +21,18 @@ export class ProductDetailsService {
       )
       .where(`product.slug ='${slug}'`)
       .getOne();
-    const inventoryVariances = await getManager().find(InventoryVariance, {
-      product_id: product?.id,
-      stock_count: MoreThan(0),
-    });
+    const inventoryVariances =
+      (await getManager().find(InventoryVariance, {
+        product_id: product?.id,
+        stock_count: MoreThan(0),
+      })) || [];
     // count total stock
-    let stock = 0;
-    inventoryVariances.forEach(element => {
-      if (element.stock_count) {
-        stock += element.stock_count;
-      }
-    });
+    // let stock = 0;
+    // inventoryVariances.forEach(element => {
+    //   if (element.stock_count) {
+    //     stock += element.stock_count;
+    //   }
+    // });
 
     const productVariance = await getConnection()
       .createQueryBuilder()
@@ -68,7 +69,7 @@ export class ProductDetailsService {
       description: v.description,
       unit_value: v.unit_value,
       unit_name: v.unit.name,
-      stock_count: stock,
+      stock_count: this.sumOfStock(inventoryVariances, v.id),
       images: v.images.map((f: FileStorage) => f.url),
     }));
     return {
@@ -76,4 +77,14 @@ export class ProductDetailsService {
       product_variances: varianceInfoes,
     };
   }
+
+  sumOfStock = (list: InventoryVariance[], id: number) => {
+    let total = 0;
+    list.forEach(l => {
+      if (l.id === id) {
+        total += l.stock_count;
+      }
+    });
+    return total;
+  };
 }
