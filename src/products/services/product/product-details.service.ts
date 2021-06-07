@@ -62,7 +62,7 @@ export class ProductDetailsService {
       id: v.id,
       title: v.title,
       sku: v.sku,
-      // product_id: v.product_id,
+      product_id: v.product_id,
       price: v.price,
       color: v.color,
       description: v.description,
