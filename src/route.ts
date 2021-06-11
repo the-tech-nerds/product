@@ -7,6 +7,7 @@ import { SupplierModule } from './suppliers/supplier.module';
 import { WishlistModule } from './wishlist/wishlist.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { DiscountModule } from './discount/discount.module';
+import { OfferModule } from './offer/offer.module';
 
 export const routes: Routes = [
   {
@@ -40,5 +41,9 @@ export const routes: Routes = [
   {
     path: '/discount',
     module: DiscountModule,
+  },
+  {
+    path: '/offer',
+    module: OfferModule,
   },
 ];

@@ -23,6 +23,7 @@ import { SupplierModule } from './suppliers/supplier.module';
 import { CommonModule } from './common/common.module';
 import { InventoryModule } from './inventory/inventory.module';
 import { DiscountModule } from './discount/discount.module';
+import { OfferModule } from './offer/offer.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { DiscountModule } from './discount/discount.module';
     CommonModule,
     WishlistModule,
     DiscountModule,
+    OfferModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
