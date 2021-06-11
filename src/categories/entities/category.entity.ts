@@ -7,6 +7,7 @@ import {
   OneToMany,
 } from 'typeorm';
 import { ShopTypes } from '@the-tech-nerds/common-services';
+import { Discount } from 'src/discount/entities/discount.entity';
 import { FileStorage } from '../../common/file/entities/storage.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from '../../products/entities/product.entity';
@@ -37,6 +38,12 @@ export class Category extends BaseEntity {
     (products: Product) => products.categories,
   )
   products!: Product[];
+
+  @OneToMany(
+    () => Discount,
+    (discount: Discount) => discount.category,
+  )
+  discounts: Discount[];
 
   @OneToMany(
     () => FileStorage,
