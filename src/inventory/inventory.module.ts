@@ -12,6 +12,7 @@ import { UpdateInventoryService } from './service/update-inventory.service';
 import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service';
 import { Shop } from '../shops/entities/shop.entity';
 import { InventoryRequest } from './request/inventory.request';
+import { InventoryUpdateEvent } from './events/inventory-update.event';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Inventory, Shop]), CommonModule],
@@ -25,6 +26,7 @@ import { InventoryRequest } from './request/inventory.request';
     FetchShopByIdService,
 
     ApiResponseService,
+    InventoryUpdateEvent,
 
     InventoryRequest,
   ],
