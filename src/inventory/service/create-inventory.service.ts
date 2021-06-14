@@ -6,6 +6,7 @@ import { InventoryRequest } from '../request/inventory.request';
 import { LocalDateToUtc } from '../../utils/date-time-conversion/date-time-conversion';
 import { Shop } from '../../shops/entities/shop.entity';
 import { FetchShopByIdService } from '../../shops/service/shop/fetch-by-id.service';
+import { InventoryUpdateEvent } from '../events/inventory-update.event';
 
 @Injectable()
 class CreateInventoryService {
@@ -13,6 +14,7 @@ class CreateInventoryService {
     @InjectRepository(Inventory)
     private inventoryRepository: Repository<Inventory>,
     private fetchShopByIdService: FetchShopByIdService,
+    private inventoryUpdateEvent: InventoryUpdateEvent,
   ) {}
 
   async create(
@@ -47,6 +49,7 @@ class CreateInventoryService {
       // @ts-ignore
       inventoryList.push(await this.inventoryRepository.save(inventoryTemp));
     }
+    this.inventoryUpdateEvent.emit(JSON.stringify(inventoryList));
     return inventoryList;
   }
 }

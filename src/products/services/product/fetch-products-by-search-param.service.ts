@@ -25,12 +25,6 @@ export class FetchProductsBySearchParamService {
       .leftJoinAndSelect('product.productVariances', 'variants')
       .leftJoinAndSelect('variants.unit', 'unit')
       .leftJoinAndSelect('variants.shops', 'shops')
-      // .leftJoinAndMapMany(
-      //   'variants.images',
-      //   FileStorage,
-      //   'file',
-      //   'variants.id = file.type_id and file.type ="product_variance"',
-      // )
       .where('product.status = :status', { status: 1 });
 
     if (shopId) {
