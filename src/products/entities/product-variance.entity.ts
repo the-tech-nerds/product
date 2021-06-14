@@ -9,6 +9,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Discount } from 'src/discount/entities/discount.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Product } from './product.entity';
 import { Unit } from './unit.entity';
@@ -85,6 +86,12 @@ export class ProductVariance extends BaseEntity {
     inventory => inventory.productVariance,
   )
   inventories!: Inventory[];
+
+  @OneToMany(
+    () => Discount,
+    (discount: Discount) => discount.product_variance,
+  )
+  discounts: Discount[];
 
   @OneToMany(
     () => FileStorage,

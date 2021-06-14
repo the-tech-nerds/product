@@ -22,6 +22,8 @@ import * as ormconfig from './database';
 import { SupplierModule } from './suppliers/supplier.module';
 import { CommonModule } from './common/common.module';
 import { InventoryModule } from './inventory/inventory.module';
+import { DiscountModule } from './discount/discount.module';
+import { OfferModule } from './offer/offer.module';
 
 @Module({
   imports: [
@@ -40,6 +42,8 @@ import { InventoryModule } from './inventory/inventory.module';
     BrandModule,
     CommonModule,
     WishlistModule,
+    DiscountModule,
+    OfferModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
