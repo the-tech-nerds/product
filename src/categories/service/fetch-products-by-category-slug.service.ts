@@ -71,8 +71,6 @@ export class FetchProductsByCategorySlugService {
       // 'images.product_variance_id',
     ]);
 
-    console.log(queryBuilder.getQueryAndParameters());
-
     return paginate(query, queryBuilder, Product, {
       sortableColumns: ['id'],
       searchableColumns: ['name', 'slug'],
