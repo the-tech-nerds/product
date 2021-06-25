@@ -1,20 +1,25 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import {
+  CRUDEvent,
+  EventTypes,
+  Microservices,
+} from '@the-tech-nerds/common-services';
 import { Inventory } from '../entities/inventory.entity';
 import { InventoryRequest } from '../request/inventory.request';
 import { LocalDateToUtc } from '../../utils/date-time-conversion/date-time-conversion';
 import { Shop } from '../../shops/entities/shop.entity';
 import { FetchShopByIdService } from '../../shops/service/shop/fetch-by-id.service';
-import { InventoryUpdateEvent } from '../events/inventory-update.event';
 
 @Injectable()
 class CreateInventoryService {
+  private readonly crudEvent = new CRUDEvent(Microservices.PRODUCT_SERVICE);
+
   constructor(
     @InjectRepository(Inventory)
     private inventoryRepository: Repository<Inventory>,
     private fetchShopByIdService: FetchShopByIdService,
-    private inventoryUpdateEvent: InventoryUpdateEvent,
   ) {}
 
   async create(
@@ -49,7 +54,12 @@ class CreateInventoryService {
       // @ts-ignore
       inventoryList.push(await this.inventoryRepository.save(inventoryTemp));
     }
-    this.inventoryUpdateEvent.emit(JSON.stringify(inventoryList));
+    this.crudEvent.emit(
+      'inventory',
+      Microservices.PRODUCT_SERVICE,
+      EventTypes.CREATE,
+      JSON.stringify(inventoryList),
+    );
     return inventoryList;
   }
 }

@@ -16,6 +16,9 @@ class ListInventoryService {
       where: {
         deleted_at: IsNull(),
       },
+      order: {
+        id: 'DESC',
+      },
     });
   }
 }
