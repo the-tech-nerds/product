@@ -1,6 +1,7 @@
 import {
   Column,
   Entity,
+  Generated,
   JoinColumn,
   JoinTable,
   ManyToMany,
@@ -36,6 +37,10 @@ export class Inventory extends BaseEntity {
 
   @Column({ type: 'int', nullable: false })
   product_variance_id: number;
+
+  @Column({ nullable: false })
+  @Generated('uuid')
+  uuid: string;
 
   @ManyToOne(
     () => ProductVariance,

@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import {
+  CRUDEvent,
+  EventTypes,
+  Microservices,
+} from '@the-tech-nerds/common-services';
 import { LocalDateToUtc } from 'src/utils/date-time-conversion/date-time-conversion';
 import { Inventory, InventoryStatusType } from '../entities/inventory.entity';
 import { InventoryRequest } from '../request/inventory.request';
@@ -8,6 +13,8 @@ import { InventoryUpdateRequest } from '../request/inventory-update.request';
 
 @Injectable()
 class UpdateInventoryService {
+  private readonly crudEvent = new CRUDEvent(Microservices.PRODUCT_SERVICE);
+
   constructor(
     @InjectRepository(Inventory)
     private inventoryRepository: Repository<Inventory>,
@@ -36,8 +43,16 @@ class UpdateInventoryService {
       updated_at: LocalDateToUtc(new Date()),
     });
 
-    return this.inventoryRepository.findOneOrFail(id);
+    const updatedInventory = await this.inventoryRepository.findOneOrFail(id);
 
+    this.crudEvent.emit(
+      'inventory',
+      Microservices.PRODUCT_SERVICE,
+      EventTypes.UPDATE,
+      JSON.stringify(updatedInventory),
+    );
+
+    return updatedInventory;
     /* const updatedInventory = await this.inventoryRepository.findOneOrFail(id);
 
     let shopList: Shop[] | null = null;
@@ -61,8 +76,14 @@ class UpdateInventoryService {
       inventory.status === InventoryStatusType.DRAFT
         ? InventoryStatusType.ACTIVE
         : InventoryStatusType.DRAFT;
-
-    return this.inventoryRepository.save(inventory);
+    const updatedInventory = await this.inventoryRepository.save(inventory);
+    this.crudEvent.emit(
+      'inventory',
+      Microservices.PRODUCT_SERVICE,
+      EventTypes.UPDATE,
+      JSON.stringify(updatedInventory),
+    );
+    return updatedInventory;
   }
 }
 
