@@ -1,5 +1,4 @@
 import { Category } from 'src/categories/entities/category.entity';
-import { Offer } from 'src/offer/entities/offer.entity';
 import { ProductVariance } from 'src/products/entities/product-variance.entity';
 import { Product } from 'src/products/entities/product.entity';
 import {
@@ -7,7 +6,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
@@ -64,10 +62,4 @@ export class Discount extends BaseEntity {
 
   @Column({ type: 'int', nullable: false })
   status: number;
-
-  @OneToMany(
-    () => Offer,
-    (offer: Offer) => offer.discount,
-  )
-  offers: Offer[];
 }
