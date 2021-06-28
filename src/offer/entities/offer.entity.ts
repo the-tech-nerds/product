@@ -1,5 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
+import { FileStorage } from '../../common/file/entities/storage.entity';
 
 export enum OfferStatusType {
   ACTIVE = 1,
@@ -34,4 +35,12 @@ export class Offer extends BaseEntity {
     default: OfferStatusType.DRAFT,
   })
   status: number;
+
+  images: FileStorage[];
+
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  image: string;
 }

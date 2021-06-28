@@ -65,6 +65,8 @@ export class FileStorageService {
       entity = 'product_variances';
     } else if (entity === 'brand') {
       entity = 'brands';
+    } else if (entity === 'offer') {
+      entity = 'offers';
     }
     const connection = getManager();
     const sql = `update ${entity} set image = '${url}' where  id = ${id}`;
