@@ -13,7 +13,7 @@ class FetchOfferByIdService {
   ) {}
 
   async execute(offerId: number): Promise<any | undefined> {
-    const files = await this.fileService.getListByEntityId('offer', offerId);
+    const files = await this.fileService.getListByEntityId('offers', offerId);
     const item = await this.offerRepository.findOne({
       id: offerId,
     });

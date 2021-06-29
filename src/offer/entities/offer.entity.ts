@@ -4,6 +4,7 @@ import { FileStorage } from '../../common/file/entities/storage.entity';
 
 export enum OfferStatusType {
   ACTIVE = 1,
+  INACTIVE = 2,
   DRAFT = 0,
 }
 @Entity({ name: 'offers' })
