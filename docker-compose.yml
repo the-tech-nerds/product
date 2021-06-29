@@ -8,7 +8,7 @@ volumes:
       local
 services:
   product:
-    # container_name: product
+    container_name: product
     build:
       context: ./
       dockerfile: Dockerfile.dev
@@ -27,17 +27,7 @@ services:
       - auth
       - authredis
       - productdb
-      - productredis
-
-  productredis:
-    container_name: productredis
-    image: redis:alpine
-    ports:
-      - 6370:6379
-    networks:
-      - groceryshop
-    volumes:
-      - "./data/redis:/data"
+      
   productdb:
     image: mysql:5.7
     container_name: productdb

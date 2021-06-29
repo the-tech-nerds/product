@@ -1,6 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ApiResponseService } from '@the-tech-nerds/common-services';
+import {
+  ApiResponseService,
+  EventsModule,
+} from '@the-tech-nerds/common-services';
 import { CommonModule } from '../common/common.module';
 import { InventoryController } from './controller/inventory.controller';
 import { Inventory } from './entities/inventory.entity';
@@ -12,7 +15,6 @@ import { UpdateInventoryService } from './service/update-inventory.service';
 import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service';
 import { Shop } from '../shops/entities/shop.entity';
 import { InventoryRequest } from './request/inventory.request';
-import { InventoryUpdateEvent } from './events/inventory-update.event';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Inventory, Shop]), CommonModule],
@@ -26,7 +28,7 @@ import { InventoryUpdateEvent } from './events/inventory-update.event';
     FetchShopByIdService,
 
     ApiResponseService,
-    InventoryUpdateEvent,
+    EventsModule,
 
     InventoryRequest,
   ],
