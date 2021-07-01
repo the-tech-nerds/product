@@ -34,6 +34,7 @@ export class FileStorageService {
     items.forEach((element: any) => {
       const file = result.filter(x => x.id === element.id)[0];
       element[`${file.type}_id`] = file.type_id;
+      element.type_id = file.type_id;
     });
     await this.fileRepository.save(items);
     await this.updateUrlToEntity(items[0].type, items[0].url, items[0].type_id);
@@ -65,6 +66,8 @@ export class FileStorageService {
       entity = 'product_variances';
     } else if (entity === 'brand') {
       entity = 'brands';
+    } else if (entity === 'offer') {
+      entity = 'offers';
     }
     const connection = getManager();
     const sql = `update ${entity} set image = '${url}' where  id = ${id}`;

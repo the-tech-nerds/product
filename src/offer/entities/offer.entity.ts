@@ -1,13 +1,12 @@
-import { Discount } from 'src/discount/entities/discount.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
+import { FileStorage } from '../../common/file/entities/storage.entity';
 
+export enum OfferStatusType {
+  ACTIVE = 1,
+  INACTIVE = 2,
+  DRAFT = 0,
+}
 @Entity({ name: 'offers' })
 export class Offer extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -16,21 +15,14 @@ export class Offer extends BaseEntity {
   @Column({ nullable: false })
   name: string;
 
+  @Column({ nullable: true })
+  description: string;
+
   @Column({ type: 'int', nullable: false })
   total_price: number;
 
   @Column({ nullable: false, type: 'text' })
-  offer_info: string;
-
-  @Column({ type: 'int', nullable: true })
-  discount_id: number;
-
-  @JoinColumn({ name: 'discount_id' })
-  @ManyToOne(
-    () => Discount,
-    (discount: Discount) => discount.offers,
-  )
-  discount: Discount;
+  offer_detail: string;
 
   @Column({ nullable: false })
   start_date: Date;
@@ -38,6 +30,18 @@ export class Offer extends BaseEntity {
   @Column({ nullable: false })
   end_date: Date;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({
+    type: 'enum',
+    enum: OfferStatusType,
+    default: OfferStatusType.DRAFT,
+  })
   status: number;
+
+  images: FileStorage[];
+
+  @Column({
+    type: 'text',
+    nullable: true,
+  })
+  image: string;
 }
