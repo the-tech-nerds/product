@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { FileStorage } from '../../common/file/entities/storage.entity';
 
@@ -11,6 +11,10 @@ export enum OfferStatusType {
 export class Offer extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ nullable: false })
+  @Generated('uuid')
+  uuid: string;
 
   @Column({ nullable: false })
   name: string;
