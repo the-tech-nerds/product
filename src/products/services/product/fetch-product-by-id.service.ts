@@ -8,7 +8,7 @@ import { FileStorageService } from '../../../common/file/filte.service';
 export class FetchProductByIdService {
   constructor(
     @InjectRepository(Product)
-    private ProductRepository: Repository<Product>,
+    private productRepository: Repository<Product>,
     private fileService: FileStorageService,
   ) {}
 
@@ -17,7 +17,7 @@ export class FetchProductByIdService {
       'product',
       productId,
     );
-    const product = await this.ProductRepository.findOne(productId, {
+    const product = await this.productRepository.findOne(productId, {
       relations: ['categories'],
     });
 
@@ -25,5 +25,9 @@ export class FetchProductByIdService {
       images,
       product,
     };
+  }
+
+  async getMultiProducts(productIds: number[]): Promise<Product[] | undefined> {
+    return this.productRepository.findByIds(productIds);
   }
 }

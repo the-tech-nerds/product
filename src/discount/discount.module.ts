@@ -9,9 +9,23 @@ import { DeleteDiscountService } from './service/delete-discount.service';
 import { ListDiscountService } from './service/fetch-all-discount.service';
 import { FetchDiscountByIdService } from './service/fetch-by-id.service';
 import { UpdateDiscountService } from './service/update-discount.service';
+import { Category } from '../categories/entities/category.entity';
+import { Product } from '../products/entities/product.entity';
+import { ProductVariance } from '../products/entities/product-variance.entity';
+import { Offer } from '../offer/entities/offer.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Discount]), CommonModule],
+  // eslint-disable-next-line max-len
+  imports: [
+    TypeOrmModule.forFeature([
+      Discount,
+      Category,
+      Product,
+      ProductVariance,
+      Offer,
+    ]),
+    CommonModule,
+  ],
   providers: [
     CreateDiscountService,
     DeleteDiscountService,

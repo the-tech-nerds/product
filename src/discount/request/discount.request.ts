@@ -4,12 +4,6 @@ export class DiscountRequest {
   @IsNotEmpty({ message: 'name is required.' })
   name: string;
 
-  product_id?: number;
-
-  category_id?: number;
-
-  product_variance_id?: number;
-
   discount_percentage?: number;
 
   discount_amount?: number;
@@ -17,6 +11,14 @@ export class DiscountRequest {
   start_date: Date;
 
   end_date: Date;
+
+  product_ids?: number[];
+
+  category_ids?: number[];
+
+  product_variance_ids?: number[];
+
+  offer_ids?: number[];
 
   status: number;
 }
