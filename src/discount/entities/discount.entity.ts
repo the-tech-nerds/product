@@ -1,59 +1,43 @@
-import { Category } from 'src/categories/entities/category.entity';
-import { Offer } from 'src/offer/entities/offer.entity';
-import { ProductVariance } from 'src/products/entities/product-variance.entity';
-import { Product } from 'src/products/entities/product.entity';
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  ManyToOne,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
+import { Category } from '../../categories/entities/category.entity';
+import { Product } from '../../products/entities/product.entity';
+import { ProductVariance } from '../../products/entities/product-variance.entity';
+import { Offer } from '../../offer/entities/offer.entity';
 
 @Entity({ name: 'discounts' })
 export class Discount extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
-  name: string;
-
-  @Column({ type: 'int', nullable: true })
-  product_id: number;
-
-  @JoinColumn({ name: 'product_id' })
-  @ManyToOne(
-    () => Product,
-    (product: Product) => product.discounts,
-  )
-  product: Product;
-
-  @Column({ type: 'int', nullable: true })
-  category_id: number;
-
-  @JoinColumn({ name: 'category_id' })
-  @ManyToOne(
+  @OneToMany(
     () => Category,
-    (category: Category) => category.discounts,
+    (category: Category) => category.discount,
   )
-  category: Category;
+  categories: Category[];
 
-  @Column({ type: 'int', nullable: false })
-  product_variance_id: number;
+  @OneToMany(
+    () => Product,
+    (product: Product) => product.discount,
+  )
+  products: Product[];
 
-  @JoinColumn({ name: 'product_variance_id' })
-  @ManyToOne(
+  @OneToMany(
     () => ProductVariance,
-    (product_variance: ProductVariance) => product_variance.discounts,
+    (productVariance: ProductVariance) => productVariance.discount,
   )
-  product_variance: ProductVariance;
+  productVariances: ProductVariance[];
 
-  @Column({ type: 'int', nullable: true })
+  @OneToMany(
+    () => Offer,
+    (offer: Offer) => offer.discount,
+  )
+  offers: Offer[];
+
+  @Column({ nullable: true })
   discount_percentage: number;
 
-  @Column({ type: 'int', nullable: true })
+  @Column({ nullable: true })
   discount_amount: number;
 
   @Column({ nullable: true })
@@ -64,10 +48,4 @@ export class Discount extends BaseEntity {
 
   @Column({ type: 'int', nullable: false })
   status: number;
-
-  @OneToMany(
-    () => Offer,
-    (offer: Offer) => offer.discount,
-  )
-  offers: Offer[];
 }

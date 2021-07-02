@@ -13,6 +13,9 @@ export class Offer extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: 'int', nullable: true })
+  discount_id: number;
+
   @Column({ nullable: false })
   name: string;
 
@@ -21,9 +24,6 @@ export class Offer extends BaseEntity {
 
   @Column({ nullable: false, type: 'text' })
   offer_info: string;
-
-  @Column({ type: 'int', nullable: true })
-  discount_id: number;
 
   @JoinColumn({ name: 'discount_id' })
   @ManyToOne(

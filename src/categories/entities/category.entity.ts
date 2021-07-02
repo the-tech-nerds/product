@@ -1,10 +1,12 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  ManyToMany,
+  Entity,
   Index,
+  JoinColumn,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ShopTypes } from '@the-tech-nerds/common-services';
 import { Discount } from 'src/discount/entities/discount.entity';
@@ -30,6 +32,9 @@ export class Category extends BaseEntity {
   @Column('integer', { default: 0 })
   parent_id: number;
 
+  @Column({ type: 'int', nullable: true })
+  discount_id: number;
+
   @Column({ default: true })
   is_active: boolean;
 
@@ -39,11 +44,15 @@ export class Category extends BaseEntity {
   )
   products!: Product[];
 
-  @OneToMany(
+  @Column({ type: 'int', nullable: true })
+  category_id: number;
+
+  @JoinColumn({ name: 'discount_id' })
+  @ManyToOne(
     () => Discount,
-    (discount: Discount) => discount.category,
+    (discount: Discount) => discount.categories,
   )
-  discounts: Discount[];
+  discount: Discount;
 
   @OneToMany(
     () => FileStorage,

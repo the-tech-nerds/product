@@ -1,13 +1,13 @@
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  ManyToMany,
-  JoinTable,
-  ManyToOne,
-  JoinColumn,
+  Entity,
   Index,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Discount } from 'src/discount/entities/discount.entity';
 import BaseEntity from '../../utils/entities/base-entity';
@@ -45,6 +45,12 @@ export class Product extends BaseEntity {
   })
   brand_id: number;
 
+  @Column({ type: 'int', nullable: true })
+  product_id: number;
+
+  @Column({ type: 'int', nullable: true })
+  discount_id: number;
+
   @Column({ nullable: true })
   @Index({ unique: true })
   slug: string;
@@ -79,11 +85,12 @@ export class Product extends BaseEntity {
   )
   productVariances: ProductVariance[];
 
-  @OneToMany(
+  @JoinColumn({ name: 'discount_id' })
+  @ManyToOne(
     () => Discount,
-    (discount: Discount) => discount.product,
+    (discount: Discount) => discount.products,
   )
-  discounts: Discount[];
+  discount: Discount;
 
   images: FileStorage[];
 
