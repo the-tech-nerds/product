@@ -1,14 +1,11 @@
-import { IsNotEmpty } from 'class-validator';
-
 export class OfferRequest {
-  @IsNotEmpty({ message: 'name is required.' })
   name: string;
 
-  offer_info: string;
+  description: string;
+
+  offer_detail: string;
 
   total_price: number;
-
-  discount_id?: number;
 
   start_date: Date;
 

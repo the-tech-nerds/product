@@ -10,6 +10,7 @@ import {
 import { Product } from '../../../products/entities/product.entity';
 import { Category } from '../../../categories/entities/category.entity';
 import { Brand } from '../../../brands/entities/brand.entity';
+import { Offer } from '../../../offer/entities/offer.entity';
 
 @Entity()
 export class FileStorage {
@@ -39,6 +40,9 @@ export class FileStorage {
 
   @Column({ nullable: true })
   brand_id: number;
+
+  @Column({ nullable: true })
+  offer_id: number;
 
   @ManyToOne(
     () => ProductVariance,
@@ -89,4 +93,14 @@ export class FileStorage {
     name: 'brand_id',
   })
   brand: Brand;
+
+  @ManyToOne(
+    () => Offer,
+    (offer: Offer) => offer.images,
+    { nullable: true },
+  )
+  @JoinColumn({
+    name: 'offer_id',
+  })
+  offer: Offer;
 }
