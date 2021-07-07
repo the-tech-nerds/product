@@ -10,11 +10,13 @@ class FetchDiscountByIdService {
     private discountRepository: Repository<Discount>,
   ) {}
 
-  async execute(brandId: number): Promise<Discount | undefined> {
-    const item = await this.discountRepository.findOne({
-      id: brandId,
-    });
-    return item;
+  async execute(discountId: number): Promise<Discount | undefined> {
+    return this.discountRepository.findOne(
+      {
+        id: discountId,
+      },
+      { relations: ['categories', 'products', 'productVariances', 'offers'] },
+    );
   }
 }
 export { FetchDiscountByIdService };

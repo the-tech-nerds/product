@@ -25,12 +25,15 @@ import { DeleteDiscountService } from '../service/delete-discount.service';
 import { FetchDiscountByIdService } from '../service/fetch-by-id.service';
 import { DiscountRequest } from '../request/discount.request';
 import { Discount } from '../entities/discount.entity';
+import { DiscountAssignRequest } from '../request/discount-assign.request';
+import { AssignDiscountService } from '../service/assign-discount.service';
 
 @Controller()
 export class DiscountController {
   constructor(
     private readonly apiResponseService: ApiResponseService,
     private readonly createDiscountService: CreateDiscountService,
+    private readonly assignDiscountService: AssignDiscountService,
     private readonly updateDiscountService: UpdateDiscountService,
     private readonly fetchDiscountByIdService: FetchDiscountByIdService,
     private readonly listDiscountService: ListDiscountService,
@@ -51,6 +54,28 @@ export class DiscountController {
     const data = await this.createDiscountService.create(
       userId,
       discountRequest,
+    );
+    return this.apiResponseService.successResponse(
+      ['Discount created successfully'],
+      data as Discount,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.BRAND.CREATE],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Post('/assign')
+  async assignDiscount(
+    @CurrentUser('id') userId: any,
+    @Body() discountAssignRequest: DiscountAssignRequest,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.assignDiscountService.execute(
+      userId,
+      discountAssignRequest,
     );
     return this.apiResponseService.successResponse(
       ['Discount created successfully'],

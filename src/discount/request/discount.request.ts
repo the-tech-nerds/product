@@ -12,13 +12,5 @@ export class DiscountRequest {
 
   end_date: Date;
 
-  product_ids?: number[];
-
-  category_ids?: number[];
-
-  product_variance_ids?: number[];
-
-  offer_ids?: number[];
-
   status: number;
 }
