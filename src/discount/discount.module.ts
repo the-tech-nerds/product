@@ -13,6 +13,7 @@ import { Category } from '../categories/entities/category.entity';
 import { Product } from '../products/entities/product.entity';
 import { ProductVariance } from '../products/entities/product-variance.entity';
 import { Offer } from '../offer/entities/offer.entity';
+import { AssignDiscountService } from './service/assign-discount.service';
 
 @Module({
   // eslint-disable-next-line max-len
@@ -28,6 +29,7 @@ import { Offer } from '../offer/entities/offer.entity';
   ],
   providers: [
     CreateDiscountService,
+    AssignDiscountService,
     DeleteDiscountService,
     FetchDiscountByIdService,
     UpdateDiscountService,
