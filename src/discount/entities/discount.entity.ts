@@ -1,4 +1,10 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Generated,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { Category } from '../../categories/entities/category.entity';
 import { Product } from '../../products/entities/product.entity';
@@ -34,6 +40,9 @@ export class Discount extends BaseEntity {
   )
   offers: Offer[];
 
+  @Column({ nullable: false })
+  name: string;
+
   @Column({ nullable: true })
   discount_percentage: number;
 
@@ -46,6 +55,13 @@ export class Discount extends BaseEntity {
   @Column({ nullable: true })
   end_date: Date;
 
-  @Column({ type: 'int', nullable: false })
+  @Column({ nullable: false })
+  @Generated('uuid')
+  uuid: string;
+
+  @Column({ type: 'int', default: 1 })
   status: number;
+
+  @Column({ type: 'int', default: 0 })
+  is_assigned: number;
 }

@@ -19,6 +19,7 @@ import { CreateWishlistService } from '../service/create-wishlist.service';
 import { DeleteWishlistService } from '../service/delete-wishlist.service';
 import { WishlistRequest } from '../request/wishlist.request';
 import { Wishlist } from '../entities/wishlist.entity';
+
 @Controller()
 export class WishlistController {
   constructor(

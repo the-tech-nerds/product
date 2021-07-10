@@ -48,7 +48,7 @@ export class ProductVariance extends BaseEntity {
   unit_id: number;
 
   @Column({ type: 'int', nullable: true })
-  discount_id: number;
+  discount_id: number | null;
 
   @Column({ default: true })
   status: boolean;

@@ -33,7 +33,7 @@ export class Category extends BaseEntity {
   parent_id: number;
 
   @Column({ type: 'int', nullable: true })
-  discount_id: number;
+  discount_id: number | null;
 
   @Column({ default: true })
   is_active: boolean;

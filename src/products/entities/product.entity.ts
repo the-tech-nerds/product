@@ -49,7 +49,7 @@ export class Product extends BaseEntity {
   product_id: number;
 
   @Column({ type: 'int', nullable: true })
-  discount_id: number;
+  discount_id: number | null;
 
   @Column({ nullable: true })
   @Index({ unique: true })

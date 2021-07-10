@@ -86,7 +86,7 @@ export class DiscountController {
 
   @UseGuards(UserGuard)
   @HasPermissions([PermissionTypes.BRAND.GET], PermissionTypeEnum.hasPermission)
-  @Get('/list/all')
+  @Get('/all')
   async gets(@Res() res: Response): Promise<Response<ResponseModel>> {
     const data = await this.listDiscountService.execute();
     return this.apiResponseService.successResponse(

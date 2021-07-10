@@ -21,7 +21,7 @@ export class Offer extends BaseEntity {
   id: number;
 
   @Column({ type: 'int', nullable: true })
-  discount_id: number;
+  discount_id: number | null;
 
   @Column({ nullable: false })
   @Generated('uuid')
