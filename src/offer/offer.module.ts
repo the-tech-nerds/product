@@ -7,6 +7,7 @@ import {
 import { CommonModule } from '../common/common.module';
 import { OfferController } from './controller/offer.controller';
 import { Offer } from './entities/offer.entity';
+import { ActiveOffersService } from './service/active-offers.service';
 import { CreateOfferService } from './service/create-offer.service';
 import { DeleteOfferService } from './service/delete-offer.service';
 import { ListOfferService } from './service/fetch-all-offer.service';
@@ -22,6 +23,7 @@ import { UpdateOfferService } from './service/update-offer.service';
     UpdateOfferService,
     ListOfferService,
     ApiResponseService,
+    ActiveOffersService,
     EventsModule,
   ],
   controllers: [OfferController],

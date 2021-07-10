@@ -2,6 +2,8 @@ import {
   ApiResponseService,
   CurrentUser,
   HasPermissions,
+  Paginate,
+  PaginateQuery,
   PermissionTypeEnum,
   PermissionTypes,
   UserGuard,
@@ -14,6 +16,7 @@ import {
   Param,
   Post,
   Put,
+  Query,
   Res,
   UseGuards,
 } from '@nestjs/common';
@@ -25,6 +28,7 @@ import { DeleteOfferService } from '../service/delete-offer.service';
 import { FetchOfferByIdService } from '../service/fetch-by-id.service';
 import { OfferRequest } from '../request/offer.request';
 import { Offer } from '../entities/offer.entity';
+import { ActiveOffersService } from '../service/active-offers.service';
 
 @Controller()
 export class OfferController {
@@ -35,6 +39,7 @@ export class OfferController {
     private readonly fetchOfferByIdService: FetchOfferByIdService,
     private readonly listOfferService: ListOfferService,
     private readonly deleteOfferService: DeleteOfferService,
+    private readonly activeOfferService: ActiveOffersService,
   ) {}
 
   @UseGuards(UserGuard)
@@ -64,6 +69,20 @@ export class OfferController {
     return this.apiResponseService.successResponse(
       ['Offer list fetched successfully'],
       data as Offer[],
+      res,
+    );
+  }
+
+  @Get('/active/all')
+  async getActiveOffers(
+    @Query('shop_id') shopId: string,
+    @Paginate() query: PaginateQuery,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.activeOfferService.execute(query);
+    return this.apiResponseService.successResponse(
+      ['Offer list fetched successfully'],
+      data,
       res,
     );
   }
