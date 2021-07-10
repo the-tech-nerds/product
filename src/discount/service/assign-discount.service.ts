@@ -28,12 +28,9 @@ class AssignDiscountService {
     userId: number,
     discountRequest: DiscountAssignRequest,
   ): Promise<Discount> {
-    console.log('in assign service. request: ', discountRequest);
     const discount = await this.discountRepository.findOneOrFail(
       discountRequest.discount_id,
     );
-
-    console.log('in assign service. discount: ', discount);
 
     const updateEntity = {
       discount_id: discount.id,
@@ -42,7 +39,6 @@ class AssignDiscountService {
     };
 
     if (discountRequest.category_ids) {
-      console.log('in assign service category');
       await this.categoryRepository.update(
         { discount_id: discountRequest.discount_id },
         { discount_id: 0 },
@@ -55,7 +51,6 @@ class AssignDiscountService {
     }
 
     if (discountRequest.product_ids) {
-      console.log('in assign service product');
       await this.productRepository.update(
         { discount_id: discountRequest.discount_id },
         { discount_id: 0 },
@@ -68,7 +63,6 @@ class AssignDiscountService {
     }
 
     if (discountRequest.product_variance_ids) {
-      console.log('in assign service variance');
       await this.productVarianceRepository.update(
         { discount_id: discountRequest.discount_id },
         { discount_id: 0 },
@@ -81,7 +75,6 @@ class AssignDiscountService {
     }
 
     if (discountRequest.offer_ids) {
-      console.log('in assign service offer');
       await this.offerRepository.update(
         { discount_id: discountRequest.discount_id },
         { discount_id: 0 },
@@ -93,7 +86,8 @@ class AssignDiscountService {
       );
     }
 
-    return discount;
+    discount.is_assigned = 1;
+    return this.discountRepository.save(discount);
   }
 }
 
