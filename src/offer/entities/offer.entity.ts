@@ -1,4 +1,10 @@
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Generated,
+  Index,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { FileStorage } from '../../common/file/entities/storage.entity';
 
@@ -15,6 +21,10 @@ export class Offer extends BaseEntity {
   @Column({ nullable: false })
   @Generated('uuid')
   uuid: string;
+
+  @Column({ nullable: true })
+  @Index({ unique: true })
+  slug: string;
 
   @Column({ nullable: false })
   name: string;
@@ -33,6 +43,9 @@ export class Offer extends BaseEntity {
 
   @Column({ nullable: false })
   end_date: Date;
+
+  @Column({ nullable: false })
+  stock: number;
 
   @Column({
     type: 'enum',

@@ -12,6 +12,7 @@ import { CreateOfferService } from './service/create-offer.service';
 import { DeleteOfferService } from './service/delete-offer.service';
 import { ListOfferService } from './service/fetch-all-offer.service';
 import { FetchOfferByIdService } from './service/fetch-by-id.service';
+import { OfferDetailByIdService } from './service/offer-detail.service';
 import { UpdateOfferService } from './service/update-offer.service';
 
 @Module({
@@ -24,6 +25,7 @@ import { UpdateOfferService } from './service/update-offer.service';
     ListOfferService,
     ApiResponseService,
     ActiveOffersService,
+    OfferDetailByIdService,
     EventsModule,
   ],
   controllers: [OfferController],
