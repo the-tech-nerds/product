@@ -14,6 +14,7 @@ import { Product } from '../products/entities/product.entity';
 import { ProductVariance } from '../products/entities/product-variance.entity';
 import { Offer } from '../offer/entities/offer.entity';
 import { AssignDiscountService } from './service/assign-discount.service';
+import { ChangeDiscountStatusService } from './service/change-discount-status.service';
 
 @Module({
   // eslint-disable-next-line max-len
@@ -28,12 +29,13 @@ import { AssignDiscountService } from './service/assign-discount.service';
     CommonModule,
   ],
   providers: [
+    ListDiscountService,
     CreateDiscountService,
     AssignDiscountService,
-    DeleteDiscountService,
     FetchDiscountByIdService,
     UpdateDiscountService,
-    ListDiscountService,
+    ChangeDiscountStatusService,
+    DeleteDiscountService,
     ApiResponseService,
   ],
   controllers: [DiscountController],

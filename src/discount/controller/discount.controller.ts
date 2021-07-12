@@ -27,6 +27,7 @@ import { DiscountRequest } from '../request/discount.request';
 import { Discount } from '../entities/discount.entity';
 import { DiscountAssignRequest } from '../request/discount-assign.request';
 import { AssignDiscountService } from '../service/assign-discount.service';
+import { ChangeDiscountStatusService } from '../service/change-discount-status.service';
 
 @Controller()
 export class DiscountController {
@@ -37,6 +38,7 @@ export class DiscountController {
     private readonly updateDiscountService: UpdateDiscountService,
     private readonly fetchDiscountByIdService: FetchDiscountByIdService,
     private readonly listDiscountService: ListDiscountService,
+    private readonly changeDiscountStatusService: ChangeDiscountStatusService,
     private readonly deleteDiscountService: DeleteDiscountService,
   ) {}
 
@@ -130,6 +132,20 @@ export class DiscountController {
     const data = await this.fetchDiscountByIdService.execute(id);
     return this.apiResponseService.successResponse(
       ['Discount fetched successfully'],
+      data as Discount,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @Put('/:id/status')
+  async changeDiscountStatus(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.changeDiscountStatusService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Discount status updated successfully'],
       data as Discount,
       res,
     );
