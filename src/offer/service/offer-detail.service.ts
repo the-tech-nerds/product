@@ -23,7 +23,7 @@ class OfferDetailByIdService {
     );
 
     return {
-      images: files,
+      images: files?.map(m => m.url),
       offer: item,
     };
   }
