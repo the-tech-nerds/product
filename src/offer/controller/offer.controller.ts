@@ -94,7 +94,6 @@ export class OfferController {
     @Param('slug') slug: string,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    console.log(slug);
     const data = await this.offerDetailService.execute(slug);
     return this.apiResponseService.successResponse(
       ['Offer fetched successfully'],

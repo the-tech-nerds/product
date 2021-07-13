@@ -41,6 +41,8 @@ class ActiveOffersService {
       'offer.start_date',
       'offer.image',
       'offer.end_date',
+      'offer.slug',
+      'offer.stock',
     ]);
 
     return paginate(query, queryBuilder, Offer, {
