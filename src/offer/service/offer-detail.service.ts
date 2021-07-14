@@ -13,7 +13,6 @@ class OfferDetailByIdService {
   ) {}
 
   async execute(slug: string): Promise<any | undefined> {
-    console.log(slug);
     const item = await this.offerRepository.findOne({
       slug,
     });
