@@ -49,14 +49,11 @@ class AssignDiscountService {
       updated_at: LocalDateToUtc(new Date()),
     };
 
+    await this.resetDiscount(discountRequest);
+
     if (discountRequest.category_ids) {
       items.item_type = DiscountItemTypes.CATEGORY;
       items.item_ids = discountRequest.category_ids;
-
-      await this.categoryRepository.update(
-        { discount_id: discountRequest.discount_id },
-        { discount_id: null },
-      );
 
       await this.categoryRepository.update(
         { id: In(discountRequest.category_ids) },
@@ -69,11 +66,6 @@ class AssignDiscountService {
       items.item_ids = discountRequest.product_ids;
 
       await this.productRepository.update(
-        { discount_id: discountRequest.discount_id },
-        { discount_id: null },
-      );
-
-      await this.productRepository.update(
         { id: In(discountRequest.product_ids) },
         updateEntity,
       );
@@ -84,11 +76,6 @@ class AssignDiscountService {
       items.item_ids = discountRequest.product_variance_ids;
 
       await this.productVarianceRepository.update(
-        { discount_id: discountRequest.discount_id },
-        { discount_id: null },
-      );
-
-      await this.productVarianceRepository.update(
         { id: In(discountRequest.product_variance_ids) },
         updateEntity,
       );
@@ -97,11 +84,6 @@ class AssignDiscountService {
     if (discountRequest.offer_ids) {
       items.item_type = DiscountItemTypes.OFFER;
       items.item_ids = discountRequest.offer_ids;
-
-      await this.offerRepository.update(
-        { discount_id: discountRequest.discount_id },
-        { discount_id: null },
-      );
 
       await this.offerRepository.update(
         { id: In(discountRequest.offer_ids) },
@@ -126,6 +108,30 @@ class AssignDiscountService {
     );
 
     return updatedDiscount;
+  }
+
+  protected async resetDiscount(
+    discountRequest: DiscountAssignRequest,
+  ): Promise<void> {
+    await this.categoryRepository.update(
+      { discount_id: discountRequest.discount_id },
+      { discount_id: null },
+    );
+
+    await this.productRepository.update(
+      { discount_id: discountRequest.discount_id },
+      { discount_id: null },
+    );
+
+    await this.productVarianceRepository.update(
+      { discount_id: discountRequest.discount_id },
+      { discount_id: null },
+    );
+
+    await this.offerRepository.update(
+      { discount_id: discountRequest.discount_id },
+      { discount_id: null },
+    );
   }
 }
 

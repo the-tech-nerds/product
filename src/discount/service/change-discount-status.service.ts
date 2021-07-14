@@ -12,7 +12,8 @@ export class ChangeDiscountStatusService {
 
   async execute(id: number): Promise<Discount | undefined | void> {
     const discount = await this.discountRepository.findOneOrFail(id);
-    discount.status = discount.status ? 1 : 0;
+    discount.status = discount.status ? 0 : 1;
+
     return this.discountRepository.save(discount);
   }
 }
