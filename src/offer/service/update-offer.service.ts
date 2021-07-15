@@ -7,6 +7,7 @@ import {
   EventTypes,
   Microservices,
 } from '@the-tech-nerds/common-services';
+import { convertToSlug } from 'src/utils/utils';
 import { Offer } from '../entities/offer.entity';
 import { OfferRequest } from '../request/offer.request';
 
@@ -27,6 +28,7 @@ class UpdateOfferService {
     await this.offerRepository.update(id, {
       ...offerRequest,
       updated_by: userId,
+      slug: convertToSlug(offerRequest.name),
       updated_at: LocalDateToUtc(new Date()),
     });
     const offer = await this.offerRepository.findOne(id);

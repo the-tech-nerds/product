@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   Generated,
+  Index,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -26,6 +27,10 @@ export class Offer extends BaseEntity {
   @Column({ nullable: false })
   @Generated('uuid')
   uuid: string;
+
+  @Column({ nullable: true })
+  @Index({ unique: true })
+  slug: string;
 
   @Column({ nullable: false })
   name: string;
@@ -53,6 +58,9 @@ export class Offer extends BaseEntity {
 
   @Column({ nullable: false })
   end_date: Date;
+
+  @Column({ nullable: false })
+  stock: number;
 
   @Column({
     type: 'enum',

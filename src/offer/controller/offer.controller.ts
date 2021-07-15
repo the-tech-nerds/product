@@ -29,6 +29,7 @@ import { FetchOfferByIdService } from '../service/fetch-by-id.service';
 import { OfferRequest } from '../request/offer.request';
 import { Offer } from '../entities/offer.entity';
 import { ActiveOffersService } from '../service/active-offers.service';
+import { OfferDetailByIdService } from '../service/offer-detail.service';
 
 @Controller()
 export class OfferController {
@@ -40,6 +41,7 @@ export class OfferController {
     private readonly listOfferService: ListOfferService,
     private readonly deleteOfferService: DeleteOfferService,
     private readonly activeOfferService: ActiveOffersService,
+    private readonly offerDetailService: OfferDetailByIdService,
   ) {}
 
   @UseGuards(UserGuard)
@@ -82,6 +84,19 @@ export class OfferController {
     const data = await this.activeOfferService.execute(query);
     return this.apiResponseService.successResponse(
       ['Offer list fetched successfully'],
+      data,
+      res,
+    );
+  }
+
+  @Get('/detail/:slug')
+  async getOfferDetail(
+    @Param('slug') slug: string,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.offerDetailService.execute(slug);
+    return this.apiResponseService.successResponse(
+      ['Offer fetched successfully'],
       data,
       res,
     );

@@ -5,6 +5,7 @@ import {
   EventTypes,
   Microservices,
 } from '@the-tech-nerds/common-services';
+import { convertToSlug } from 'src/utils/utils';
 import { Repository } from 'typeorm';
 import { Offer } from '../entities/offer.entity';
 import { OfferRequest } from '../request/offer.request';
@@ -22,6 +23,7 @@ class CreateOfferService {
     const offer = await this.offerRepository.save({
       ...offerRequest,
       created_by: userId,
+      slug: convertToSlug(offerRequest.name),
     });
 
     this.crudEvent.emit(
