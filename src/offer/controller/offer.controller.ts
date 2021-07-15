@@ -82,6 +82,7 @@ export class OfferController {
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.activeOfferService.execute(query);
+    console.log(data);
     return this.apiResponseService.successResponse(
       ['Offer list fetched successfully'],
       data,

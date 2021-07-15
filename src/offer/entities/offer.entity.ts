@@ -51,6 +51,7 @@ export class Offer extends BaseEntity {
   )
   discount: Discount;
 
+  @Column({ nullable: false })
   offer_detail: string;
 
   @Column({ nullable: false })

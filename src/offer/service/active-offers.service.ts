@@ -19,7 +19,7 @@ class ActiveOffersService {
   async execute(query: PaginateQuery): Promise<Paginated<Offer>> {
     let queryBuilder = this.offerRepository
       .createQueryBuilder('offer')
-      // .leftJoinAndSelect('variants.shops', 'shops')
+      .leftJoinAndSelect('offer.discount', 'discount')
       .where('offer.status = :status', { status: 1 })
       .andWhere('offer.end_date >= :date', {
         date: LocalDateToUtc(new Date()),
@@ -43,6 +43,7 @@ class ActiveOffersService {
       'offer.end_date',
       'offer.slug',
       'offer.stock',
+      'discount',
     ]);
 
     return paginate(query, queryBuilder, Offer, {
