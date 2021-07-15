@@ -1,6 +1,14 @@
-import { Column, Entity, Generated, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Generated,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import BaseEntity from '../../utils/entities/base-entity';
 import { FileStorage } from '../../common/file/entities/storage.entity';
+import { Discount } from '../../discount/entities/discount.entity';
 
 export enum OfferStatusType {
   ACTIVE = 1,
@@ -11,6 +19,9 @@ export enum OfferStatusType {
 export class Offer extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
+
+  @Column({ type: 'int', nullable: true })
+  discount_id: number | null;
 
   @Column({ nullable: false })
   @Generated('uuid')
@@ -26,6 +37,15 @@ export class Offer extends BaseEntity {
   total_price: number;
 
   @Column({ nullable: false, type: 'text' })
+  offer_info: string;
+
+  @JoinColumn({ name: 'discount_id' })
+  @ManyToOne(
+    () => Discount,
+    (discount: Discount) => discount.offers,
+  )
+  discount: Discount;
+
   offer_detail: string;
 
   @Column({ nullable: false })

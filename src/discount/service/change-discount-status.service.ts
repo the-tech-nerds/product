@@ -4,19 +4,16 @@ import { Repository } from 'typeorm';
 import { Discount } from '../entities/discount.entity';
 
 @Injectable()
-class FetchDiscountByIdService {
+export class ChangeDiscountStatusService {
   constructor(
     @InjectRepository(Discount)
     private discountRepository: Repository<Discount>,
   ) {}
 
-  async execute(discountId: number): Promise<Discount | undefined> {
-    return this.discountRepository.findOne(
-      {
-        id: discountId,
-      },
-      { relations: ['categories', 'products', 'productVariances', 'offers'] },
-    );
+  async execute(id: number): Promise<Discount | undefined | void> {
+    const discount = await this.discountRepository.findOneOrFail(id);
+    discount.status = discount.status ? 0 : 1;
+
+    return this.discountRepository.save(discount);
   }
 }
-export { FetchDiscountByIdService };

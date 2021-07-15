@@ -25,15 +25,20 @@ import { DeleteDiscountService } from '../service/delete-discount.service';
 import { FetchDiscountByIdService } from '../service/fetch-by-id.service';
 import { DiscountRequest } from '../request/discount.request';
 import { Discount } from '../entities/discount.entity';
+import { DiscountAssignRequest } from '../request/discount-assign.request';
+import { AssignDiscountService } from '../service/assign-discount.service';
+import { ChangeDiscountStatusService } from '../service/change-discount-status.service';
 
 @Controller()
 export class DiscountController {
   constructor(
     private readonly apiResponseService: ApiResponseService,
     private readonly createDiscountService: CreateDiscountService,
+    private readonly assignDiscountService: AssignDiscountService,
     private readonly updateDiscountService: UpdateDiscountService,
     private readonly fetchDiscountByIdService: FetchDiscountByIdService,
     private readonly listDiscountService: ListDiscountService,
+    private readonly changeDiscountStatusService: ChangeDiscountStatusService,
     private readonly deleteDiscountService: DeleteDiscountService,
   ) {}
 
@@ -60,8 +65,30 @@ export class DiscountController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.BRAND.CREATE],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Post('/assign')
+  async assignDiscount(
+    @CurrentUser('id') userId: any,
+    @Body() discountAssignRequest: DiscountAssignRequest,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.assignDiscountService.execute(
+      userId,
+      discountAssignRequest,
+    );
+    return this.apiResponseService.successResponse(
+      ['Discount created successfully'],
+      data as Discount,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
   @HasPermissions([PermissionTypes.BRAND.GET], PermissionTypeEnum.hasPermission)
-  @Get('/list/all')
+  @Get('/all')
   async gets(@Res() res: Response): Promise<Response<ResponseModel>> {
     const data = await this.listDiscountService.execute();
     return this.apiResponseService.successResponse(
@@ -105,6 +132,20 @@ export class DiscountController {
     const data = await this.fetchDiscountByIdService.execute(id);
     return this.apiResponseService.successResponse(
       ['Discount fetched successfully'],
+      data as Discount,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @Put('/:id/status')
+  async changeDiscountStatus(
+    @Param('id') id: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.changeDiscountStatusService.execute(id);
+    return this.apiResponseService.successResponse(
+      ['Discount status updated successfully'],
       data as Discount,
       res,
     );

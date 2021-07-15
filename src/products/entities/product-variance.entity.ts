@@ -47,6 +47,9 @@ export class ProductVariance extends BaseEntity {
   })
   unit_id: number;
 
+  @Column({ type: 'int', nullable: true })
+  discount_id: number | null;
+
   @Column({ default: true })
   status: boolean;
 
@@ -87,11 +90,15 @@ export class ProductVariance extends BaseEntity {
   )
   inventories!: Inventory[];
 
-  @OneToMany(
+  @Column({ type: 'int', nullable: false })
+  product_variance_id: number;
+
+  @JoinColumn({ name: 'discount_id' })
+  @ManyToOne(
     () => Discount,
-    (discount: Discount) => discount.product_variance,
+    (discount: Discount) => discount.productVariances,
   )
-  discounts: Discount[];
+  discount: Discount;
 
   @OneToMany(
     () => FileStorage,

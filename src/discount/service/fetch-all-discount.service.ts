@@ -12,7 +12,8 @@ class ListDiscountService {
 
   async execute(): Promise<Discount[]> {
     return this.discountRepository.find({
-      deleted_at: IsNull(),
+      relations: ['categories', 'products', 'productVariances', 'offers'],
+      where: { deleted_at: IsNull() },
     });
   }
 }
