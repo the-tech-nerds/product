@@ -2,6 +2,7 @@ import { ViewEntity, ViewColumn, Connection } from 'typeorm';
 import { Product } from '../entities/product.entity';
 import { ProductVariance } from '../entities/product-variance.entity';
 import { Unit } from '../entities/unit.entity';
+
 @ViewEntity({
   expression: (connection: Connection) =>
     connection

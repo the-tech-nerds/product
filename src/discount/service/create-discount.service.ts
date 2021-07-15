@@ -15,6 +15,12 @@ class CreateDiscountService {
     userId: number,
     discountRequest: DiscountRequest,
   ): Promise<Discount> {
+    if (!discountRequest.discount_amount)
+      discountRequest.discount_amount = undefined;
+
+    if (!discountRequest.discount_percentage)
+      discountRequest.discount_percentage = undefined;
+
     return this.discountRepository.save({
       ...discountRequest,
       created_by: userId,

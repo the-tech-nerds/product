@@ -27,7 +27,7 @@ services:
       - auth
       - authredis
       - productdb
-      
+
   productdb:
     image: mysql:5.7
     container_name: productdb
@@ -47,11 +47,11 @@ services:
 
   rabbitmq:
     image: rabbitmq:3-management
-    ports: 
+    ports:
       - 15672:15672
       - 5672:5672
     networks:
       - groceryshop
-    environment: 
+    environment:
       RABBITMQ_DEFAULT_PASS: pass
       RABBITMQ_DEFAULT_USER: user

@@ -29,4 +29,10 @@ export class FetchProductVarianceByIdService {
       productVariance,
     };
   }
+
+  async getMultiProductVariances(
+    varianceIds: number[],
+  ): Promise<ProductVariance[] | undefined> {
+    return this.productVarianceRepository.findByIds(varianceIds);
+  }
 }

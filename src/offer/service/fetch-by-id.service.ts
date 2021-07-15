@@ -22,5 +22,9 @@ class FetchOfferByIdService {
       offer: item,
     };
   }
+
+  async getMultiOffers(offerIds: number[]): Promise<Offer[] | undefined> {
+    return this.offerRepository.findByIds(offerIds);
+  }
 }
 export { FetchOfferByIdService };
