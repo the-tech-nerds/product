@@ -4,9 +4,12 @@ import {
   Generated,
   Index,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Shop } from 'src/shops/entities/shop.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { FileStorage } from '../../common/file/entities/storage.entity';
 import { Discount } from '../../discount/entities/discount.entity';
@@ -77,4 +80,11 @@ export class Offer extends BaseEntity {
     nullable: true,
   })
   image: string;
+
+  @ManyToMany(
+    () => Shop,
+    (shops: Shop) => shops.offer,
+  )
+  @JoinTable({ name: 'offer_shops' })
+  shops: Shop[];
 }
