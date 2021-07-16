@@ -14,8 +14,8 @@ class FetchOfferByIdService {
 
   async execute(offerId: number): Promise<any | undefined> {
     const files = await this.fileService.getListByEntityId('offers', offerId);
-    const item = await this.offerRepository.findOne({
-      id: offerId,
+    const item = await this.offerRepository.findOneOrFail(offerId, {
+      relations: ['shops'],
     });
     return {
       images: files,

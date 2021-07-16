@@ -44,9 +44,6 @@ export class Offer extends BaseEntity {
   @Column({ type: 'int', nullable: false })
   total_price: number;
 
-  @Column({ nullable: false, type: 'text' })
-  offer_info: string;
-
   @JoinColumn({ name: 'discount_id' })
   @ManyToOne(
     () => Discount,
