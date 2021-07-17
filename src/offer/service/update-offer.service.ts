@@ -29,7 +29,6 @@ class UpdateOfferService {
     offerRequest: OfferRequest,
   ): Promise<Offer | undefined> {
     const shopIds = offerRequest.shops || null;
-    console.log(shop_ids);
     if (!shopIds) {
       throw new BadRequestException('Not the valid shops');
     }

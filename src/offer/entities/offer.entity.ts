@@ -38,7 +38,10 @@ export class Offer extends BaseEntity {
   @Column({ nullable: false })
   name: string;
 
-  @Column({ nullable: true })
+  @Column({
+    nullable: true,
+    type: 'text',
+  })
   description: string;
 
   @Column({ type: 'int', nullable: false })
@@ -51,7 +54,10 @@ export class Offer extends BaseEntity {
   )
   discount: Discount;
 
-  @Column({ nullable: false })
+  @Column({
+    nullable: false,
+    type: 'text',
+  })
   offer_detail: string;
 
   @Column({ nullable: false })
