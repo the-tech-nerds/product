@@ -41,7 +41,7 @@ class AssignDiscountService {
       discountRequest.discount_id,
     );
 
-    const items = new DiscountItems();
+    const discountItems = new DiscountItems();
 
     const updateEntity = {
       discount_id: discount.id,
@@ -51,42 +51,42 @@ class AssignDiscountService {
 
     await this.resetDiscount(discountRequest);
 
-    if (discountRequest.category_ids) {
-      items.item_type = DiscountItemTypes.CATEGORY;
-      items.item_ids = discountRequest.category_ids;
+    if (discountRequest.categories) {
+      discountItems.item_type = DiscountItemTypes.CATEGORY;
+      discountItems.items = discountRequest.categories;
 
       await this.categoryRepository.update(
-        { id: In(discountRequest.category_ids) },
+        { id: In(discountRequest.categories.map(x => x.id)) },
         updateEntity,
       );
     }
 
-    if (discountRequest.product_ids) {
-      items.item_type = DiscountItemTypes.PRODUCT;
-      items.item_ids = discountRequest.product_ids;
+    if (discountRequest.products) {
+      discountItems.item_type = DiscountItemTypes.PRODUCT;
+      discountItems.items = discountRequest.products;
 
       await this.productRepository.update(
-        { id: In(discountRequest.product_ids) },
+        { id: In(discountRequest.products.map(x => x.id)) },
         updateEntity,
       );
     }
 
-    if (discountRequest.product_variance_ids) {
-      items.item_type = DiscountItemTypes.PRODUCT_VARIANCE;
-      items.item_ids = discountRequest.product_variance_ids;
+    if (discountRequest.product_variances) {
+      discountItems.item_type = DiscountItemTypes.PRODUCT_VARIANCE;
+      discountItems.items = discountRequest.product_variances;
 
       await this.productVarianceRepository.update(
-        { id: In(discountRequest.product_variance_ids) },
+        { id: In(discountRequest.product_variances.map(x => x.id)) },
         updateEntity,
       );
     }
 
-    if (discountRequest.offer_ids) {
-      items.item_type = DiscountItemTypes.OFFER;
-      items.item_ids = discountRequest.offer_ids;
+    if (discountRequest.offers) {
+      discountItems.item_type = DiscountItemTypes.OFFER;
+      discountItems.items = discountRequest.offers;
 
       await this.offerRepository.update(
-        { id: In(discountRequest.offer_ids) },
+        { id: In(discountRequest.offers.map(x => x.id)) },
         updateEntity,
       );
     }
@@ -97,8 +97,10 @@ class AssignDiscountService {
 
     const discountInfo = {
       ...updatedDiscount,
-      items,
+      discountItems,
     };
+
+    console.log('discount info', discountInfo);
 
     this.crudEvent.emit(
       'discount',

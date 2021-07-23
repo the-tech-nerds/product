@@ -1,14 +1,18 @@
 import { IsNotEmpty } from 'class-validator';
+import { Product } from '../../products/entities/product.entity';
+import { Category } from '../../categories/entities/category.entity';
+import { ProductVariance } from '../../products/entities/product-variance.entity';
+import { Offer } from '../../offer/entities/offer.entity';
 
 export class DiscountAssignRequest {
   @IsNotEmpty({ message: 'discount is required.' })
   discount_id: number;
 
-  product_ids?: number[];
+  products?: Product[];
 
-  category_ids?: number[];
+  categories?: Category[];
 
-  product_variance_ids?: number[];
+  product_variances?: ProductVariance[];
 
-  offer_ids?: number[];
+  offers?: Offer[];
 }
