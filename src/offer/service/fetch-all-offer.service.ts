@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { IsNull, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 import { Offer } from '../entities/offer.entity';
 
 @Injectable()
@@ -12,7 +12,9 @@ class ListOfferService {
 
   async execute(): Promise<Offer[]> {
     return this.offerRepository.find({
-      deleted_at: IsNull(),
+      order: {
+        id: 'DESC',
+      },
     });
   }
 }

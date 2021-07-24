@@ -12,4 +12,16 @@ export class OfferRequest {
   end_date: Date;
 
   status: number;
+
+  stock: number;
+
+  shops?: number[];
+}
+
+export interface ShopOffer {
+  id: number;
+  name: string;
+  description?: string;
+  address?: string;
+  type_id?: number;
 }

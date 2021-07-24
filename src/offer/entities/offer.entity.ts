@@ -4,9 +4,12 @@ import {
   Generated,
   Index,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Shop } from 'src/shops/entities/shop.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { FileStorage } from '../../common/file/entities/storage.entity';
 import { Discount } from '../../discount/entities/discount.entity';
@@ -35,14 +38,14 @@ export class Offer extends BaseEntity {
   @Column({ nullable: false })
   name: string;
 
-  @Column({ nullable: true })
+  @Column({
+    nullable: true,
+    type: 'text',
+  })
   description: string;
 
   @Column({ type: 'int', nullable: false })
   total_price: number;
-
-  @Column({ nullable: false, type: 'text' })
-  offer_info: string;
 
   @JoinColumn({ name: 'discount_id' })
   @ManyToOne(
@@ -51,6 +54,10 @@ export class Offer extends BaseEntity {
   )
   discount: Discount;
 
+  @Column({
+    nullable: false,
+    type: 'text',
+  })
   offer_detail: string;
 
   @Column({ nullable: false })
@@ -76,4 +83,11 @@ export class Offer extends BaseEntity {
     nullable: true,
   })
   image: string;
+
+  @ManyToMany(
+    () => Shop,
+    (shops: Shop) => shops.offer,
+  )
+  @JoinTable({ name: 'offer_shops' })
+  shops: Shop[];
 }

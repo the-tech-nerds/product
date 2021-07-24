@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { ShopTypes } from '@the-tech-nerds/common-services';
 import { FileStorage } from 'src/common/file/entities/storage.entity';
+import { Offer } from 'src/offer/entities/offer.entity';
 import BaseEntity from '../../utils/entities/base-entity';
 import { ProductVariance } from '../../products/entities/product-variance.entity';
 import { Inventory } from '../../inventory/entities/inventory.entity';
@@ -55,6 +56,12 @@ export class Shop extends BaseEntity {
     (productVariance: ProductVariance) => productVariance.shops,
   )
   productVariances: ProductVariance[];
+
+  @ManyToMany(
+    () => Offer,
+    (offer: Offer) => offer.shops,
+  )
+  offer: Offer[];
 
   @OneToMany(
     () => FileStorage,

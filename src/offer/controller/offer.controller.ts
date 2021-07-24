@@ -30,6 +30,7 @@ import { OfferRequest } from '../request/offer.request';
 import { Offer } from '../entities/offer.entity';
 import { ActiveOffersService } from '../service/active-offers.service';
 import { OfferDetailByIdService } from '../service/offer-detail.service';
+import { UpdateOfferStatusService } from '../service/update-status.service';
 
 @Controller()
 export class OfferController {
@@ -42,6 +43,7 @@ export class OfferController {
     private readonly deleteOfferService: DeleteOfferService,
     private readonly activeOfferService: ActiveOffersService,
     private readonly offerDetailService: OfferDetailByIdService,
+    private readonly updateOfferStatusService: UpdateOfferStatusService,
   ) {}
 
   @UseGuards(UserGuard)
@@ -55,6 +57,7 @@ export class OfferController {
     @Body() offerRequest: OfferRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
+    console.log(offerRequest.shops);
     const data = await this.createOfferService.create(userId, offerRequest);
     return this.apiResponseService.successResponse(
       ['Offer created successfully'],
@@ -82,6 +85,7 @@ export class OfferController {
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
     const data = await this.activeOfferService.execute(query);
+    console.log(data);
     return this.apiResponseService.successResponse(
       ['Offer list fetched successfully'],
       data,
@@ -121,6 +125,25 @@ export class OfferController {
     );
     return this.apiResponseService.successResponse(
       ['Offer has been updated successfully'],
+      data,
+      res,
+    );
+  }
+
+  @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.BRAND.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
+  @Put(':id/status/:status')
+  async updateStatus(
+    @Param('id') id: number,
+    @Param('status') status: number,
+    @Res() res: Response,
+  ): Promise<Response<ResponseModel>> {
+    const data = await this.updateOfferStatusService.execute(id, status);
+    return this.apiResponseService.successResponse(
+      ['Status has been updated successfully'],
       data,
       res,
     );
