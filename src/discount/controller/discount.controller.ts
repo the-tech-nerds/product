@@ -66,7 +66,7 @@ export class DiscountController {
 
   @UseGuards(UserGuard)
   @HasPermissions(
-    [PermissionTypes.BRAND.CREATE],
+    [PermissionTypes.DISCOUNT.ASSIGN],
     PermissionTypeEnum.hasPermission,
   )
   @Post('/assign')
@@ -87,7 +87,10 @@ export class DiscountController {
   }
 
   @UseGuards(UserGuard)
-  @HasPermissions([PermissionTypes.BRAND.GET], PermissionTypeEnum.hasPermission)
+  @HasPermissions(
+    [PermissionTypes.DISCOUNT.GET],
+    PermissionTypeEnum.hasPermission,
+  )
   @Get('/all')
   async gets(@Res() res: Response): Promise<Response<ResponseModel>> {
     const data = await this.listDiscountService.execute();
@@ -100,7 +103,7 @@ export class DiscountController {
 
   @UseGuards(UserGuard)
   @HasPermissions(
-    [PermissionTypes.BRAND.UPDATE],
+    [PermissionTypes.DISCOUNT.UPDATE],
     PermissionTypeEnum.hasPermission,
   )
   @Put('/:id')
@@ -123,7 +126,10 @@ export class DiscountController {
   }
 
   @UseGuards(UserGuard)
-  @HasPermissions([PermissionTypes.BRAND.GET], PermissionTypeEnum.hasPermission)
+  @HasPermissions(
+    [PermissionTypes.DISCOUNT.GET],
+    PermissionTypeEnum.hasPermission,
+  )
   @Get('/:id')
   async getById(
     @Param('id') id: number,
@@ -138,6 +144,10 @@ export class DiscountController {
   }
 
   @UseGuards(UserGuard)
+  @HasPermissions(
+    [PermissionTypes.DISCOUNT.UPDATE],
+    PermissionTypeEnum.hasPermission,
+  )
   @Put('/:id/status')
   async changeDiscountStatus(
     @Param('id') id: number,
@@ -153,7 +163,7 @@ export class DiscountController {
 
   @UseGuards(UserGuard)
   @HasPermissions(
-    [PermissionTypes.BRAND.DELETE],
+    [PermissionTypes.DISCOUNT.DELETE],
     PermissionTypeEnum.hasPermission,
   )
   @Delete('/:id')
