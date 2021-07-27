@@ -30,6 +30,7 @@ import { MenuCategoryService } from '../service/menu-category';
 import { FetchCategoryBySlugService } from '../service/fetch-category-by-slug.service';
 import { FetchCategoryByShopService } from '../service/fetch-category-by-shop.service';
 import { FetchProductsByCategorySlugService } from '../service/fetch-products-by-category-slug.service';
+// import { ActiveOffersService } from 'src/offer/service/active-offers.service';
 
 @Controller()
 export class CategoryController {
@@ -45,7 +46,8 @@ export class CategoryController {
     private readonly fetchCategoryBySlugService: FetchCategoryBySlugService,
     private readonly fetchProductsByCategorySlugService: FetchProductsByCategorySlugService,
     private readonly fetchCategoryByShopService: FetchCategoryByShopService,
-  ) {}
+  ) // private readonly fectActiveDiscountService: ActiveOffersService
+  {}
 
   @UseGuards(UserGuard)
   @Post('/')
@@ -122,6 +124,10 @@ export class CategoryController {
       shopId,
       query,
     );
+    data.results.forEach(x => {
+      x.discount = 90;
+    });
+    console.log(data.results[0]);
     return this.apiResponseService.successResponse(
       ['Products fetched successfully'],
       data,
