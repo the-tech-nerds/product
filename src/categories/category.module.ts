@@ -2,6 +2,8 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiResponseService } from '@the-tech-nerds/common-services';
 import { Product } from 'src/products/entities/product.entity';
+import { FetchActiveDiscountService } from 'src/discount/service/fetch-active-discount.servce';
+import { Discount } from 'src/discount/entities/discount.entity';
 import { CommonModule } from '../common/common.module';
 import { Category } from './entities/category.entity';
 import { CategoryController } from './controller/category.controller';
@@ -20,7 +22,10 @@ import { FetchProductsByCategorySlugService } from './service/fetch-products-by-
 import { FetchChildCategoriesService } from './service/fetch-child-categories.service';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Category, Shop, Product]), CommonModule],
+  imports: [
+    TypeOrmModule.forFeature([Category, Shop, Product, Discount]),
+    CommonModule,
+  ],
   providers: [
     CreateCategoryService,
     UpdateCategoryService,
@@ -35,6 +40,7 @@ import { FetchChildCategoriesService } from './service/fetch-child-categories.se
     FetchCategoryByShopService,
     FetchShopByIdService,
     FetchChildCategoriesService,
+    FetchActiveDiscountService,
   ],
   controllers: [CategoryController],
   exports: [FetchCategoryByIdService, FetchChildCategoriesService],
