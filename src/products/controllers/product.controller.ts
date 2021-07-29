@@ -21,6 +21,7 @@ import {
   PermissionTypes,
   UserGuard,
 } from '@the-tech-nerds/common-services';
+import { FetchActiveDiscountService } from 'src/discount/service/fetch-active-discount.servce';
 import { Product } from '../entities/product.entity';
 import { ProductRequest } from '../requests/product.request';
 import { ListProductsService } from '../services/product/list-products.service';
@@ -44,6 +45,7 @@ export class ProductController {
     private readonly productDetailsService: ProductDetailsService,
     private readonly createMockProductService: CreateMockProductsService,
     private readonly fetchProductsBySearchParam: FetchProductsBySearchParamService,
+    private readonly fectActiveDiscountService: FetchActiveDiscountService,
   ) {}
 
   @Get('/search')
@@ -56,6 +58,11 @@ export class ProductController {
     const data = await this.fetchProductsBySearchParam.execute(
       paginateQuery,
       shopId,
+    );
+    const discount = await this.fectActiveDiscountService.execute();
+    data.results = await this.fectActiveDiscountService.checkDiscount(
+      data.results,
+      discount,
     );
     return this.apiResponseService.successResponse(
       ['Products fetched successfully'],
