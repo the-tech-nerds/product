@@ -6,6 +6,8 @@ import {
   FileService,
 } from '@the-tech-nerds/common-services';
 import { FileStorage } from 'src/common/file/entities/storage.entity';
+import { FetchActiveDiscountService } from 'src/discount/service/fetch-active-discount.servce';
+import { Discount } from 'src/discount/entities/discount.entity';
 import { ProductVariance } from './entities/product-variance.entity';
 import { Product } from './entities/product.entity';
 import { ProductController } from './controllers/product.controller';
@@ -40,7 +42,14 @@ import { FetchChildCategoriesService } from '../categories/service/fetch-child-c
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Product, ProductVariance, Unit, Category, Shop]),
+    TypeOrmModule.forFeature([
+      Product,
+      ProductVariance,
+      Unit,
+      Category,
+      Shop,
+      Discount,
+    ]),
     TypeOrmModule.forFeature([
       Product,
       ProductVariance,
@@ -77,6 +86,8 @@ import { FetchChildCategoriesService } from '../categories/service/fetch-child-c
 
     FetchCategoryByIdService,
     FetchChildCategoriesService,
+
+    FetchActiveDiscountService,
   ],
   controllers: [ProductController, ProductVarianceController, UnitController],
 })

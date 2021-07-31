@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { getConnection, getManager, MoreThan } from 'typeorm';
 import { InventoryVariance } from 'src/products/view/inventory-variance.view';
+import { Discount } from 'src/discount/entities/discount.entity';
 import { Product } from '../../entities/product.entity';
 import { FileStorage } from '../../../common/file/entities/storage.entity';
 import { ProductVariance } from '../../entities/product-variance.entity';
@@ -18,6 +19,12 @@ export class ProductDetailsService {
         FileStorage,
         'file',
         'product.id = file.type_id and file.type ="product"',
+      )
+      .leftJoinAndMapOne(
+        'product.discount',
+        Discount,
+        'dist',
+        'product.discount_id = dist.id',
       )
       .where(`product.slug ='${slug}'`)
       .getOne();
@@ -45,6 +52,12 @@ export class ProductDetailsService {
         'variance.id = file.type_id and file.type ="product-variance"',
       )
       .leftJoinAndMapOne(
+        'variance.discount',
+        Discount,
+        'dist',
+        'variance.discount_id = dist.id',
+      )
+      .leftJoinAndMapOne(
         'variance.unit',
         Unit,
         'unit',
@@ -56,6 +69,7 @@ export class ProductDetailsService {
     const productInfo = {
       slug: product?.slug,
       name: product?.name,
+      Discount: product?.discount,
       description: product?.description,
       images: product?.images.map((f: FileStorage) => f.url),
     };
@@ -65,6 +79,7 @@ export class ProductDetailsService {
       sku: v.sku,
       product_id: v.product_id,
       price: v.price,
+      discount: v.discount,
       color: v.color,
       description: v.description,
       unit_value: v.unit_value,

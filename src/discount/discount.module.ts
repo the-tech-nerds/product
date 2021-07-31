@@ -15,6 +15,7 @@ import { ProductVariance } from '../products/entities/product-variance.entity';
 import { Offer } from '../offer/entities/offer.entity';
 import { AssignDiscountService } from './service/assign-discount.service';
 import { ChangeDiscountStatusService } from './service/change-discount-status.service';
+import { FetchActiveDiscountService } from './service/fetch-active-discount.servce';
 
 @Module({
   // eslint-disable-next-line max-len
@@ -37,6 +38,7 @@ import { ChangeDiscountStatusService } from './service/change-discount-status.se
     ChangeDiscountStatusService,
     DeleteDiscountService,
     ApiResponseService,
+    FetchActiveDiscountService,
   ],
   controllers: [DiscountController],
 })

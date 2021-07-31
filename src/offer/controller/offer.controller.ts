@@ -57,7 +57,6 @@ export class OfferController {
     @Body() offerRequest: OfferRequest,
     @Res() res: Response,
   ): Promise<Response<ResponseModel>> {
-    console.log(offerRequest.shops);
     const data = await this.createOfferService.create(userId, offerRequest);
     return this.apiResponseService.successResponse(
       ['Offer created successfully'],

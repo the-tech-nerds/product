@@ -18,6 +18,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
+import { FetchActiveDiscountService } from 'src/discount/service/fetch-active-discount.servce';
 import { CreateCategoryService } from '../service/create-category.service';
 import { CategoryRequest } from '../request/category.request';
 import { Category } from '../entities/category.entity';
@@ -45,6 +46,7 @@ export class CategoryController {
     private readonly fetchCategoryBySlugService: FetchCategoryBySlugService,
     private readonly fetchProductsByCategorySlugService: FetchProductsByCategorySlugService,
     private readonly fetchCategoryByShopService: FetchCategoryByShopService,
+    private readonly fectActiveDiscountService: FetchActiveDiscountService,
   ) {}
 
   @UseGuards(UserGuard)
@@ -121,6 +123,11 @@ export class CategoryController {
       slug,
       shopId,
       query,
+    );
+    const discount = await this.fectActiveDiscountService.execute();
+    data.results = await this.fectActiveDiscountService.checkDiscount(
+      data.results,
+      discount,
     );
     return this.apiResponseService.successResponse(
       ['Products fetched successfully'],
