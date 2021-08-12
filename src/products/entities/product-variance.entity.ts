@@ -59,6 +59,9 @@ export class ProductVariance extends BaseEntity {
   })
   description: string;
 
+  @Column({ type: 'int', default: 0 })
+  discounted_price: number;
+
   @Index()
   @JoinColumn({ name: 'product_id' })
   @ManyToOne(

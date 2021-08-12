@@ -20,6 +20,7 @@ import { FetchShopByIdService } from '../shops/service/shop/fetch-by-id.service'
 import { Shop } from '../shops/entities/shop.entity';
 import { FetchProductsByCategorySlugService } from './service/fetch-products-by-category-slug.service';
 import { FetchChildCategoriesService } from './service/fetch-child-categories.service';
+import { FetchVariancesByIdsService } from './service/fetch-variance-by-ids.service';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { FetchChildCategoriesService } from './service/fetch-child-categories.se
     FetchShopByIdService,
     FetchChildCategoriesService,
     FetchActiveDiscountService,
+    FetchVariancesByIdsService,
   ],
   controllers: [CategoryController],
   exports: [FetchCategoryByIdService, FetchChildCategoriesService],

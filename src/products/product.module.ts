@@ -39,6 +39,7 @@ import { ProductDetailsService } from './services/product/product-details.servic
 import { CreateMockProductsService } from './services/product/create-mock-products.service';
 import { FetchProductsBySearchParamService } from './services/product/fetch-products-by-search-param.service';
 import { FetchChildCategoriesService } from '../categories/service/fetch-child-categories.service';
+import { FetchVariancesByProductIdsService } from './services/product/fetch-variance-by-ids.service';
 
 @Module({
   imports: [
@@ -69,6 +70,7 @@ import { FetchChildCategoriesService } from '../categories/service/fetch-child-c
     FetchProductByIdService,
     DeleteProductService,
     ProductDetailsService,
+    FetchVariancesByProductIdsService,
 
     ListProductVarianceService,
     CreateProductVarianceService,

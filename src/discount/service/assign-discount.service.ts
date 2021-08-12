@@ -6,6 +6,7 @@ import {
   EventTypes,
   Microservices,
 } from '@the-tech-nerds/common-services';
+import { FetchVariancesByIdsService } from 'src/categories/service/fetch-variance-by-ids.service';
 import { Discount } from '../entities/discount.entity';
 import { Product } from '../../products/entities/product.entity';
 import { Category } from '../../categories/entities/category.entity';
@@ -31,6 +32,7 @@ class AssignDiscountService {
     private productVarianceRepository: Repository<ProductVariance>,
     @InjectRepository(Offer)
     private offerRepository: Repository<Offer>,
+    private fetchVariancesByIdsService: FetchVariancesByIdsService,
   ) {}
 
   async execute(
@@ -54,11 +56,21 @@ class AssignDiscountService {
     if (discountRequest.categories) {
       discountItems.item_type = DiscountItemTypes.CATEGORY;
       discountItems.items = discountRequest.categories;
+      const variances =
+        (await this.fetchVariancesByIdsService.execute(
+          discountRequest.categories.map(x => x.id),
+        )) || [];
+      variances?.forEach(ele => {
+        ele.discounted_price = this.calculateDiscount(discount, ele.price);
+        ele.discount_id = discount.id;
+      });
 
       await this.categoryRepository.update(
         { id: In(discountRequest.categories.map(x => x.id)) },
         updateEntity,
       );
+
+      await this.productVarianceRepository.save(variances);
     }
 
     if (discountRequest.products) {
@@ -100,7 +112,7 @@ class AssignDiscountService {
       discountItems,
     };
 
-    console.log('discount info', discountInfo);
+    // console.log('discount info', discountInfo);
 
     this.crudEvent.emit(
       'discount',
@@ -134,6 +146,15 @@ class AssignDiscountService {
       { discount_id: discountRequest.discount_id },
       { discount_id: null },
     );
+  }
+
+  private calculateDiscount(discount: Discount, varianceAmount: number) {
+    if (discount.discount_percentage) {
+      return (
+        varianceAmount - varianceAmount * (discount.discount_percentage / 100)
+      );
+    }
+    return varianceAmount - discount.discount_amount;
   }
 }
 

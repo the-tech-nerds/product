@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApiResponseService } from '@the-tech-nerds/common-services';
+import { FetchVariancesByIdsService } from 'src/categories/service/fetch-variance-by-ids.service';
+import { FetchVariancesByProductIdsService } from 'src/products/services/product/fetch-variance-by-ids.service';
 import { CommonModule } from '../common/common.module';
 import { DiscountController } from './controller/discount.controller';
 import { Discount } from './entities/discount.entity';
@@ -39,6 +41,8 @@ import { FetchActiveDiscountService } from './service/fetch-active-discount.serv
     DeleteDiscountService,
     ApiResponseService,
     FetchActiveDiscountService,
+    FetchVariancesByIdsService,
+    FetchVariancesByProductIdsService,
   ],
   controllers: [DiscountController],
 })

@@ -44,9 +44,6 @@ export class Category extends BaseEntity {
   )
   products!: Product[];
 
-  @Column({ type: 'int', nullable: true })
-  category_id: number;
-
   @JoinColumn({ name: 'discount_id' })
   @ManyToOne(
     () => Discount,
