@@ -90,9 +90,6 @@ export class ProductVariance extends BaseEntity {
   )
   inventories!: Inventory[];
 
-  @Column({ type: 'int', nullable: false })
-  product_variance_id: number;
-
   @JoinColumn({ name: 'discount_id' })
   @ManyToOne(
     () => Discount,
