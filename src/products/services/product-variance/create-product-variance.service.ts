@@ -28,7 +28,6 @@ class CreateProductVarianceService {
     }-${uuidv4()}`;
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { shop_ids = null } = productVarianceRequest;
-    console.log(productVarianceRequest);
     const updatedProductVariance = await this.productVarianceRepository.save({
       ...productVarianceRequest,
       created_by: userId,
