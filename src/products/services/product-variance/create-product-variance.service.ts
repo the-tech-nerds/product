@@ -4,9 +4,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { FileStorageService } from 'src/common/file/filte.service';
 import { FileStorage } from '@the-tech-nerds/common-services/dist/upload/model/file-storage.model';
+import { Category } from 'src/categories/entities/category.entity';
 import { FetchShopByIdService } from '../../../shops/service/shop/fetch-by-id.service';
 import { ProductVarianceRequest } from '../../requests/product-variance.request';
 import { Shop } from '../../../shops/entities/shop.entity';
+import { FetchProductByIdService } from '../product/fetch-product-by-id.service';
 
 const { v4: uuidv4 } = require('uuid');
 
@@ -17,6 +19,7 @@ class CreateProductVarianceService {
     private productVarianceRepository: Repository<ProductVariance>,
     private shopByIdsService: FetchShopByIdService,
     private fileStorageService: FileStorageService,
+    private fetchProductByIdService: FetchProductByIdService,
   ) {}
 
   async create(
@@ -28,6 +31,23 @@ class CreateProductVarianceService {
     }-${uuidv4()}`;
     // eslint-disable-next-line @typescript-eslint/naming-convention
     const { shop_ids = null } = productVarianceRequest;
+    const prod = await this.fetchProductByIdService.execute(
+      productVarianceRequest.product_id,
+    );
+    if (prod?.product?.discount_id > 0) {
+      productVarianceRequest.discount_id = prod.product.discount_id;
+    } else {
+      const categoris: Category[] = prod?.product?.categories || [];
+      const cDiscountIds =
+        categoris
+          .map((c: Category) => c.discount_id)
+          ?.filter(
+            (v: any, i: any, a: any) => v !== null && a.indexOf(v) === i,
+          ) || [];
+      if (cDiscountIds.length > 0) {
+        productVarianceRequest.discount_id = Number(cDiscountIds[0]);
+      }
+    }
     const updatedProductVariance = await this.productVarianceRepository.save({
       ...productVarianceRequest,
       created_by: userId,

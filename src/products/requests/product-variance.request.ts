@@ -25,4 +25,6 @@ export class ProductVarianceRequest {
   shop_ids: number[];
 
   description?: string;
+
+  discount_id?: number | null;
 }
