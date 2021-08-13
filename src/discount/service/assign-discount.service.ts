@@ -7,6 +7,7 @@ import {
   Microservices,
 } from '@the-tech-nerds/common-services';
 import { FetchVariancesByIdsService } from 'src/categories/service/fetch-variance-by-ids.service';
+import { FetchVariancesByProductIdsService } from 'src/products/services/product/fetch-variance-by-ids.service';
 import { Discount } from '../entities/discount.entity';
 import { Product } from '../../products/entities/product.entity';
 import { Category } from '../../categories/entities/category.entity';
@@ -33,6 +34,7 @@ class AssignDiscountService {
     @InjectRepository(Offer)
     private offerRepository: Repository<Offer>,
     private fetchVariancesByIdsService: FetchVariancesByIdsService,
+    private fetchVariancesByProductIds: FetchVariancesByProductIdsService,
   ) {}
 
   async execute(
@@ -56,51 +58,52 @@ class AssignDiscountService {
     if (discountRequest.categories) {
       discountItems.item_type = DiscountItemTypes.CATEGORY;
       discountItems.items = discountRequest.categories;
+      const ids = discountRequest.categories.map(x => x.id) || [];
+      await this.categoryRepository.update({ id: In(ids) }, updateEntity);
       const variances =
-        (await this.fetchVariancesByIdsService.execute(
-          discountRequest.categories.map(x => x.id),
-        )) || [];
-      variances?.forEach(ele => {
-        ele.discounted_price = this.calculateDiscount(discount, ele.price);
-        ele.discount_id = discount.id;
-      });
-
-      await this.categoryRepository.update(
-        { id: In(discountRequest.categories.map(x => x.id)) },
-        updateEntity,
-      );
-
-      await this.productVarianceRepository.save(variances);
+        (await this.fetchVariancesByIdsService.execute(ids)) || [];
+      await this.UpdateVariances(variances, discount);
     }
 
     if (discountRequest.products) {
       discountItems.item_type = DiscountItemTypes.PRODUCT;
       discountItems.items = discountRequest.products;
+      const ids = discountRequest.products.map(x => x.id) || [];
 
-      await this.productRepository.update(
-        { id: In(discountRequest.products.map(x => x.id)) },
-        updateEntity,
-      );
+      await this.productRepository.update({ id: In(ids) }, updateEntity);
+
+      const variances =
+        (await this.fetchVariancesByProductIds.execute(ids)) || [];
+      await this.UpdateVariances(variances, discount);
     }
 
     if (discountRequest.product_variances) {
       discountItems.item_type = DiscountItemTypes.PRODUCT_VARIANCE;
       discountItems.items = discountRequest.product_variances;
-
-      await this.productVarianceRepository.update(
-        { id: In(discountRequest.product_variances.map(x => x.id)) },
-        updateEntity,
-      );
+      const ids = discountRequest.product_variances.map(x => x.id) || [];
+      const variances =
+        (await this.productVarianceRepository.find({
+          id: In(ids),
+        })) || [];
+      await this.UpdateVariances(variances, discount);
     }
 
     if (discountRequest.offers) {
       discountItems.item_type = DiscountItemTypes.OFFER;
       discountItems.items = discountRequest.offers;
-
-      await this.offerRepository.update(
-        { id: In(discountRequest.offers.map(x => x.id)) },
-        updateEntity,
-      );
+      const ids = discountRequest.offers.map(x => x.id) || [];
+      const offers =
+        (await this.offerRepository.find({
+          id: In(ids),
+        })) || [];
+      offers?.forEach(ele => {
+        ele.discounted_price = this.calculateDiscount(
+          discount,
+          ele.total_price,
+        );
+        ele.discount_id = discount.id;
+      });
+      await this.offerRepository.save(offers);
     }
 
     discount.is_assigned = 1;
@@ -112,7 +115,7 @@ class AssignDiscountService {
       discountItems,
     };
 
-    // console.log('discount info', discountInfo);
+    console.log('discount info', discountInfo);
 
     this.crudEvent.emit(
       'discount',
@@ -148,13 +151,27 @@ class AssignDiscountService {
     );
   }
 
-  private calculateDiscount(discount: Discount, varianceAmount: number) {
+  private calculateDiscount(
+    discount: Discount,
+    varianceAmount: number,
+  ): number {
     if (discount.discount_percentage) {
       return (
         varianceAmount - varianceAmount * (discount.discount_percentage / 100)
       );
     }
     return varianceAmount - discount.discount_amount;
+  }
+
+  private async UpdateVariances(
+    variances: ProductVariance[],
+    discount: Discount,
+  ) {
+    variances?.forEach(ele => {
+      ele.discounted_price = this.calculateDiscount(discount, ele.price);
+      ele.discount_id = discount.id;
+    });
+    await this.productVarianceRepository.save(variances);
   }
 }
 

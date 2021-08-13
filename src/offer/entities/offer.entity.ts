@@ -76,6 +76,9 @@ export class Offer extends BaseEntity {
   })
   status: number;
 
+  @Column({ type: 'int', default: 0 })
+  discounted_price: number;
+
   images: FileStorage[];
 
   @Column({
